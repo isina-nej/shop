@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
-import 'core/localization/app_strings.dart';
+import 'core/localization/language_manager.dart';
 import 'shared/widgets/layouts/main_layout.dart';
 
 void main() async {
@@ -10,60 +11,64 @@ void main() async {
   final themeManager = AdvancedThemeManager();
   await themeManager.initialize();
 
-  runApp(MyApp(themeManager: themeManager));
+  // Initialize language manager
+  final languageManager = LanguageManager();
+  await languageManager.loadLanguage();
+
+  runApp(MyApp(themeManager: themeManager, languageManager: languageManager));
 }
 
 class MyApp extends StatelessWidget {
   final AdvancedThemeManager themeManager;
+  final LanguageManager languageManager;
 
-  const MyApp({super.key, required this.themeManager});
+  const MyApp({
+    super.key,
+    required this.themeManager,
+    required this.languageManager,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: themeManager,
-      builder: (context, child) {
-        return AnimatedTheme(
-          data:
-              themeManager.themeMode == ThemeMode.dark ||
-                  (themeManager.themeMode == ThemeMode.system &&
-                      MediaQuery.platformBrightnessOf(context) ==
-                          Brightness.dark)
-              ? themeManager.getDarkTheme()
-              : themeManager.getLightTheme(),
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          child: Builder(
-            builder: (context) {
-              return MaterialApp(
-                title: 'SinaShop',
-                theme: themeManager.getLightTheme(),
-                darkTheme: themeManager.getDarkTheme(),
-                themeMode: themeManager.themeMode,
-                // TODO: Add localization delegates after generation
-                // localizationsDelegates: const [
-                //   AppLocalizations.delegate,
-                //   GlobalMaterialLocalizations.delegate,
-                //   GlobalWidgetsLocalizations.delegate,
-                //   GlobalCupertinoLocalizations.delegate,
-                // ],
-                // supportedLocales: const [
-                //   Locale('en'),
-                //   Locale('fa'),
-                // ],
-                home: AppLocalization(
-                  locale: 'fa', // Default to Persian
-                  child: ThemeProvider(
-                    themeManager: themeManager,
-                    child: const MainLayout(),
-                  ),
-                ),
-                debugShowCheckedModeBanner: false,
-              );
-            },
-          ),
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: themeManager),
+        ChangeNotifierProvider.value(value: languageManager),
+      ],
+      child: Consumer2<AdvancedThemeManager, LanguageManager>(
+        builder: (context, themeManager, languageManager, child) {
+          return AnimatedTheme(
+            data:
+                themeManager.themeMode == ThemeMode.dark ||
+                    (themeManager.themeMode == ThemeMode.system &&
+                        MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark)
+                ? themeManager.getDarkTheme()
+                : themeManager.getLightTheme(),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: MaterialApp(
+              title: 'SinaShop',
+              theme: themeManager.getLightTheme(),
+              darkTheme: themeManager.getDarkTheme(),
+              themeMode: themeManager.themeMode,
+              locale: languageManager.locale,
+              supportedLocales: LanguageManager.supportedLocales,
+              builder: (context, child) {
+                return Directionality(
+                  textDirection: languageManager.textDirection,
+                  child: child!,
+                );
+              },
+              home: ThemeProvider(
+                themeManager: themeManager,
+                child: const MainLayout(),
+              ),
+              debugShowCheckedModeBanner: false,
+            ),
+          );
+        },
+      ),
     );
   }
 }

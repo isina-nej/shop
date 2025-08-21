@@ -1,9 +1,12 @@
 // Profile Page - User Profile and Settings
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/theme_manager.dart';
+import '../../../../core/theme/advanced_theme_manager.dart';
+import '../../../../core/localization/language_manager.dart';
+import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/utils/responsive_utils.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -41,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          'پروفایل کاربری',
+          context.tr('profile'),
           style: AppTextStyles.headlineMedium.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -72,67 +75,67 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: AppDimensions.paddingXL),
 
               // Profile Menu Items
-              _buildMenuSection(context, 'حساب کاربری', [
+              _buildMenuSection(context, context.tr('user_account'), [
                 ProfileMenuItem(
                   icon: Icons.person_outline,
-                  title: 'ویرایش پروفایل',
-                  subtitle: 'تغییر اطلاعات شخصی',
+                  title: context.tr('edit_profile'),
+                  subtitle: context.tr('edit_personal_info'),
                   onTap: () => _navigateToEditProfile(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.location_on_outlined,
-                  title: 'آدرس‌های من',
-                  subtitle: 'مدیریت آدرس‌های ارسال',
+                  title: context.tr('my_addresses'),
+                  subtitle: context.tr('manage_addresses'),
                   onTap: () => _navigateToAddresses(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.credit_card_outlined,
-                  title: 'کارت‌های پرداخت',
-                  subtitle: 'مدیریت روش‌های پرداخت',
+                  title: context.tr('payment_cards'),
+                  subtitle: context.tr('manage_payment_methods'),
                   onTap: () => _navigateToPaymentMethods(),
                 ),
               ]),
 
               const SizedBox(height: AppDimensions.paddingL),
 
-              _buildMenuSection(context, 'سفارش‌ها', [
+              _buildMenuSection(context, context.tr('orders'), [
                 ProfileMenuItem(
                   icon: Icons.shopping_bag_outlined,
-                  title: 'سفارش‌های من',
-                  subtitle: 'مشاهده تاریخچه خرید',
+                  title: context.tr('my_orders'),
+                  subtitle: context.tr('view_order_history'),
                   onTap: () => _navigateToOrders(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.favorite_outline,
-                  title: 'علاقه‌مندی‌ها',
-                  subtitle: 'محصولات مورد علاقه',
+                  title: context.tr('wishlist'),
+                  subtitle: context.tr('favorite_products'),
                   onTap: () => _navigateToWishlist(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.rate_review_outlined,
-                  title: 'نظرات من',
-                  subtitle: 'نظرات ثبت شده',
+                  title: context.tr('my_reviews'),
+                  subtitle: context.tr('submitted_reviews'),
                   onTap: () => _navigateToReviews(),
                 ),
               ]),
 
               const SizedBox(height: AppDimensions.paddingL),
 
-              _buildMenuSection(context, 'تنظیمات', [
+              _buildMenuSection(context, context.tr('settings'), [
                 ProfileMenuItem(
                   icon: Icons.notifications_outlined,
-                  title: 'اعلان‌ها',
-                  subtitle: 'تنظیمات اطلاع‌رسانی',
+                  title: context.tr('notifications'),
+                  subtitle: context.tr('notification_settings'),
                   onTap: () => _navigateToNotifications(),
                 ),
                 ProfileMenuItem(
                   icon: isDark
                       ? Icons.light_mode_outlined
                       : Icons.dark_mode_outlined,
-                  title: 'حالت تاریک',
+                  title: context.tr('toggle_dark_mode'),
                   subtitle: isDark
-                      ? 'تغییر به حالت روشن'
-                      : 'تغییر به حالت تاریک',
+                      ? context.tr('switch_to_light_mode')
+                      : context.tr('switch_to_dark_mode'),
                   onTap: () => _toggleTheme(context),
                   trailing: Switch(
                     value: isDark,
@@ -142,30 +145,30 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 ProfileMenuItem(
                   icon: Icons.language_outlined,
-                  title: 'زبان',
-                  subtitle: 'فارسی',
+                  title: context.tr('language'),
+                  subtitle: context.languageManager.languageName,
                   onTap: () => _showLanguageSelection(),
                 ),
               ]),
 
               const SizedBox(height: AppDimensions.paddingL),
 
-              _buildMenuSection(context, 'پشتیبانی', [
+              _buildMenuSection(context, context.tr('help_support'), [
                 ProfileMenuItem(
                   icon: Icons.help_outline,
-                  title: 'راهنما و پشتیبانی',
+                  title: context.tr('help_support'),
                   subtitle: 'سوالات متداول و تماس',
                   onTap: () => _navigateToSupport(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.info_outline,
-                  title: 'درباره ما',
+                  title: context.tr('about'),
                   subtitle: 'اطلاعات برنامه',
                   onTap: () => _navigateToAbout(),
                 ),
                 ProfileMenuItem(
                   icon: Icons.privacy_tip_outlined,
-                  title: 'حریم خصوصی',
+                  title: context.tr('privacy_policy'),
                   subtitle: 'قوانین و مقررات',
                   onTap: () => _navigateToPrivacy(),
                 ),
@@ -438,9 +441,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Theme Toggle
   void _toggleTheme(BuildContext context) {
-    // Find the ThemeManager using the context
-    final themeManager = ThemeManagerProvider.of(context);
-    themeManager?.toggleTheme();
+    final themeManager = Provider.of<AdvancedThemeManager>(
+      context,
+      listen: false,
+    );
+    themeManager.toggleTheme();
   }
 
   // Navigation Methods
@@ -491,8 +496,85 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _showLanguageSelection() {
-    // TODO: Show language selection
-    debugPrint('Show language selection');
+    final languageManager = Provider.of<LanguageManager>(
+      context,
+      listen: false,
+    );
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                context.tr('changeLanguage'),
+                style: AppTextStyles.headlineSmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              ...LanguageManager.supportedLocales.map((locale) {
+                final languageNames = {
+                  'fa': context.tr('farsi'),
+                  'en': context.tr('english'),
+                  'ar': context.tr('arabic'),
+                  'ru': context.tr('russian'),
+                  'zh': context.tr('chinese'),
+                };
+
+                final flags = {
+                  'fa': '🇮🇷',
+                  'en': '🇺🇸',
+                  'ar': '🇸🇦',
+                  'ru': '🇷🇺',
+                  'zh': '🇨🇳',
+                };
+
+                return ListTile(
+                  leading: Text(
+                    flags[locale.languageCode] ?? '🌐',
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  title: Text(
+                    languageNames[locale.languageCode] ?? locale.languageCode,
+                  ),
+                  trailing:
+                      languageManager.locale.languageCode == locale.languageCode
+                      ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                      : null,
+                  onTap: () async {
+                    switch (locale.languageCode) {
+                      case 'fa':
+                        await languageManager.setFarsi();
+                        break;
+                      case 'en':
+                        await languageManager.setEnglish();
+                        break;
+                      case 'ar':
+                        await languageManager.setArabic();
+                        break;
+                      case 'ru':
+                        await languageManager.setRussian();
+                        break;
+                      case 'zh':
+                        await languageManager.setChinese();
+                        break;
+                    }
+                    Navigator.of(context).pop();
+                  },
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void _showLogoutDialog(BuildContext context) {
