@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'translation_manager.dart';
 
 /// کلاس مدیریت زبان اپلیکیشن
 class LanguageManager extends ChangeNotifier {
@@ -99,12 +100,26 @@ class LanguageManager extends ChangeNotifier {
         _locale = Locale(languageCode, countryCode ?? '');
       }
 
+      // مقداردهی اولیه TranslationManager
+      await TranslationManager.instance.initialize(
+        defaultLanguage: _locale.languageCode,
+      );
+
       notifyListeners();
     } catch (e) {
       // در صورت بروز خطا، از زبان دستگاه یا انگلیسی استفاده کن
       final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
       _locale = getDeviceLanguage(deviceLocale);
       debugPrint('Error loading language: $e');
+
+      // تلاش برای مقداردهی اولیه حتی در صورت خطا
+      try {
+        await TranslationManager.instance.initialize(
+          defaultLanguage: _locale.languageCode,
+        );
+      } catch (e) {
+        debugPrint('Error initializing TranslationManager: $e');
+      }
     }
   }
 
@@ -123,6 +138,7 @@ class LanguageManager extends ChangeNotifier {
   /// تغییر به زبان فارسی
   Future<void> setFarsi() async {
     _locale = const Locale('fa', 'IR');
+    await TranslationManager.instance.changeLanguage('fa');
     notifyListeners();
     await saveLanguage();
   }
@@ -130,6 +146,7 @@ class LanguageManager extends ChangeNotifier {
   /// تغییر به زبان انگلیسی
   Future<void> setEnglish() async {
     _locale = const Locale('en', 'US');
+    await TranslationManager.instance.changeLanguage('en');
     notifyListeners();
     await saveLanguage();
   }
@@ -137,6 +154,7 @@ class LanguageManager extends ChangeNotifier {
   /// تغییر به زبان عربی
   Future<void> setArabic() async {
     _locale = const Locale('ar', 'SA');
+    await TranslationManager.instance.changeLanguage('ar');
     notifyListeners();
     await saveLanguage();
   }
@@ -144,6 +162,7 @@ class LanguageManager extends ChangeNotifier {
   /// تغییر به زبان روسی
   Future<void> setRussian() async {
     _locale = const Locale('ru', 'RU');
+    await TranslationManager.instance.changeLanguage('ru');
     notifyListeners();
     await saveLanguage();
   }
@@ -151,6 +170,7 @@ class LanguageManager extends ChangeNotifier {
   /// تغییر به زبان چینی
   Future<void> setChinese() async {
     _locale = const Locale('zh', 'CN');
+    await TranslationManager.instance.changeLanguage('zh');
     notifyListeners();
     await saveLanguage();
   }

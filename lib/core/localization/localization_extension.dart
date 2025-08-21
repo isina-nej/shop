@@ -5,10 +5,19 @@ import 'app_localizations.dart';
 
 /// Extension برای دسترسی آسان به ترجمه‌ها
 extension LocalizationExtension on BuildContext {
-  /// دریافت متن ترجمه شده
+  /// دریافت متن ترجمه شده (سینک)
   String tr(String key) {
     final languageManager = Provider.of<LanguageManager>(this, listen: false);
     return AppLocalizations.translate(key, languageManager.locale.languageCode);
+  }
+
+  /// دریافت متن ترجمه شده (async) - برای بارگذاری اولیه
+  Future<String> trAsync(String key) async {
+    final languageManager = Provider.of<LanguageManager>(this, listen: false);
+    return await AppLocalizations.translateAsync(
+      key,
+      languageManager.locale.languageCode,
+    );
   }
 
   /// دریافت زبان فعلی
