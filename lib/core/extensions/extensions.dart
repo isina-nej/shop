@@ -1,4 +1,6 @@
 // Extensions for common Dart/Flutter classes
+import 'package:flutter/material.dart';
+
 extension StringExtensions on String {
   // Capitalize first letter
   String get capitalize {
@@ -28,9 +30,9 @@ extension StringExtensions on String {
 
   // Convert to title case
   String get toTitleCase {
-    return split(' ')
-        .map((word) => word.isNotEmpty ? word.capitalize : word)
-        .join(' ');
+    return split(
+      ' ',
+    ).map((word) => word.isNotEmpty ? word.capitalize : word).join(' ');
   }
 }
 
@@ -61,8 +63,14 @@ extension BuildContextExtensions on BuildContext {
     Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
   }
 
-  void pushNamedAndRemoveUntil(String routeName, bool Function(Route<dynamic>) predicate, {Object? arguments}) {
-    Navigator.of(this).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+  void pushNamedAndRemoveUntil(
+    String routeName,
+    bool Function(Route<dynamic>) predicate, {
+    Object? arguments,
+  }) {
+    Navigator.of(
+      this,
+    ).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 }
 
@@ -87,7 +95,8 @@ extension DateTimeExtensions on DateTime {
   String get formatted => '$day/$month/$year';
 
   // Format date time
-  String get formattedWithTime => '$formatted ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  String get formattedWithTime =>
+      '$formatted ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
 
   // Check if date is today
   bool get isToday {
@@ -98,7 +107,9 @@ extension DateTimeExtensions on DateTime {
   // Check if date is yesterday
   bool get isYesterday {
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    return year == yesterday.year && month == yesterday.month && day == yesterday.day;
+    return year == yesterday.year &&
+        month == yesterday.month &&
+        day == yesterday.day;
   }
 
   // Get time ago string

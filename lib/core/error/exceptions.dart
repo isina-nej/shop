@@ -4,11 +4,7 @@ abstract class AppException implements Exception {
   final String? code;
   final dynamic details;
 
-  const AppException({
-    required this.message,
-    this.code,
-    this.details,
-  });
+  const AppException({required this.message, this.code, this.details});
 
   @override
   String toString() => message;
@@ -49,11 +45,8 @@ class ServerException extends NetworkException {
 
 // Auth Exceptions
 class AuthException extends AppException {
-  const AuthException({
-    required String message,
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+  const AuthException({required String message, String? code, dynamic details})
+    : super(message: message, code: code, details: details);
 }
 
 class UnauthorizedException extends AuthException {
@@ -92,9 +85,6 @@ class StorageException extends AppException {
 
 // Cache Exceptions
 class CacheException extends AppException {
-  const CacheException({
-    required String message,
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+  const CacheException({required String message, String? code, dynamic details})
+    : super(message: message, code: code, details: details);
 }

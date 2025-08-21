@@ -52,10 +52,7 @@ class CustomTextField extends StatelessWidget {
         hintText: hint,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffixIcon: suffixIcon != null
-            ? IconButton(
-                icon: Icon(suffixIcon),
-                onPressed: onSuffixIconPressed,
-              )
+            ? IconButton(icon: Icon(suffixIcon), onPressed: onSuffixIconPressed)
             : null,
       ),
     );
@@ -88,14 +85,9 @@ class SearchTextField extends StatelessWidget {
         hintText: hint ?? 'Search...',
         prefixIcon: const Icon(Icons.search),
         suffixIcon: controller?.text.isNotEmpty == true
-            ? IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: onClear,
-              )
+            ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)
             : null,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       ),
     );

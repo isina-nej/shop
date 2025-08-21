@@ -55,10 +55,7 @@ class LoadingOverlay extends StatelessWidget {
                   const LoadingIndicator(color: Colors.white),
                   if (message != null) ...[
                     const SizedBox(height: 16),
-                    Text(
-                      message!,
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                    Text(message!, style: const TextStyle(color: Colors.white)),
                   ],
                 ],
               ),
@@ -98,13 +95,9 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
       vsync: this,
     )..repeat();
 
-    _animation = Tween<double>(
-      begin: -1.0,
-      end: 2.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.ease,
-    ));
+    _animation = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.ease),
+    );
   }
 
   @override
@@ -116,7 +109,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
@@ -129,16 +122,8 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
               begin: Alignment(_animation.value - 1, 0),
               end: Alignment(_animation.value, 0),
               colors: isDark
-                  ? [
-                      Colors.grey[800]!,
-                      Colors.grey[700]!,
-                      Colors.grey[800]!,
-                    ]
-                  : [
-                      Colors.grey[300]!,
-                      Colors.grey[100]!,
-                      Colors.grey[300]!,
-                    ],
+                  ? [Colors.grey[800]!, Colors.grey[700]!, Colors.grey[800]!]
+                  : [Colors.grey[300]!, Colors.grey[100]!, Colors.grey[300]!],
             ),
           ),
         );
