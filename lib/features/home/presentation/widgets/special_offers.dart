@@ -16,8 +16,7 @@ class SpecialOffers extends StatelessWidget {
       discount: '50%',
       backgroundColor: AppColors.error,
       textColor: AppColors.white,
-      imageUrl:
-          'https://via.placeholder.com/400x200/EF4444/FFFFFF?text=50%+OFF',
+      imageUrl: 'assets/images/banners/offer_50_percent.png',
       validUntil: '۱۴۰۳/۰۱/۱۵',
     ),
     OfferModel(
@@ -27,8 +26,7 @@ class SpecialOffers extends StatelessWidget {
       discount: 'رایگان',
       backgroundColor: AppColors.success,
       textColor: AppColors.white,
-      imageUrl:
-          'https://via.placeholder.com/400x200/10B981/FFFFFF?text=FREE+SHIPPING',
+      imageUrl: 'assets/images/banners/free_shipping.png',
       validUntil: '۱۴۰۳/۰۲/۳۰',
     ),
     OfferModel(
@@ -38,8 +36,7 @@ class SpecialOffers extends StatelessWidget {
       discount: '30%',
       backgroundColor: AppColors.primary,
       textColor: AppColors.white,
-      imageUrl:
-          'https://via.placeholder.com/400x200/667EEA/FFFFFF?text=WELCOME30',
+      imageUrl: 'assets/images/banners/welcome_30.png',
       validUntil: '۱۴۰۳/۰۱/۳۱',
     ),
   ];

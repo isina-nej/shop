@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_manager.dart';
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
               themeMode: themeManager.themeMode,
               locale: languageManager.locale,
               supportedLocales: LanguageManager.supportedLocales,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
               onGenerateRoute: AppRouter.generateRoute,
               builder: (context, child) {
                 return Directionality(

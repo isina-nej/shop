@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage>
     name: 'سینا احمدزاده',
     email: 'sina.ahmadzadeh@sinashop.com',
     phone: '09123456789',
-    profileImage: 'https://via.placeholder.com/150x150/667EEA/FFFFFF?text=S',
+    profileImage: 'assets/images/placeholders/user_avatar.png',
     joinDate: '۱۴۰۳/۰۵/۲۱',
     isVerified: true,
     totalOrders: 24,
@@ -149,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(56),
-              child: Image.network(
+              child: Image.asset(
                 _user.profileImage,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
@@ -860,6 +860,7 @@ class _ProfilePageState extends State<ProfilePage>
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : AppColors.white,
@@ -868,86 +869,91 @@ class _ProfilePageState extends State<ProfilePage>
           ),
         ),
         padding: const EdgeInsets.all(AppDimensions.paddingL),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: AppColors.grey300,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: AppDimensions.paddingL),
-            Text(
-              'انتخاب زبان',
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: AppDimensions.paddingL),
-            ...LanguageManager.supportedLocales.map((locale) {
-              final languageData = _getLanguageData(locale.languageCode);
-
-              return Container(
-                margin: const EdgeInsets.only(bottom: AppDimensions.paddingS),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
                 decoration: BoxDecoration(
-                  color:
-                      languageManager.locale.languageCode == locale.languageCode
-                      ? AppColors.primary.withOpacity(0.1)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-                  border:
-                      languageManager.locale.languageCode == locale.languageCode
-                      ? Border.all(color: AppColors.primary)
-                      : null,
+                  color: AppColors.grey300,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                child: ListTile(
-                  leading: Text(
-                    languageData['flag']!,
-                    style: const TextStyle(fontSize: 28),
+              ),
+              const SizedBox(height: AppDimensions.paddingL),
+              Text(
+                'انتخاب زبان',
+                style: AppTextStyles.headlineSmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: AppDimensions.paddingL),
+              ...LanguageManager.supportedLocales.map((locale) {
+                final languageData = _getLanguageData(locale.languageCode);
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: AppDimensions.paddingS),
+                  decoration: BoxDecoration(
+                    color:
+                        languageManager.locale.languageCode ==
+                            locale.languageCode
+                        ? AppColors.primary.withOpacity(0.1)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+                    border:
+                        languageManager.locale.languageCode ==
+                            locale.languageCode
+                        ? Border.all(color: AppColors.primary)
+                        : null,
                   ),
-                  title: Text(
-                    languageData['name']!,
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      fontWeight:
-                          languageManager.locale.languageCode ==
-                              locale.languageCode
-                          ? FontWeight.bold
-                          : FontWeight.normal,
+                  child: ListTile(
+                    leading: Text(
+                      languageData['flag']!,
+                      style: const TextStyle(fontSize: 28),
                     ),
+                    title: Text(
+                      languageData['name']!,
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        fontWeight:
+                            languageManager.locale.languageCode ==
+                                locale.languageCode
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                    subtitle: Text(languageData['nativeName']!),
+                    trailing:
+                        languageManager.locale.languageCode ==
+                            locale.languageCode
+                        ? Icon(Icons.check_circle, color: AppColors.primary)
+                        : null,
+                    onTap: () async {
+                      switch (locale.languageCode) {
+                        case 'fa':
+                          await languageManager.setFarsi();
+                          break;
+                        case 'en':
+                          await languageManager.setEnglish();
+                          break;
+                        case 'ar':
+                          await languageManager.setArabic();
+                          break;
+                        case 'ru':
+                          await languageManager.setRussian();
+                          break;
+                        case 'zh':
+                          await languageManager.setChinese();
+                          break;
+                      }
+                      Navigator.of(context).pop();
+                    },
                   ),
-                  subtitle: Text(languageData['nativeName']!),
-                  trailing:
-                      languageManager.locale.languageCode == locale.languageCode
-                      ? Icon(Icons.check_circle, color: AppColors.primary)
-                      : null,
-                  onTap: () async {
-                    switch (locale.languageCode) {
-                      case 'fa':
-                        await languageManager.setFarsi();
-                        break;
-                      case 'en':
-                        await languageManager.setEnglish();
-                        break;
-                      case 'ar':
-                        await languageManager.setArabic();
-                        break;
-                      case 'ru':
-                        await languageManager.setRussian();
-                        break;
-                      case 'zh':
-                        await languageManager.setChinese();
-                        break;
-                    }
-                    Navigator.of(context).pop();
-                  },
-                ),
-              );
-            }).toList(),
-            const SizedBox(height: AppDimensions.paddingL),
-          ],
+                );
+              }).toList(),
+              const SizedBox(height: AppDimensions.paddingL),
+            ],
+          ),
         ),
       ),
     );

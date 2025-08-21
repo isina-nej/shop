@@ -162,8 +162,8 @@ class _EditProfilePageState extends State<EditProfilePage>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(57),
                   child: _hasProfileImage
-                      ? Image.network(
-                          'https://via.placeholder.com/150x150/667EEA/FFFFFF?text=S',
+                      ? Image.asset(
+                          'assets/images/placeholders/user_avatar.png',
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
