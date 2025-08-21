@@ -1,0 +1,184 @@
+name: Deploy Flutter Web Build
+
+on:
+  push:
+    branches: [ main, master ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'deploy-web.*'
+      - 'WEB_DEPLOYMENT_GUIDE.md'
+  
+  # Allows manual trigger from GitHub UI
+  workflow_dispatch:
+
+env:
+  WEB_REPO_NAME: shop-web # Change this to your web repository name
+  WEB_REPO_OWNER: ${{ github.repository_owner }} # Uses the same owner as current repo
+
+jobs:
+  deploy-web:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Flutter Project
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 🐦 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+        cache: true
+
+    - name: 📦 Get Flutter Dependencies
+      run: flutter pub get
+
+    - name: 🔨 Build Flutter Web
+      run: flutter build web --release --web-renderer canvaskit
+
+    - name: 📥 Checkout/Create Web Repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ env.WEB_REPO_OWNER }}/${{ env.WEB_REPO_NAME }}
+        token: ${{ secrets.WEB_DEPLOY_TOKEN }} # You need to create this secret
+        path: web-repo
+        fetch-depth: 0
+        
+    - name: 📋 Copy Web Build Files
+      run: |
+        # Create web repo directory if it doesn't exist
+        mkdir -p web-repo
+        cd web-repo
+        
+        # Initialize if not a git repo
+        if [ ! -d ".git" ]; then
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git remote add origin https://github.com/${{ env.WEB_REPO_OWNER }}/${{ env.WEB_REPO_NAME }}.git
+        fi
+        
+        # Clear existing files but keep .git and README.md
+        find . -maxdepth 1 \( -name ".git" -o -name "README.md" -o -name ".gitignore" \) -prune -o -type f -delete
+        find . -maxdepth 1 \( -name ".git" -o -name "README.md" -o -name ".gitignore" \) -prune -o -type d -exec rm -rf {} + 2>/dev/null || true
+        
+        # Copy new build files
+        cp -r ../build/web/* .
+        
+        # Create/Update README if it doesn't exist
+        if [ ! -f "README.md" ]; then
+          cat > README.md << 'EOF'
+        # SinaShop Web Build
+        
+        This repository contains the automatically built web version of the SinaShop Flutter application.
+        
+        ## 🚀 Deployment
+        
+        This repository is automatically updated via GitHub Actions when changes are pushed to the main Flutter project.
+        
+        ## ⚙️ Vercel Configuration
+        
+        To deploy on Vercel:
+        1. Import this repository to Vercel
+        2. Configure build settings:
+           - **Framework Preset**: Other
+           - **Build Command**: (leave empty)
+           - **Output Directory**: `./`
+           - **Install Command**: (leave empty)
+        
+        ## 📱 Features
+        
+        - Responsive design
+        - PWA capabilities
+        - Optimized for web performance
+        - Multi-language support (Persian/English)
+        
+        ## 🔄 Auto-deployment
+        
+        This site is automatically built and deployed when changes are made to:
+        - Flutter source code
+        - Assets and images
+        - Configuration files
+        
+        Last updated: $(date)
+        EOF
+        fi
+        
+        # Create .gitignore
+        cat > .gitignore << 'EOF'
+        # Logs
+        *.log
+        npm-debug.log*
+        yarn-debug.log*
+        yarn-error.log*
+        
+        # OS generated files
+        .DS_Store
+        .DS_Store?
+        ._*
+        .Spotlight-V100
+        .Trashes
+        ehthumbs.db
+        Thumbs.db
+        
+        # Editor files
+        .vscode/
+        .idea/
+        *.swp
+        *.swo
+        *~
+        EOF
+
+    - name: 🔄 Deploy to Web Repository
+      run: |
+        cd web-repo
+        
+        # Configure git
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+        
+        # Add all changes
+        git add .
+        
+        # Check if there are changes to commit
+        if [ -n "$(git status --porcelain)" ]; then
+          # Create commit
+          git commit -m "🚀 Deploy web build from ${{ github.sha }}
+
+          - Auto-deployed from: ${{ github.repository }}
+          - Commit: ${{ github.sha }}
+          - Branch: ${{ github.ref_name }}
+          - Workflow: ${{ github.workflow }}
+          - Deployed at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          
+          # Push changes
+          git push --set-upstream origin main
+          
+          echo "✅ Successfully deployed web build!"
+        else
+          echo "ℹ️ No changes to deploy."
+        fi
+
+    - name: 📊 Deployment Summary
+      run: |
+        echo "## 🎉 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+        echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔗 Web Repository | [\`${{ env.WEB_REPO_OWNER }}/${{ env.WEB_REPO_NAME }}\`](https://github.com/${{ env.WEB_REPO_OWNER }}/${{ env.WEB_REPO_NAME }}) |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🌐 Potential Vercel URL | \`https://${{ env.WEB_REPO_NAME }}.vercel.app\` |" >> $GITHUB_STEP_SUMMARY
+        echo "| ⏰ Deployed At | $(date -u '+%Y-%m-%d %H:%M:%S UTC') |" >> $GITHUB_STEP_SUMMARY
+        echo "| 📝 Source Commit | [\`${{ github.sha }}\`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 🔧 Vercel Setup Instructions" >> $GITHUB_STEP_SUMMARY
+        echo "1. Go to [Vercel Dashboard](https://vercel.com/dashboard)" >> $GITHUB_STEP_SUMMARY
+        echo "2. Click **Import Project**" >> $GITHUB_STEP_SUMMARY
+        echo "3. Import \`${{ env.WEB_REPO_OWNER }}/${{ env.WEB_REPO_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "4. Set framework to **Other**" >> $GITHUB_STEP_SUMMARY
+        echo "5. Leave build command empty" >> $GITHUB_STEP_SUMMARY
+        echo "6. Set output directory to \`./\`" >> $GITHUB_STEP_SUMMARY
+        echo "7. Deploy! 🚀" >> $GITHUB_STEP_SUMMARY
