@@ -29,21 +29,12 @@ class AppUtils {
 
   // Generate random string
   static String generateRandomString(int length) {
-    const chars =
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return List.generate(
-      length,
-      (index) =>
-          chars[(chars.length * (index + 1) * 0.5).floor() % chars.length],
-    ).join();
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return List.generate(length, (index) => chars[(chars.length * (index + 1) * 0.5).floor() % chars.length]).join();
   }
 
   // Show snackbar
-  static void showSnackBar(
-    BuildContext context,
-    String message, {
-    bool isError = false,
-  }) {
+  static void showSnackBar(BuildContext context, String message, {bool isError = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -58,7 +49,9 @@ class AppUtils {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 

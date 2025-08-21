@@ -9,7 +9,7 @@ class AppLocalizations {
   ];
 
   static const String translationsPath = 'assets/translations';
-
+  
   static const Locale fallbackLocale = Locale('en', 'US');
 }
 

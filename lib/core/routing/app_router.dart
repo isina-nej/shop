@@ -26,62 +26,74 @@ class AppRouter {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Splash Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Splash Screen')),
+          ),
         );
-
+      
       case onboarding:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Onboarding Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Onboarding Screen')),
+          ),
         );
-
+      
       case login:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Login Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Login Screen')),
+          ),
         );
-
+      
       case register:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Register Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Register Screen')),
+          ),
         );
-
+      
       case home:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Home Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Home Screen')),
+          ),
         );
-
+      
       case products:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Products Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Products Screen')),
+          ),
         );
-
+      
       case cart:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Cart Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Cart Screen')),
+          ),
         );
-
+      
       case profile:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Profile Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Profile Screen')),
+          ),
         );
-
+      
       case settings:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Settings Screen'))),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Settings Screen')),
+          ),
         );
-
+      
       default:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Page Not Found'))),
+          builder: (_) => const Scaffold(
+            body: Center(
+              child: Text('Page Not Found'),
+            ),
+          ),
         );
     }
   }
