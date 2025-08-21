@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/theme/theme_manager.dart';
+import '../../../../core/utils/responsive_utils.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -54,126 +55,130 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
 
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(
-          horizontal: isTablet
-              ? AppDimensions.paddingXL
-              : AppDimensions.paddingM,
-          vertical: AppDimensions.paddingM,
-        ),
-        child: Column(
-          children: [
-            // User Profile Header
-            _buildProfileHeader(context),
+      body: ResponsiveContainer(
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(
+            horizontal: isTablet
+                ? AppDimensions.paddingXL
+                : AppDimensions.paddingM,
+            vertical: AppDimensions.paddingM,
+          ),
+          child: Column(
+            children: [
+              // User Profile Header
+              _buildProfileHeader(context),
 
-            const SizedBox(height: AppDimensions.paddingXL),
+              const SizedBox(height: AppDimensions.paddingXL),
 
-            // Profile Menu Items
-            _buildMenuSection(context, 'حساب کاربری', [
-              ProfileMenuItem(
-                icon: Icons.person_outline,
-                title: 'ویرایش پروفایل',
-                subtitle: 'تغییر اطلاعات شخصی',
-                onTap: () => _navigateToEditProfile(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.location_on_outlined,
-                title: 'آدرس‌های من',
-                subtitle: 'مدیریت آدرس‌های ارسال',
-                onTap: () => _navigateToAddresses(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.credit_card_outlined,
-                title: 'کارت‌های پرداخت',
-                subtitle: 'مدیریت روش‌های پرداخت',
-                onTap: () => _navigateToPaymentMethods(),
-              ),
-            ]),
-
-            const SizedBox(height: AppDimensions.paddingL),
-
-            _buildMenuSection(context, 'سفارش‌ها', [
-              ProfileMenuItem(
-                icon: Icons.shopping_bag_outlined,
-                title: 'سفارش‌های من',
-                subtitle: 'مشاهده تاریخچه خرید',
-                onTap: () => _navigateToOrders(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.favorite_outline,
-                title: 'علاقه‌مندی‌ها',
-                subtitle: 'محصولات مورد علاقه',
-                onTap: () => _navigateToWishlist(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.rate_review_outlined,
-                title: 'نظرات من',
-                subtitle: 'نظرات ثبت شده',
-                onTap: () => _navigateToReviews(),
-              ),
-            ]),
-
-            const SizedBox(height: AppDimensions.paddingL),
-
-            _buildMenuSection(context, 'تنظیمات', [
-              ProfileMenuItem(
-                icon: Icons.notifications_outlined,
-                title: 'اعلان‌ها',
-                subtitle: 'تنظیمات اطلاع‌رسانی',
-                onTap: () => _navigateToNotifications(),
-              ),
-              ProfileMenuItem(
-                icon: isDark
-                    ? Icons.light_mode_outlined
-                    : Icons.dark_mode_outlined,
-                title: 'حالت تاریک',
-                subtitle: isDark ? 'تغییر به حالت روشن' : 'تغییر به حالت تاریک',
-                onTap: () => _toggleTheme(context),
-                trailing: Switch(
-                  value: isDark,
-                  onChanged: (_) => _toggleTheme(context),
-                  activeColor: AppColors.primary,
+              // Profile Menu Items
+              _buildMenuSection(context, 'حساب کاربری', [
+                ProfileMenuItem(
+                  icon: Icons.person_outline,
+                  title: 'ویرایش پروفایل',
+                  subtitle: 'تغییر اطلاعات شخصی',
+                  onTap: () => _navigateToEditProfile(),
                 ),
-              ),
-              ProfileMenuItem(
-                icon: Icons.language_outlined,
-                title: 'زبان',
-                subtitle: 'فارسی',
-                onTap: () => _showLanguageSelection(),
-              ),
-            ]),
+                ProfileMenuItem(
+                  icon: Icons.location_on_outlined,
+                  title: 'آدرس‌های من',
+                  subtitle: 'مدیریت آدرس‌های ارسال',
+                  onTap: () => _navigateToAddresses(),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.credit_card_outlined,
+                  title: 'کارت‌های پرداخت',
+                  subtitle: 'مدیریت روش‌های پرداخت',
+                  onTap: () => _navigateToPaymentMethods(),
+                ),
+              ]),
 
-            const SizedBox(height: AppDimensions.paddingL),
+              const SizedBox(height: AppDimensions.paddingL),
 
-            _buildMenuSection(context, 'پشتیبانی', [
-              ProfileMenuItem(
-                icon: Icons.help_outline,
-                title: 'راهنما و پشتیبانی',
-                subtitle: 'سوالات متداول و تماس',
-                onTap: () => _navigateToSupport(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.info_outline,
-                title: 'درباره ما',
-                subtitle: 'اطلاعات برنامه',
-                onTap: () => _navigateToAbout(),
-              ),
-              ProfileMenuItem(
-                icon: Icons.privacy_tip_outlined,
-                title: 'حریم خصوصی',
-                subtitle: 'قوانین و مقررات',
-                onTap: () => _navigateToPrivacy(),
-              ),
-            ]),
+              _buildMenuSection(context, 'سفارش‌ها', [
+                ProfileMenuItem(
+                  icon: Icons.shopping_bag_outlined,
+                  title: 'سفارش‌های من',
+                  subtitle: 'مشاهده تاریخچه خرید',
+                  onTap: () => _navigateToOrders(),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.favorite_outline,
+                  title: 'علاقه‌مندی‌ها',
+                  subtitle: 'محصولات مورد علاقه',
+                  onTap: () => _navigateToWishlist(),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.rate_review_outlined,
+                  title: 'نظرات من',
+                  subtitle: 'نظرات ثبت شده',
+                  onTap: () => _navigateToReviews(),
+                ),
+              ]),
 
-            const SizedBox(height: AppDimensions.paddingXL),
+              const SizedBox(height: AppDimensions.paddingL),
 
-            // Logout Button
-            _buildLogoutButton(context),
+              _buildMenuSection(context, 'تنظیمات', [
+                ProfileMenuItem(
+                  icon: Icons.notifications_outlined,
+                  title: 'اعلان‌ها',
+                  subtitle: 'تنظیمات اطلاع‌رسانی',
+                  onTap: () => _navigateToNotifications(),
+                ),
+                ProfileMenuItem(
+                  icon: isDark
+                      ? Icons.light_mode_outlined
+                      : Icons.dark_mode_outlined,
+                  title: 'حالت تاریک',
+                  subtitle: isDark
+                      ? 'تغییر به حالت روشن'
+                      : 'تغییر به حالت تاریک',
+                  onTap: () => _toggleTheme(context),
+                  trailing: Switch(
+                    value: isDark,
+                    onChanged: (_) => _toggleTheme(context),
+                    activeColor: AppColors.primary,
+                  ),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.language_outlined,
+                  title: 'زبان',
+                  subtitle: 'فارسی',
+                  onTap: () => _showLanguageSelection(),
+                ),
+              ]),
 
-            const SizedBox(height: AppDimensions.paddingXL),
-          ],
+              const SizedBox(height: AppDimensions.paddingL),
+
+              _buildMenuSection(context, 'پشتیبانی', [
+                ProfileMenuItem(
+                  icon: Icons.help_outline,
+                  title: 'راهنما و پشتیبانی',
+                  subtitle: 'سوالات متداول و تماس',
+                  onTap: () => _navigateToSupport(),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.info_outline,
+                  title: 'درباره ما',
+                  subtitle: 'اطلاعات برنامه',
+                  onTap: () => _navigateToAbout(),
+                ),
+                ProfileMenuItem(
+                  icon: Icons.privacy_tip_outlined,
+                  title: 'حریم خصوصی',
+                  subtitle: 'قوانین و مقررات',
+                  onTap: () => _navigateToPrivacy(),
+                ),
+              ]),
+
+              const SizedBox(height: AppDimensions.paddingXL),
+
+              // Logout Button
+              _buildLogoutButton(context),
+
+              const SizedBox(height: AppDimensions.paddingXL),
+            ],
+          ),
         ),
       ),
     );

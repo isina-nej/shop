@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/theme_manager.dart';
+import '../../../../main.dart';
+import '../../../../shared/widgets/theme/theme_settings_sheet.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -57,14 +58,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? Icons.light_mode
                 : Icons.dark_mode,
           ),
-          onPressed: () {
-            final themeManager = _Provider.of<ThemeManager>(context);
-            themeManager.changeTheme(
-              Theme.of(context).brightness == Brightness.dark
-                  ? ThemeStatus.light
-                  : ThemeStatus.dark,
-            );
-          },
+          onPressed: () => _showThemeSettings(context),
         ),
         // Notifications Button
         IconButton(
@@ -96,26 +90,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
 
-// Provider helper (temporary)
-class _Provider<T extends ChangeNotifier> {
-  static T of<T extends ChangeNotifier>(BuildContext context) {
-    final provider = context
-        .dependOnInheritedWidgetOfExactType<_ProviderWidget<T>>();
-    assert(provider != null, 'No Provider<$T> found in context');
-    return provider!.notifier;
-  }
-}
-
-class _ProviderWidget<T extends ChangeNotifier> extends InheritedWidget {
-  final T notifier;
-
-  const _ProviderWidget({required this.notifier, required Widget child})
-    : super(child: child);
-
-  @override
-  bool updateShouldNotify(covariant _ProviderWidget<T> oldWidget) {
-    return notifier != oldWidget.notifier;
+  void _showThemeSettings(BuildContext context) {
+    final themeManager = ThemeProvider.of(context);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => ThemeSettingsSheet(themeManager: themeManager),
+    );
   }
 }

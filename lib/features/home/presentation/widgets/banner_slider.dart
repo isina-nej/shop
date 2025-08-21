@@ -107,45 +107,56 @@ class _BannerSliderState extends State<BannerSlider> {
                       ),
                     ),
                     // Content
-                    Padding(
-                      padding: const EdgeInsets.all(AppDimensions.paddingL),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            banner.title,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.white,
-                            ),
-                          ),
-                          const SizedBox(height: AppDimensions.paddingS),
-                          Text(
-                            banner.subtitle,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: AppColors.white,
-                            ),
-                          ),
-                          const SizedBox(height: AppDimensions.paddingM),
-                          ElevatedButton(
-                            onPressed: () {
-                              // TODO: Handle banner action
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.white,
-                              foregroundColor: banner.color,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  AppDimensions.radiusS,
+                    Positioned.fill(
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppDimensions.paddingL),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                banner.title,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.white,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            child: const Text('مشاهده'),
-                          ),
-                        ],
+                            const SizedBox(height: AppDimensions.paddingS),
+                            Flexible(
+                              child: Text(
+                                banner.subtitle,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.white,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(height: AppDimensions.paddingS),
+                            ElevatedButton(
+                              onPressed: () {
+                                // TODO: Handle banner action
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.white,
+                                foregroundColor: banner.color,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    AppDimensions.radiusS,
+                                  ),
+                                ),
+                              ),
+                              child: const Text('مشاهده'),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

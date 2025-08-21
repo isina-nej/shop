@@ -1,51 +1,76 @@
 import 'package:flutter/material.dart';
-import 'core/theme/theme_manager.dart';
-import 'core/theme/app_theme.dart';
+import 'core/theme/advanced_theme_manager.dart';
+import 'core/localization/app_strings.dart';
 import 'shared/widgets/layouts/main_layout.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize theme manager
+  final themeManager = AdvancedThemeManager();
+  await themeManager.initialize();
+
+  runApp(MyApp(themeManager: themeManager));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AdvancedThemeManager themeManager;
+
+  const MyApp({super.key, required this.themeManager});
 
   @override
   Widget build(BuildContext context) {
-    return ThemeProvider(
-      themeManager: ThemeManager(),
-      child: Builder(
-        builder: (context) {
-          final themeManager = ThemeProvider.of(context);
-
-          return MaterialApp(
-            title: 'SinaShop',
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: _getThemeMode(themeManager.currentTheme),
-            home: const MainLayout(),
-            debugShowCheckedModeBanner: false,
-          );
-        },
-      ),
+    return AnimatedBuilder(
+      animation: themeManager,
+      builder: (context, child) {
+        return AnimatedTheme(
+          data:
+              themeManager.themeMode == ThemeMode.dark ||
+                  (themeManager.themeMode == ThemeMode.system &&
+                      MediaQuery.platformBrightnessOf(context) ==
+                          Brightness.dark)
+              ? themeManager.getDarkTheme()
+              : themeManager.getLightTheme(),
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: Builder(
+            builder: (context) {
+              return MaterialApp(
+                title: 'SinaShop',
+                theme: themeManager.getLightTheme(),
+                darkTheme: themeManager.getDarkTheme(),
+                themeMode: themeManager.themeMode,
+                // TODO: Add localization delegates after generation
+                // localizationsDelegates: const [
+                //   AppLocalizations.delegate,
+                //   GlobalMaterialLocalizations.delegate,
+                //   GlobalWidgetsLocalizations.delegate,
+                //   GlobalCupertinoLocalizations.delegate,
+                // ],
+                // supportedLocales: const [
+                //   Locale('en'),
+                //   Locale('fa'),
+                // ],
+                home: AppLocalization(
+                  locale: 'fa', // Default to Persian
+                  child: ThemeProvider(
+                    themeManager: themeManager,
+                    child: const MainLayout(),
+                  ),
+                ),
+                debugShowCheckedModeBanner: false,
+              );
+            },
+          ),
+        );
+      },
     );
-  }
-
-  ThemeMode _getThemeMode(ThemeStatus themeStatus) {
-    switch (themeStatus) {
-      case ThemeStatus.light:
-        return ThemeMode.light;
-      case ThemeStatus.dark:
-        return ThemeMode.dark;
-      case ThemeStatus.system:
-        return ThemeMode.system;
-    }
   }
 }
 
-// Custom ThemeProvider for theme management
+// Custom ThemeProvider for passing theme manager down the widget tree
 class ThemeProvider extends InheritedWidget {
-  final ThemeManager themeManager;
+  final AdvancedThemeManager themeManager;
 
   const ThemeProvider({
     super.key,
@@ -53,7 +78,7 @@ class ThemeProvider extends InheritedWidget {
     required super.child,
   });
 
-  static ThemeManager of(BuildContext context) {
+  static AdvancedThemeManager of(BuildContext context) {
     final ThemeProvider? result = context
         .dependOnInheritedWidgetOfExactType<ThemeProvider>();
     assert(result != null, 'No ThemeProvider found in context');
@@ -63,44 +88,5 @@ class ThemeProvider extends InheritedWidget {
   @override
   bool updateShouldNotify(ThemeProvider oldWidget) {
     return themeManager != oldWidget.themeManager;
-  }
-}
-
-// Custom Consumer for theme changes
-class ThemeConsumer extends StatefulWidget {
-  final Widget Function(BuildContext context, ThemeManager themeManager)
-  builder;
-
-  const ThemeConsumer({super.key, required this.builder});
-
-  @override
-  State<ThemeConsumer> createState() => _ThemeConsumerState();
-}
-
-class _ThemeConsumerState extends State<ThemeConsumer> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final themeManager = ThemeProvider.of(context);
-    themeManager.addListener(_onThemeChanged);
-  }
-
-  @override
-  void dispose() {
-    final themeManager = ThemeProvider.of(context);
-    themeManager.removeListener(_onThemeChanged);
-    super.dispose();
-  }
-
-  void _onThemeChanged() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final themeManager = ThemeProvider.of(context);
-    return widget.builder(context, themeManager);
   }
 }

@@ -3,45 +3,47 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/app_strings.dart';
 
 class CategoryGrid extends StatelessWidget {
   const CategoryGrid({super.key});
 
   // Mock categories data
-  static const List<CategoryModel> _categories = [
+  static List<CategoryModel> _getCategories(BuildContext context) => [
     CategoryModel(
       id: '1',
-      name: 'الکترونیک',
+      name: context.tr('electronics'),
       icon: Icons.phone_android,
       color: AppColors.primary,
     ),
     CategoryModel(
       id: '2',
-      name: 'پوشاک',
+      name: context.tr('clothing'),
       icon: Icons.checkroom,
       color: AppColors.secondary,
     ),
     CategoryModel(
       id: '3',
-      name: 'خانه و آشپزخانه',
+      name: context.tr('homeAndLifestyle'),
       icon: Icons.home,
       color: AppColors.accent,
     ),
     CategoryModel(
       id: '4',
-      name: 'ورزش و سرگرمی',
+      name: context.tr('sportsAndRecreation'),
       icon: Icons.sports_soccer,
       color: AppColors.success,
     ),
     CategoryModel(
       id: '5',
-      name: 'زیبایی و سلامت',
+      name: context.tr('beautyAndHealth'),
       icon: Icons.spa,
       color: AppColors.warning,
     ),
     CategoryModel(
       id: '6',
-      name: 'کتاب و مطالعه',
+      name: context.tr('booksAndMedia'),
       icon: Icons.book,
       color: AppColors.info,
     ),
@@ -49,35 +51,74 @@ class CategoryGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = ResponsiveUtils.isDesktop(context);
+    final crossAxisCount = ResponsiveUtils.getResponsiveValue(
+      context,
+      mobile: 2,
+      tablet: 3,
+      desktop: 6,
+    );
+
     return Container(
-      height: 200,
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
-      child: GridView.builder(
-        scrollDirection: Axis.horizontal,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.2,
-          crossAxisSpacing: AppDimensions.paddingS,
-          mainAxisSpacing: AppDimensions.paddingS,
-        ),
-        itemCount: _categories.length,
-        itemBuilder: (context, index) {
-          final category = _categories[index];
-          return _CategoryCard(category: category);
-        },
+      height: isDesktop ? 120 : 200,
+      padding: ResponsiveUtils.getResponsivePadding(context),
+      child: isDesktop
+          ? _buildDesktopGrid(context, crossAxisCount)
+          : _buildMobileGrid(context, crossAxisCount),
+    );
+  }
+
+  Widget _buildMobileGrid(BuildContext context, int crossAxisCount) {
+    final categories = _getCategories(context);
+
+    return GridView.builder(
+      scrollDirection: Axis.horizontal,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.2,
+        crossAxisSpacing: AppDimensions.paddingS,
+        mainAxisSpacing: AppDimensions.paddingS,
       ),
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        final category = categories[index];
+        return _CategoryCard(category: category);
+      },
+    );
+  }
+
+  Widget _buildDesktopGrid(BuildContext context, int crossAxisCount) {
+    final categories = _getCategories(context);
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        childAspectRatio: 1.2,
+        crossAxisSpacing: AppDimensions.paddingM,
+        mainAxisSpacing: AppDimensions.paddingM,
+      ),
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        final category = categories[index];
+        return _CategoryCard(category: category, isCompact: true);
+      },
     );
   }
 }
 
 class _CategoryCard extends StatelessWidget {
   final CategoryModel category;
+  final bool isCompact;
 
-  const _CategoryCard({required this.category});
+  const _CategoryCard({required this.category, this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconSize = isCompact ? 32.0 : 48.0;
+    final containerSize = isCompact ? 40.0 : 48.0;
 
     return GestureDetector(
       onTap: () {
@@ -101,31 +142,38 @@ class _CategoryCard extends StatelessWidget {
           children: [
             // Icon Container
             Container(
-              width: 48,
-              height: 48,
+              width: containerSize,
+              height: containerSize,
               decoration: BoxDecoration(
-                color: category.color.withOpacity(0.1),
+                color: category.color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusS),
               ),
-              child: Icon(
-                category.icon,
-                color: category.color,
-                size: AppDimensions.iconL,
-              ),
+              child: Icon(category.icon, color: category.color, size: iconSize),
             ),
-            const SizedBox(height: AppDimensions.paddingS),
+            SizedBox(
+              height: isCompact
+                  ? AppDimensions.paddingXS
+                  : AppDimensions.paddingS,
+            ),
             // Category Name
-            Text(
-              category.name,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.labelMedium.copyWith(
-                color: isDark
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
-                fontWeight: FontWeight.w600,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Text(
+                category.name,
+                textAlign: TextAlign.center,
+                style:
+                    (isCompact
+                            ? AppTextStyles.labelSmall
+                            : AppTextStyles.labelMedium)
+                        .copyWith(
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimaryLight,
+                          fontWeight: FontWeight.w600,
+                        ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

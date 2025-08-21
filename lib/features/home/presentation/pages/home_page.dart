@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/app_strings.dart';
+import '../../../../shared/widgets/theme/theme_info_card.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/search_bar_widget.dart';
 import '../widgets/banner_slider.dart';
@@ -20,6 +23,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    return ResponsiveLayout(
+      mobile: _buildMobileLayout(context),
+      desktop: _buildDesktopLayout(context),
+    );
+  }
+
+  Widget _buildMobileLayout(BuildContext context) {
     return Scaffold(
       appBar: const HomeAppBar(),
       body: RefreshIndicator(
@@ -44,9 +54,12 @@ class _HomePageState extends State<HomePage> {
               // Categories Section
               _buildSectionHeader(
                 context,
-                'دسته‌بندی‌ها', // TODO: Use translation
+                context.tr('categories'),
                 onSeeAll: () => _navigateToCategories(),
               ),
+
+              // Theme Info Card
+              const ThemeInfoCard(),
 
               const CategoryGrid(),
 
@@ -55,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               // Special Offers Section
               _buildSectionHeader(
                 context,
-                'پیشنهادات ویژه', // TODO: Use translation
+                context.tr('specialOffers'),
                 onSeeAll: () => _navigateToSpecialOffers(),
               ),
 
@@ -66,12 +79,104 @@ class _HomePageState extends State<HomePage> {
               // Featured Products Section
               _buildSectionHeader(
                 context,
-                'محصولات ویژه', // TODO: Use translation
+                context.tr('featuredProducts'),
                 onSeeAll: () => _navigateToFeaturedProducts(),
               ),
 
               const FeaturedProducts(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopLayout(BuildContext context) {
+    return Scaffold(
+      appBar: const HomeAppBar(),
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ResponsiveContainer(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: AppDimensions.marginL),
+
+                // Search Bar with responsive width
+                Row(
+                  children: [
+                    Expanded(flex: 3, child: const SearchBarWidget()),
+                    const SizedBox(width: AppDimensions.marginM),
+                    Expanded(flex: 1, child: const ThemeInfoCard()),
+                  ],
+                ),
+
+                const SizedBox(height: AppDimensions.marginXL),
+
+                // Banner Slider
+                const BannerSlider(),
+
+                const SizedBox(height: AppDimensions.marginXL),
+
+                // Categories Section
+                _buildSectionHeader(
+                  context,
+                  context.tr('categories'),
+                  onSeeAll: () => _navigateToCategories(),
+                ),
+
+                const SizedBox(height: AppDimensions.marginL),
+                const CategoryGrid(),
+
+                const SizedBox(height: AppDimensions.marginXL),
+
+                // Content Row: Special Offers and Featured Products
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Special Offers Section
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionHeader(
+                            context,
+                            context.tr('specialOffers'),
+                            onSeeAll: () => _navigateToSpecialOffers(),
+                          ),
+                          const SizedBox(height: AppDimensions.marginL),
+                          const SpecialOffers(),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: AppDimensions.marginXL),
+
+                    // Featured Products Section
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildSectionHeader(
+                            context,
+                            context.tr('featuredProducts'),
+                            onSeeAll: () => _navigateToFeaturedProducts(),
+                          ),
+                          const SizedBox(height: AppDimensions.marginL),
+                          const FeaturedProducts(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: AppDimensions.marginXL * 2),
+              ],
+            ),
           ),
         ),
       ),
@@ -104,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'مشاهده همه', // TODO: Use translation
+                    context.tr('seeAll'),
                     style: AppTextStyles.labelLarge.copyWith(
                       color: AppColors.primary,
                     ),
@@ -124,22 +229,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _onRefresh() async {
+    debugPrint('Home: Refreshing content...');
     // TODO: Implement refresh logic
     await Future.delayed(const Duration(seconds: 1));
+    debugPrint('Home: Refresh completed');
   }
 
   void _navigateToCategories() {
+    debugPrint('Home: Navigate to Categories');
     // TODO: Navigate to categories page
-    debugPrint('Navigate to Categories');
   }
 
   void _navigateToSpecialOffers() {
+    debugPrint('Home: Navigate to Special Offers');
     // TODO: Navigate to special offers page
-    debugPrint('Navigate to Special Offers');
   }
 
   void _navigateToFeaturedProducts() {
+    debugPrint('Home: Navigate to Featured Products');
     // TODO: Navigate to featured products page
-    debugPrint('Navigate to Featured Products');
   }
 }
