@@ -5,6 +5,7 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/localization/localization_extension.dart';
+import '../../../../core/routing/app_router.dart';
 import '../../../../shared/widgets/theme/theme_info_card.dart';
 import '../widgets/home_app_bar.dart';
 import '../widgets/search_bar_widget.dart';
@@ -57,9 +58,7 @@ class _HomePageState extends State<HomePage> {
                 context.tr('categories'),
                 onSeeAll: () => _navigateToCategories(),
               ),
-
-              // Theme Info Card
-              const ThemeInfoCard(),
+              const SizedBox(height: AppDimensions.marginS),
 
               const CategoryGrid(),
 
@@ -71,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                 context.tr('specialOffers'),
                 onSeeAll: () => _navigateToSpecialOffers(),
               ),
+              const SizedBox(height: AppDimensions.marginS),
 
               const SpecialOffers(),
 
@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                 context.tr('featuredProducts'),
                 onSeeAll: () => _navigateToFeaturedProducts(),
               ),
+              const SizedBox(height: AppDimensions.marginS),
 
               const FeaturedProducts(),
             ],
@@ -236,17 +237,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _navigateToCategories() {
+    Navigator.pushNamed(context, AppRouter.categories);
     debugPrint('Home: Navigate to Categories');
-    // TODO: Navigate to categories page
   }
 
   void _navigateToSpecialOffers() {
+    Navigator.pushNamed(context, AppRouter.specialOffers);
     debugPrint('Home: Navigate to Special Offers');
-    // TODO: Navigate to special offers page
   }
 
   void _navigateToFeaturedProducts() {
+    Navigator.pushNamed(context, AppRouter.featuredProducts);
     debugPrint('Home: Navigate to Featured Products');
-    // TODO: Navigate to featured products page
   }
 }

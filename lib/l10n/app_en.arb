@@ -1,0 +1,187 @@
+{
+  "@@locale": "en",
+  "appTitle": "SinaShop",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home page title"
+  },
+  "products": "Products",
+  "@products": {
+    "description": "Products page title"
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "Categories page title"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Cart page title"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile page title"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search label"
+  },
+  "search_products": "Search products...",
+  "@search_products": {
+    "description": "Search products placeholder"
+  },
+  "sort_products": "Sort",
+  "@sort_products": {
+    "description": "Sort products button"
+  },
+  "filter": "Filter",
+  "@filter": {
+    "description": "Filter button"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Price label"
+  },
+  "rating": "Rating",
+  "@rating": {
+    "description": "Rating label"
+  },
+  "brand": "Brand",
+  "@brand": {
+    "description": "Brand label"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category label"
+  },
+  "add_to_cart": "Add to Cart",
+  "@add_to_cart": {
+    "description": "Add to cart button"
+  },
+  "buy_now": "Buy Now",
+  "@buy_now": {
+    "description": "Buy now button"
+  },
+  "featured_products": "Featured Products",
+  "@featured_products": {
+    "description": "Featured products section title"
+  },
+  "best_sellers": "Best Sellers",
+  "@best_sellers": {
+    "description": "Best sellers section title"
+  },
+  "new_arrivals": "New Arrivals",
+  "@new_arrivals": {
+    "description": "New arrivals section title"
+  },
+  "special_offers": "Special Offers",
+  "@special_offers": {
+    "description": "Special offers section title"
+  },
+  "view_all": "View All",
+  "@view_all": {
+    "description": "View all button"
+  },
+  "no_products_found": "No products found",
+  "@no_products_found": {
+    "description": "Message when no products are found"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading message"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error message"
+  },
+  "try_again": "Try Again",
+  "@try_again": {
+    "description": "Try again button"
+  },
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Welcome message"
+  },
+  "signin": "Sign In",
+  "@signin": {
+    "description": "Sign in button"
+  },
+  "signup": "Sign Up",
+  "@signup": {
+    "description": "Sign up button"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Username field label"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone field label"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "Address field label"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Total amount label"
+  },
+  "subtotal": "Subtotal",
+  "@subtotal": {
+    "description": "Subtotal amount label"
+  },
+  "shipping": "Shipping",
+  "@shipping": {
+    "description": "Shipping cost label"
+  },
+  "tax": "Tax",
+  "@tax": {
+    "description": "Tax amount label"
+  },
+  "discount": "Discount",
+  "@discount": {
+    "description": "Discount amount label"
+  },
+  "quantity": "Quantity",
+  "@quantity": {
+    "description": "Quantity label"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Remove button"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Update button"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Yes button"
+  },
+  "no": "No",
+  "@no": {
+    "description": "No button"
+  }
+}

@@ -18,21 +18,52 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="SinaShop - Online Shopping Platform">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="shop">
+  <meta name="apple-mobile-web-app-title" content="SinaShop">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>shop</title>
+  <title>SinaShop</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <!-- Loading indicator -->
+  <div id="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; font-family: Arial, sans-serif;">
+    <div style="width: 50px; height: 50px; border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #3498db; animation: spin 2s linear infinite;"></div>
+    <p style="margin-top: 20px; color: #666;">Loading SinaShop...</p>
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </div>
+  
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Hide loading indicator when Flutter app starts
+      setTimeout(function() {
+        var loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      }, 3000);
+      
+      // Download main.dart.js with HTML renderer config
+      _flutter.loader.load({
+        config: {
+          renderer: "html"
+        }
+      });
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

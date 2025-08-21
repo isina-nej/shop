@@ -5,6 +5,7 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/localization/localization_extension.dart';
+import '../../../../core/routing/app_router.dart';
 
 class CategoryGrid extends StatelessWidget {
   const CategoryGrid({super.key});
@@ -71,19 +72,23 @@ class CategoryGrid extends StatelessWidget {
   Widget _buildMobileGrid(BuildContext context, int crossAxisCount) {
     final categories = _getCategories(context);
 
-    return GridView.builder(
-      scrollDirection: Axis.horizontal,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.2,
-        crossAxisSpacing: AppDimensions.paddingS,
-        mainAxisSpacing: AppDimensions.paddingS,
+    return Container(
+      height: 200,
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1.0,
+          crossAxisSpacing: AppDimensions.paddingS,
+          mainAxisSpacing: AppDimensions.paddingS,
+        ),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          return _CategoryCard(category: category);
+        },
       ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        final category = categories[index];
-        return _CategoryCard(category: category);
-      },
     );
   }
 
@@ -122,7 +127,12 @@ class _CategoryCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // TODO: Navigate to category products
+        // Navigate to category products
+        Navigator.pushNamed(
+          context,
+          AppRouter.categoryProducts,
+          arguments: {'categoryId': category.id, 'categoryName': category.name},
+        );
         debugPrint('Category selected: ${category.name}');
       },
       child: Container(

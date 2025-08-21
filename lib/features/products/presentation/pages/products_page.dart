@@ -1,12 +1,12 @@
-// Products Page - Responsive Products List with Filters
+// Products Page - Responsive Products List with Filters (Updated for DataManager)
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/localization/localization_extension.dart';
-import '../../../../core/data/mock_data.dart';
-import '../../../../core/models/shop_models.dart';
+import '../../../../core/data/data_manager.dart';
+import '../../../../core/data/models/product_model.dart';
 import 'product_details_page.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -26,124 +26,80 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  List<Product> _products = [];
-  List<Product> _filteredProducts = [];
-  ProductFilter _currentFilter = const ProductFilter();
+  final DataManager _dataManager = DataManager.instance;
+  
+  List<ProductModel> _products = [];
+  List<ProductModel> _filteredProducts = [];
   String _searchQuery = '';
   bool _isGridView = true;
   bool _isLoading = false;
+  String? _errorMessage;
+  
+  // Filter options
+  String? _selectedCategoryId;
+  double? _minPrice;
+  double? _maxPrice;
+  double? _minRating;
+  bool _inStockOnly = false;
+  String _sortBy = 'name';
+  String _sortOrder = 'asc';
 
   @override
   void initState() {
     super.initState();
-    _loadProducts();
+    _selectedCategoryId = widget.categoryId;
     _searchQuery = widget.searchQuery ?? '';
-    if (_searchQuery.isNotEmpty) {
-      _filterProducts();
-    }
+    _loadProducts();
   }
 
-  void _loadProducts() {
+  Future<void> _loadProducts() async {
     setState(() {
       _isLoading = true;
+      _errorMessage = null;
     });
 
-    // Simulate API call delay
-    Future.delayed(const Duration(milliseconds: 500), () {
+    try {
+      final response = await _dataManager.getProducts(
+        categoryId: _selectedCategoryId,
+        query: _searchQuery.isEmpty ? null : _searchQuery,
+        minPrice: _minPrice,
+        maxPrice: _maxPrice,
+        minRating: _minRating,
+        inStockOnly: _inStockOnly ? true : null,
+        sortBy: _sortBy,
+        sortOrder: _sortOrder,
+        limit: 50,
+      );
+
+      if (response.success) {
+        setState(() {
+          _products = response.data;
+          _filteredProducts = _products;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _errorMessage = response.message;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
       setState(() {
-        if (widget.categoryId != null) {
-          _products = MockData.getProductsByCategory(widget.categoryId!);
-        } else {
-          _products = MockData.products;
-        }
-        _filteredProducts = _products;
+        _errorMessage = 'خطای غیرمنتظره: ${e.toString()}';
         _isLoading = false;
       });
-    });
-  }
-
-  void _filterProducts() {
-    setState(() {
-      _filteredProducts = _products.where((product) {
-        // Search filter
-        if (_searchQuery.isNotEmpty) {
-          final searchLower = _searchQuery.toLowerCase();
-          if (!product.name.toLowerCase().contains(searchLower) &&
-              !product.description.toLowerCase().contains(searchLower) &&
-              !product.brand.toLowerCase().contains(searchLower)) {
-            return false;
-          }
-        }
-
-        // Category filter
-        if (_currentFilter.categories.isNotEmpty &&
-            !_currentFilter.categories.contains(product.category)) {
-          return false;
-        }
-
-        // Brand filter
-        if (_currentFilter.brands.isNotEmpty &&
-            !_currentFilter.brands.contains(product.brand)) {
-          return false;
-        }
-
-        // Price filter
-        if (_currentFilter.minPrice != null &&
-            product.price < _currentFilter.minPrice!) {
-          return false;
-        }
-        if (_currentFilter.maxPrice != null &&
-            product.price > _currentFilter.maxPrice!) {
-          return false;
-        }
-
-        // Rating filter
-        if (_currentFilter.minRating != null &&
-            product.rating < _currentFilter.minRating!) {
-          return false;
-        }
-
-        // Stock filter
-        if (_currentFilter.inStockOnly == true && !product.isInStock) {
-          return false;
-        }
-
-        // Sale filter
-        if (_currentFilter.onSaleOnly == true && !product.isOnSale) {
-          return false;
-        }
-
-        return true;
-      }).toList();
-
-      // Apply sorting
-      _sortProducts();
-    });
-  }
-
-  void _sortProducts() {
-    switch (_currentFilter.sortBy) {
-      case ProductSortOption.newest:
-        // No sorting needed as mock data is already in newest order
-        break;
-      case ProductSortOption.oldest:
-        _filteredProducts = _filteredProducts.reversed.toList();
-        break;
-      case ProductSortOption.priceLowToHigh:
-        _filteredProducts.sort((a, b) => a.price.compareTo(b.price));
-        break;
-      case ProductSortOption.priceHighToLow:
-        _filteredProducts.sort((a, b) => b.price.compareTo(a.price));
-        break;
-      case ProductSortOption.rating:
-        _filteredProducts.sort((a, b) => b.rating.compareTo(a.rating));
-        break;
-      case ProductSortOption.popular:
-        _filteredProducts.sort(
-          (a, b) => b.reviewsCount.compareTo(a.reviewsCount),
-        );
-        break;
     }
+  }
+
+  void _applyFilters() {
+    _loadProducts(); // Reload with new filters
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query;
+    });
+    _loadProducts();
   }
 
   @override
@@ -181,7 +137,7 @@ class _ProductsPageState extends State<ProductsPage> {
         ),
         IconButton(
           icon: const Icon(Icons.tune),
-          onPressed: () => _showFilterBottomSheet(context),
+          onPressed: () => _showFilterOptions(context),
         ),
       ],
     );
@@ -192,6 +148,10 @@ class _ProductsPageState extends State<ProductsPage> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    if (_errorMessage != null) {
+      return _buildErrorState(context);
+    }
+
     return Column(
       children: [
         // Search Bar
@@ -199,16 +159,6 @@ class _ProductsPageState extends State<ProductsPage> {
           margin: const EdgeInsets.all(AppDimensions.paddingM),
           child: _buildSearchBar(context),
         ),
-
-        // Filter Chips
-        if (_hasActiveFilters())
-          Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingM,
-            ),
-            child: _buildFilterChips(context),
-          ),
 
         // Products Count
         Padding(
@@ -225,7 +175,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 ),
               ),
               TextButton.icon(
-                onPressed: () => _showSortBottomSheet(context),
+                onPressed: () => _showSortOptions(context),
                 icon: const Icon(Icons.sort, size: 16),
                 label: Text(context.tr('sort_products')),
               ),
@@ -246,6 +196,10 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget _buildDesktopLayout(BuildContext context) {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_errorMessage != null) {
+      return _buildErrorState(context);
     }
 
     return Row(
@@ -292,19 +246,68 @@ class _ProductsPageState extends State<ProductsPage> {
                 ),
               ),
 
-              // Products Grid/List
+              // Products List/Grid
               Expanded(
                 child: _filteredProducts.isEmpty
                     ? _buildEmptyState(context)
-                    : Container(
-                        padding: const EdgeInsets.all(AppDimensions.paddingL),
-                        child: _buildProductsGrid(context, crossAxisCount: 4),
-                      ),
+                    : _buildProductsList(context),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildErrorState(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            _errorMessage!,
+            style: Theme.of(context).textTheme.titleMedium,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _loadProducts,
+            child: const Text('تلاش مجدد'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.search_off,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'محصولی یافت نشد',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'فیلترها را تغییر دهید یا جستجوی جدید انجام دهید',
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
@@ -324,11 +327,17 @@ class _ProductsPageState extends State<ProductsPage> {
         ],
       ),
       child: TextField(
+        controller: TextEditingController(text: _searchQuery),
         onChanged: (value) {
           setState(() {
             _searchQuery = value;
           });
-          _filterProducts();
+          // Debounce search to avoid too many API calls
+          Future.delayed(const Duration(milliseconds: 500), () {
+            if (_searchQuery == value) {
+              _onSearchChanged(value);
+            }
+          });
         },
         decoration: InputDecoration(
           hintText: context.tr('search_products'),
@@ -340,7 +349,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     setState(() {
                       _searchQuery = '';
                     });
-                    _filterProducts();
+                    _onSearchChanged('');
                   },
                 )
               : null,
@@ -394,7 +403,7 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  Widget _buildProductCard(BuildContext context, Product product) {
+  Widget _buildProductCard(BuildContext context, ProductModel product) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
@@ -421,13 +430,13 @@ class _ProductsPageState extends State<ProductsPage> {
                         top: Radius.circular(AppDimensions.radiusL),
                       ),
                       image: DecorationImage(
-                        image: NetworkImage(product.images.first),
+                        image: NetworkImage(product.mainImage),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   // Discount Badge
-                  if (product.discountPercentage != null)
+                  if (product.isOnSale)
                     Positioned(
                       top: 8,
                       right: 8,
@@ -443,7 +452,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                         ),
                         child: Text(
-                          '${product.discountPercentage!.round()}%',
+                          '${product.discountPercentage.round()}%',
                           style: AppTextStyles.bodySmall.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -507,12 +516,12 @@ class _ProductsPageState extends State<ProductsPage> {
                         Icon(Icons.star, size: 16, color: Colors.amber[600]),
                         const SizedBox(width: 2),
                         Text(
-                          product.rating.toString(),
+                          product.rating.average.toString(),
                           style: AppTextStyles.bodySmall,
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '(${product.reviewsCount})',
+                          '(${product.rating.totalReviews})',
                           style: AppTextStyles.bodySmall.copyWith(
                             color: Theme.of(context).textTheme.bodySmall?.color,
                           ),
@@ -534,9 +543,9 @@ class _ProductsPageState extends State<ProductsPage> {
                             ),
                           ),
                         ),
-                        if (product.formattedOriginalPrice != null) ...[
+                        if (product.isOnSale) ...[
                           Text(
-                            product.formattedOriginalPrice!,
+                            product.formattedOriginalPrice,
                             style: AppTextStyles.bodySmall.copyWith(
                               decoration: TextDecoration.lineThrough,
                               color: Theme.of(
@@ -557,7 +566,7 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  Widget _buildProductListItem(BuildContext context, Product product) {
+  Widget _buildProductListItem(BuildContext context, ProductModel product) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
@@ -581,7 +590,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppDimensions.radiusS),
                   image: DecorationImage(
-                    image: NetworkImage(product.images.first),
+                    image: NetworkImage(product.mainImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -617,9 +626,9 @@ class _ProductsPageState extends State<ProductsPage> {
                     Row(
                       children: [
                         Icon(Icons.star, size: 16, color: Colors.amber[600]),
-                        const SizedBox(width: 2),
+                        const SizedBox(width: 4),
                         Text(
-                          '${product.rating} (${product.reviewsCount})',
+                          '${product.rating.average} (${product.rating.totalReviews})',
                           style: AppTextStyles.bodySmall,
                         ),
                         const Spacer(),
@@ -648,116 +657,74 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search_off,
-            size: 64,
-            color: Theme.of(context).textTheme.bodySmall?.color,
+  Widget _buildViewToggle(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(
+            Icons.grid_view,
+            color: _isGridView ? AppColors.primary : Colors.grey,
           ),
-          const SizedBox(height: AppDimensions.paddingL),
-          Text(
-            context.tr('no_items_found'),
-            style: AppTextStyles.headlineSmall.copyWith(
-              color: Theme.of(context).textTheme.bodySmall?.color,
-            ),
-          ),
-          const SizedBox(height: AppDimensions.paddingM),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _searchQuery = '';
-                _currentFilter = const ProductFilter();
-              });
-              _filterProducts();
-            },
-            child: Text(context.tr('clear_filter')),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFilterChips(BuildContext context) {
-    final chips = <Widget>[];
-
-    if (_searchQuery.isNotEmpty) {
-      chips.add(
-        FilterChip(
-          label: Text(_searchQuery),
-          selected: true,
-          onSelected: (selected) {
-            if (!selected) {
-              setState(() {
-                _searchQuery = '';
-              });
-              _filterProducts();
-            }
-          },
-          onDeleted: () {
+          onPressed: () {
             setState(() {
-              _searchQuery = '';
+              _isGridView = true;
             });
-            _filterProducts();
           },
         ),
-      );
-    }
-
-    return ListView(scrollDirection: Axis.horizontal, children: chips);
-  }
-
-  Widget _buildViewToggle(BuildContext context) {
-    return ToggleButtons(
-      isSelected: [_isGridView, !_isGridView],
-      onPressed: (index) {
-        setState(() {
-          _isGridView = index == 0;
-        });
-      },
-      children: const [Icon(Icons.grid_view), Icon(Icons.list)],
+        IconButton(
+          icon: Icon(
+            Icons.list,
+            color: !_isGridView ? AppColors.primary : Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              _isGridView = false;
+            });
+          },
+        ),
+      ],
     );
   }
 
   Widget _buildSortDropdown(BuildContext context) {
-    return DropdownButton<ProductSortOption>(
-      value: _currentFilter.sortBy,
+    return DropdownButton<String>(
+      value: '$_sortBy-$_sortOrder',
+      items: const [
+        DropdownMenuItem(
+          value: 'name-asc',
+          child: Text('نام (الف-ی)'),
+        ),
+        DropdownMenuItem(
+          value: 'name-desc',
+          child: Text('نام (ی-الف)'),
+        ),
+        DropdownMenuItem(
+          value: 'price-asc',
+          child: Text('قیمت (کم به زیاد)'),
+        ),
+        DropdownMenuItem(
+          value: 'price-desc',
+          child: Text('قیمت (زیاد به کم)'),
+        ),
+        DropdownMenuItem(
+          value: 'rating-desc',
+          child: Text('امتیاز (بالا به پایین)'),
+        ),
+        DropdownMenuItem(
+          value: 'popularity-desc',
+          child: Text('پرفروش‌ترین'),
+        ),
+      ],
       onChanged: (value) {
         if (value != null) {
+          final parts = value.split('-');
           setState(() {
-            _currentFilter = _currentFilter.copyWith(sortBy: value);
+            _sortBy = parts[0];
+            _sortOrder = parts[1];
           });
-          _filterProducts();
+          _applyFilters();
         }
       },
-      items: ProductSortOption.values.map((option) {
-        String label;
-        switch (option) {
-          case ProductSortOption.newest:
-            label = context.tr('newest_first');
-            break;
-          case ProductSortOption.oldest:
-            label = context.tr('oldest_first');
-            break;
-          case ProductSortOption.priceLowToHigh:
-            label = context.tr('price_low_to_high');
-            break;
-          case ProductSortOption.priceHighToLow:
-            label = context.tr('price_high_to_low');
-            break;
-          case ProductSortOption.rating:
-            label = context.tr('rating');
-            break;
-          case ProductSortOption.popular:
-            label = context.tr('popularity');
-            break;
-        }
-
-        return DropdownMenuItem(value: option, child: Text(label));
-      }).toList(),
     );
   }
 
@@ -766,165 +733,209 @@ class _ProductsPageState extends State<ProductsPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.tr('filter_products'),
+          'فیلترها',
           style: AppTextStyles.headlineSmall.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: AppDimensions.paddingL),
-
-        // Add filter widgets here
-        // This is a placeholder for the actual filter implementation
-        ElevatedButton(
-          onPressed: () {
+        const SizedBox(height: 16),
+        
+        // Price Range
+        Text(
+          'محدوده قیمت',
+          style: AppTextStyles.bodyLarge.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'حداقل',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  _minPrice = double.tryParse(value);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'حداکثر',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  _maxPrice = double.tryParse(value);
+                },
+              ),
+            ),
+          ],
+        ),
+        
+        const SizedBox(height: 16),
+        
+        // Stock filter
+        CheckboxListTile(
+          title: const Text('فقط کالاهای موجود'),
+          value: _inStockOnly,
+          onChanged: (value) {
             setState(() {
-              _currentFilter = const ProductFilter();
-              _searchQuery = '';
+              _inStockOnly = value ?? false;
             });
-            _filterProducts();
           },
-          child: Text(context.tr('clear_filter')),
+        ),
+        
+        const SizedBox(height: 16),
+        
+        // Apply Filters Button
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: _applyFilters,
+            child: const Text('اعمال فیلتر'),
+          ),
+        ),
+        
+        const SizedBox(height: 8),
+        
+        // Clear Filters Button
+        SizedBox(
+          width: double.infinity,
+          child: TextButton(
+            onPressed: () {
+              setState(() {
+                _selectedCategoryId = null;
+                _minPrice = null;
+                _maxPrice = null;
+                _minRating = null;
+                _inStockOnly = false;
+                _sortBy = 'name';
+                _sortOrder = 'asc';
+              });
+              _applyFilters();
+            },
+            child: const Text('پاک کردن فیلترها'),
+          ),
         ),
       ],
     );
   }
 
-  bool _hasActiveFilters() {
-    return _searchQuery.isNotEmpty ||
-        _currentFilter.categories.isNotEmpty ||
-        _currentFilter.brands.isNotEmpty ||
-        _currentFilter.minPrice != null ||
-        _currentFilter.maxPrice != null ||
-        _currentFilter.minRating != null ||
-        _currentFilter.inStockOnly == true ||
-        _currentFilter.onSaleOnly == true;
+  void _showSortOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'مرتب‌سازی براساس',
+                style: AppTextStyles.headlineSmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                title: const Text('نام (الف-ی)'),
+                trailing: _sortBy == 'name' && _sortOrder == 'asc'
+                    ? Icon(Icons.check, color: AppColors.primary)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _sortBy = 'name';
+                    _sortOrder = 'asc';
+                  });
+                  _applyFilters();
+                },
+              ),
+              ListTile(
+                title: const Text('قیمت (کم به زیاد)'),
+                trailing: _sortBy == 'price' && _sortOrder == 'asc'
+                    ? Icon(Icons.check, color: AppColors.primary)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _sortBy = 'price';
+                    _sortOrder = 'asc';
+                  });
+                  _applyFilters();
+                },
+              ),
+              ListTile(
+                title: const Text('قیمت (زیاد به کم)'),
+                trailing: _sortBy == 'price' && _sortOrder == 'desc'
+                    ? Icon(Icons.check, color: AppColors.primary)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _sortBy = 'price';
+                    _sortOrder = 'desc';
+                  });
+                  _applyFilters();
+                },
+              ),
+              ListTile(
+                title: const Text('امتیاز (بالا به پایین)'),
+                trailing: _sortBy == 'rating' && _sortOrder == 'desc'
+                    ? Icon(Icons.check, color: AppColors.primary)
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _sortBy = 'rating';
+                    _sortOrder = 'desc';
+                  });
+                  _applyFilters();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  void _showFilterBottomSheet(BuildContext context) {
+  void _showFilterOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
       builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(AppDimensions.paddingL),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.tr('filter_products'),
-                style: AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+        return DraggableScrollableSheet(
+          initialChildSize: 0.6,
+          maxChildSize: 0.9,
+          builder: (context, scrollController) {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: _buildFilterSidebar(context),
               ),
-              const SizedBox(height: AppDimensions.paddingL),
-              // Add filter options here
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        setState(() {
-                          _currentFilter = const ProductFilter();
-                        });
-                        _filterProducts();
-                      },
-                      child: Text(context.tr('clear_filter')),
-                    ),
-                  ),
-                  const SizedBox(width: AppDimensions.paddingM),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        _filterProducts();
-                      },
-                      child: Text(context.tr('apply_filter')),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
   }
 
-  void _showSortBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(AppDimensions.paddingL),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.tr('sort_products'),
-                style: AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: AppDimensions.paddingL),
-              ...ProductSortOption.values.map((option) {
-                String label;
-                switch (option) {
-                  case ProductSortOption.newest:
-                    label = context.tr('newest_first');
-                    break;
-                  case ProductSortOption.oldest:
-                    label = context.tr('oldest_first');
-                    break;
-                  case ProductSortOption.priceLowToHigh:
-                    label = context.tr('price_low_to_high');
-                    break;
-                  case ProductSortOption.priceHighToLow:
-                    label = context.tr('price_high_to_low');
-                    break;
-                  case ProductSortOption.rating:
-                    label = context.tr('rating');
-                    break;
-                  case ProductSortOption.popular:
-                    label = context.tr('popularity');
-                    break;
-                }
-
-                return ListTile(
-                  title: Text(label),
-                  trailing: _currentFilter.sortBy == option
-                      ? Icon(Icons.check, color: AppColors.primary)
-                      : null,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      _currentFilter = _currentFilter.copyWith(sortBy: option);
-                    });
-                    _filterProducts();
-                  },
-                );
-              }).toList(),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _toggleFavorite(Product product) {
-    // TODO: Implement favorite functionality
+  void _toggleFavorite(ProductModel product) {
+    // TODO: Implement favorite functionality with DataManager
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.tr('item_added_to_wishlist'))),
+      const SnackBar(content: Text('محصول به علاقه‌مندی‌ها اضافه شد')),
     );
   }
 
-  void _navigateToProductDetails(BuildContext context, Product product) {
+  void _navigateToProductDetails(BuildContext context, ProductModel product) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ProductDetailsPage(productId: product.id),

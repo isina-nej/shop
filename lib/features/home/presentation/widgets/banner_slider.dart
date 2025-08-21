@@ -143,6 +143,7 @@ class _BannerSliderState extends State<BannerSlider> {
                             ElevatedButton(
                               onPressed: () {
                                 // TODO: Handle banner action
+                                debugPrint('Banner clicked: ${banner.title}');
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.white,
@@ -151,6 +152,10 @@ class _BannerSliderState extends State<BannerSlider> {
                                   borderRadius: BorderRadius.circular(
                                     AppDimensions.radiusS,
                                   ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppDimensions.paddingM,
+                                  vertical: AppDimensions.paddingS,
                                 ),
                               ),
                               child: const Text('مشاهده'),
@@ -164,25 +169,33 @@ class _BannerSliderState extends State<BannerSlider> {
               );
             },
           ),
+
           // Page Indicators
           Positioned(
-            bottom: AppDimensions.paddingM,
-            left: AppDimensions.paddingM,
+            bottom: 16,
+            right: 16,
             child: Row(
-              children: List.generate(
-                _banners.length,
-                (index) => Container(
-                  width: 8,
-                  height: 8,
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: index == _currentPage
-                        ? AppColors.white
-                        : AppColors.white.withOpacity(0.5),
+              mainAxisSize: MainAxisSize.min,
+              children: _banners.asMap().entries.map((entry) {
+                return GestureDetector(
+                  onTap: () => _pageController.animateToPage(
+                    entry.key,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
                   ),
-                ),
-              ),
+                  child: Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentPage == entry.key
+                          ? AppColors.white
+                          : AppColors.white.withOpacity(0.4),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ],

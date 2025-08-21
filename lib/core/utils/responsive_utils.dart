@@ -210,11 +210,13 @@ class ResponsiveContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: ResponsiveUtils.getResponsiveConstraints(context),
-      padding: padding ?? ResponsiveUtils.getResponsivePadding(context),
-      margin: margin ?? ResponsiveUtils.getResponsiveMargin(context),
-      child: child,
+    return Center(
+      child: Container(
+        constraints: ResponsiveUtils.getResponsiveConstraints(context),
+        padding: padding ?? ResponsiveUtils.getResponsivePadding(context),
+        margin: margin ?? ResponsiveUtils.getResponsiveMargin(context),
+        child: child,
+      ),
     );
   }
 }

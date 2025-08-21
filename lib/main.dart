@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_manager.dart';
+import 'core/routing/app_router.dart';
 import 'shared/widgets/layouts/main_layout.dart';
 
 void main() async {
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
               themeMode: themeManager.themeMode,
               locale: languageManager.locale,
               supportedLocales: LanguageManager.supportedLocales,
+              onGenerateRoute: AppRouter.generateRoute,
               builder: (context, child) {
                 return Directionality(
                   textDirection: languageManager.textDirection,

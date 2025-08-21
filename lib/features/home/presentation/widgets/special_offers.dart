@@ -46,63 +46,35 @@ class SpecialOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Section Header
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingM,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'پیشنهادات ویژه',
-                style: AppTextStyles.headlineMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Offers List
+          SizedBox(
+            height: 160,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppDimensions.paddingM,
               ),
-              GestureDetector(
-                onTap: () {
-                  // TODO: Navigate to all offers
-                  debugPrint('View all offers');
-                },
-                child: Text(
-                  'مشاهده همه',
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w600,
+              itemCount: _offers.length,
+              itemBuilder: (context, index) {
+                final offer = _offers[index];
+                return Container(
+                  width: 320,
+                  margin: EdgeInsets.only(
+                    left: index < _offers.length - 1
+                        ? AppDimensions.paddingM
+                        : 0,
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppDimensions.paddingM),
-
-        // Offers List
-        SizedBox(
-          height: 160,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingM,
+                  child: _OfferCard(offer: offer),
+                );
+              },
             ),
-            itemCount: _offers.length,
-            itemBuilder: (context, index) {
-              final offer = _offers[index];
-              return Container(
-                width: 320,
-                margin: EdgeInsets.only(
-                  left: index < _offers.length - 1 ? AppDimensions.paddingM : 0,
-                ),
-                child: _OfferCard(offer: offer),
-              );
-            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

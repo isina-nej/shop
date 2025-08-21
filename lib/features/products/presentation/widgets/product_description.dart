@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
-import '../pages/product_details_page.dart';
+import '../../../../core/data/models/product_model.dart';
 
 class ProductDescription extends StatelessWidget {
-  final ProductDetailModel product;
+  final ProductModel product;
 
   const ProductDescription({super.key, required this.product});
 
