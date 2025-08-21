@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class PaymentMethodsPage extends StatefulWidget {
   const PaymentMethodsPage({super.key});
@@ -102,7 +103,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('روش‌های پرداخت'),
+        title: Text(context.tr('payment_methods')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         actions: [
@@ -122,7 +123,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addPaymentMethod,
         icon: const Icon(Icons.add),
-        label: const Text('افزودن روش پرداخت'),
+        label: Text(context.tr('add_payment_method')),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
       ),
@@ -136,7 +137,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         children: [
           CircularProgressIndicator(),
           SizedBox(height: AppDimensions.paddingL),
-          Text('در حال بارگذاری...'),
+          Text(context.tr('loading')),
         ],
       ),
     );
@@ -180,7 +181,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               child: ElevatedButton.icon(
                 onPressed: _addPaymentMethod,
                 icon: const Icon(Icons.add),
-                label: const Text('افزودن روش پرداخت'),
+                label: Text(context.tr('add_payment_method')),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,
@@ -505,7 +506,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                             value: 'set_default',
                             child: ListTile(
                               leading: Icon(Icons.star_border),
-                              title: Text('تنظیم به عنوان پیش‌فرض'),
+                              title: Text(context.tr('set_as_default')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
@@ -513,7 +514,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                           value: 'edit',
                           child: ListTile(
                             leading: Icon(Icons.edit),
-                            title: Text('ویرایش'),
+                            title: Text(context.tr('edit')),
                             contentPadding: EdgeInsets.zero,
                           ),
                         ),
@@ -611,7 +612,9 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('روش پرداخت ${method.title} اضافه شد'),
+              content: Text(
+                '${context.tr('payment_method_added')} ${method.title}',
+              ),
               backgroundColor: AppColors.success,
             ),
           );
@@ -632,7 +635,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           });
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('کارت ${card.title} اضافه شد'),
+              content: Text('${context.tr('card_added')} ${card.title}'),
               backgroundColor: AppColors.success,
             ),
           );
@@ -648,7 +651,9 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         onCharged: (amount) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('کیف پول با مبلغ $amount تومان شارژ شد'),
+              content: Text(
+                '${context.tr('wallet_charged_with')} $amount ${context.tr('toman')}',
+              ),
               backgroundColor: AppColors.success,
             ),
           );
@@ -660,7 +665,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
   void _viewTransactions() {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('تاریخچه تراکنش‌ها')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('transaction_history'))));
   }
 
   void _showPaymentMethodDetails(PaymentMethod method) {
@@ -699,23 +704,23 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
   }
 
   void _editPaymentMethod(PaymentMethod method) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('ویرایش ${method.title}')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${context.tr('edit')} ${method.title}')),
+    );
   }
 
   void _deletePaymentMethod(PaymentMethod method) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('حذف روش پرداخت'),
+        title: Text(context.tr('delete_payment_method')),
         content: Text(
           'آیا مطمئن هستید که می‌خواهید "${method.title}" را حذف کنید؟',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -731,7 +736,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            child: Text(context.tr('delete')),
           ),
         ],
       ),
@@ -786,8 +791,8 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 ),
                 child: Icon(Icons.credit_card, color: AppColors.primary),
               ),
-              title: const Text('کارت بانکی'),
-              subtitle: const Text('افزودن کارت عابر بانک یا کارت اعتباری'),
+              title: Text(context.tr('bank_card')),
+              subtitle: Text(context.tr('add_bank_card_description')),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 Navigator.pop(context);
@@ -808,8 +813,8 @@ class AddPaymentMethodSheet extends StatelessWidget {
                   color: AppColors.success,
                 ),
               ),
-              title: const Text('کیف پول'),
-              subtitle: const Text('ایجاد کیف پول برای پرداخت سریع'),
+              title: Text(context.tr('wallet')),
+              subtitle: Text(context.tr('create_wallet_description')),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 Navigator.pop(context);
@@ -835,8 +840,8 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 ),
                 child: Icon(Icons.payment, color: AppColors.warning),
               ),
-              title: const Text('خرید اقساطی'),
-              subtitle: const Text('پرداخت در چندین قسط'),
+              title: Text(context.tr('installment_purchase')),
+              subtitle: Text(context.tr('installment_description')),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 Navigator.pop(context);
@@ -989,7 +994,7 @@ class _AddCardSheetState extends State<AddCardSheet> {
                   onPressed: _isLoading ? null : _addCard,
                   child: _isLoading
                       ? const CircularProgressIndicator()
-                      : const Text('افزودن کارت'),
+                      : Text(context.tr('add_card')),
                 ),
               ),
             ],
@@ -1040,7 +1045,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('شارژ کیف پول'),
+      title: Text(context.tr('charge_wallet')),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1053,7 +1058,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
             ),
           ),
           const SizedBox(height: AppDimensions.paddingM),
-          const Text('مبالغ پیشنهادی:'),
+          Text(context.tr('suggested_amounts')),
           const SizedBox(height: AppDimensions.paddingS),
           Wrap(
             spacing: 8,
@@ -1090,7 +1095,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
           onPressed: _isLoading ? null : _chargeWallet,
           child: _isLoading
               ? const CircularProgressIndicator()
-              : const Text('شارژ'),
+              : Text(context.tr('charge')),
         ),
       ],
     );
@@ -1139,7 +1144,7 @@ class PaymentMethodDetailsDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('بستن'),
+          child: Text(context.tr('close')),
         ),
       ],
     );

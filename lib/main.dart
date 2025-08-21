@@ -5,9 +5,13 @@ import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_manager.dart';
 import 'core/routing/app_router.dart';
 import 'shared/widgets/layouts/main_layout.dart';
+import 'core/localization/translation_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize translation manager
+  await TranslationManager.instance.initialize();
 
   // Initialize theme manager
   final themeManager = AdvancedThemeManager();
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             child: MaterialApp(
-              title: 'SinaShop',
+              title: TranslationManager.instance.translate('app_name'),
               theme: themeManager.getLightTheme(),
               darkTheme: themeManager.getDarkTheme(),
               themeMode: themeManager.themeMode,

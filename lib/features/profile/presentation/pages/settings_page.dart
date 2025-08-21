@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -69,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('تنظیمات'),
+        title: Text(context.tr('settings')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         actions: [
@@ -202,10 +203,19 @@ class _SettingsPageState extends State<SettingsPage>
           subtitle: 'انتخاب تم اپلیکیشن',
           icon: Icons.color_lens,
           value: _selectedTheme,
-          items: const [
-            DropdownMenuItem(value: 'system', child: Text('سیستم')),
-            DropdownMenuItem(value: 'light', child: Text('روشن')),
-            DropdownMenuItem(value: 'dark', child: Text('تاریک')),
+          items: [
+            DropdownMenuItem(
+              value: 'system',
+              child: Text(context.tr('system')),
+            ),
+            DropdownMenuItem(
+              value: 'light',
+              child: Text(context.tr('light_mode')),
+            ),
+            DropdownMenuItem(
+              value: 'dark',
+              child: Text(context.tr('dark_mode')),
+            ),
           ],
           onChanged: (value) {
             setState(() => _selectedTheme = value!);
@@ -333,10 +343,10 @@ class _SettingsPageState extends State<SettingsPage>
           subtitle: 'انتخاب زبان رابط کاربری',
           icon: Icons.translate,
           value: _selectedLanguage,
-          items: const [
-            DropdownMenuItem(value: 'fa', child: Text('فارسی')),
-            DropdownMenuItem(value: 'en', child: Text('انگلیسی')),
-            DropdownMenuItem(value: 'ar', child: Text('عربی')),
+          items: [
+            DropdownMenuItem(value: 'fa', child: Text(context.tr('persian'))),
+            DropdownMenuItem(value: 'en', child: Text(context.tr('english'))),
+            DropdownMenuItem(value: 'ar', child: Text(context.tr('arabic'))),
           ],
           onChanged: (value) {
             setState(() => _selectedLanguage = value!);
@@ -349,10 +359,16 @@ class _SettingsPageState extends State<SettingsPage>
           subtitle: 'انتخاب واحد نمایش قیمت‌ها',
           icon: Icons.monetization_on,
           value: _selectedCurrency,
-          items: const [
-            DropdownMenuItem(value: 'IRR', child: Text('ریال ایران')),
-            DropdownMenuItem(value: 'USD', child: Text('دلار آمریکا')),
-            DropdownMenuItem(value: 'EUR', child: Text('یورو')),
+          items: [
+            DropdownMenuItem(
+              value: 'IRR',
+              child: Text(context.tr('iranian_rial')),
+            ),
+            DropdownMenuItem(
+              value: 'USD',
+              child: Text(context.tr('us_dollar')),
+            ),
+            DropdownMenuItem(value: 'EUR', child: Text(context.tr('euro'))),
           ],
           onChanged: (value) {
             setState(() => _selectedCurrency = value!);
@@ -364,9 +380,15 @@ class _SettingsPageState extends State<SettingsPage>
           subtitle: 'نحوه نمایش تاریخ و زمان',
           icon: Icons.calendar_today,
           value: _selectedDateFormat,
-          items: const [
-            DropdownMenuItem(value: 'persian', child: Text('شمسی')),
-            DropdownMenuItem(value: 'gregorian', child: Text('میلادی')),
+          items: [
+            DropdownMenuItem(
+              value: 'persian',
+              child: Text(context.tr('shamsi')),
+            ),
+            DropdownMenuItem(
+              value: 'gregorian',
+              child: Text(context.tr('gregorian')),
+            ),
           ],
           onChanged: (value) {
             setState(() => _selectedDateFormat = value!);
@@ -408,7 +430,7 @@ class _SettingsPageState extends State<SettingsPage>
           icon: Icons.folder,
           trailing: TextButton(
             onPressed: _clearCache,
-            child: const Text('پاک کردن'),
+            child: Text(context.tr('clear')),
           ),
         ),
 
@@ -655,14 +677,14 @@ class _SettingsPageState extends State<SettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('بازنشانی تنظیمات'),
+        title: Text(context.tr('reset_settings')),
         content: const Text(
           'آیا مطمئن هستید که می‌خواهید تمام تنظیمات را به حالت پیش‌فرض بازگردانید؟',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           ElevatedButton(
             onPressed: () {
@@ -673,7 +695,7 @@ class _SettingsPageState extends State<SettingsPage>
               backgroundColor: AppColors.error,
               foregroundColor: AppColors.white,
             ),
-            child: const Text('بازنشانی'),
+            child: Text(context.tr('reset')),
           ),
         ],
       ),
@@ -700,20 +722,20 @@ class _SettingsPageState extends State<SettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('اندازه فونت'),
+        title: Text(context.tr('font_size')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('کوچک'),
+              title: Text(context.tr('small')),
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
-              title: const Text('متوسط'),
+              title: Text(context.tr('medium')),
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
-              title: const Text('بزرگ'),
+              title: Text(context.tr('large')),
               onTap: () => Navigator.pop(context),
             ),
           ],
@@ -725,7 +747,7 @@ class _SettingsPageState extends State<SettingsPage>
   void _showLanguageChangeDialog() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('زبان تغییر کرد. اپلیکیشن مجدداً راه‌اندازی می‌شود.'),
+        content: Text(context.tr('language_changed_restart')),
         duration: Duration(seconds: 3),
       ),
     );
@@ -734,7 +756,7 @@ class _SettingsPageState extends State<SettingsPage>
   void _enableBiometricAuth() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('احراز هویت زیستی فعال شد'),
+        content: Text(context.tr('biometric_enabled')),
         backgroundColor: AppColors.success,
       ),
     );
@@ -742,7 +764,9 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _showNotificationManagement() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('مدیریت اطلاعیه‌ها به زودی اضافه می‌شود')),
+      SnackBar(
+        content: Text(context.tr('notification_management_coming_soon')),
+      ),
     );
   }
 
@@ -750,7 +774,7 @@ class _SettingsPageState extends State<SettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('پاک کردن کش'),
+        title: Text(context.tr('clear_cache')),
         content: Text(
           '${_cacheSize.toStringAsFixed(1)} مگابایت کش پاک می‌شود.',
         ),
@@ -765,12 +789,12 @@ class _SettingsPageState extends State<SettingsPage>
               setState(() => _cacheSize = 0.0);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('کش پاک شد'),
+                  content: Text(context.tr('cache_cleared')),
                   backgroundColor: AppColors.success,
                 ),
               );
             },
-            child: const Text('پاک کردن'),
+            child: Text(context.tr('clear')),
           ),
         ],
       ),
@@ -779,7 +803,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _showDownloadManager() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('مدیریت دانلودها به زودی اضافه می‌شود')),
+      SnackBar(content: Text(context.tr('download_management_coming_soon'))),
     );
   }
 
@@ -787,8 +811,8 @@ class _SettingsPageState extends State<SettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('پشتیبان‌گیری'),
-        content: const Text('تنظیمات شما در Google Drive ذخیره می‌شود.'),
+        title: Text(context.tr('backup')),
+        content: Text(context.tr('backup_google_drive_description')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -799,12 +823,12 @@ class _SettingsPageState extends State<SettingsPage>
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('پشتیبان‌گیری کامل شد'),
+                  content: Text(context.tr('backup_completed')),
                   backgroundColor: AppColors.success,
                 ),
               );
             },
-            child: const Text('ذخیره'),
+            child: Text(context.tr('save')),
           ),
         ],
       ),
@@ -813,26 +837,26 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _showCrashReportSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تنظیمات گزارش خرابی به زودی اضافه می‌شود')),
+      SnackBar(content: Text(context.tr('crash_report_coming_soon'))),
     );
   }
 
   void _showDeveloperMode() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('حالت توسعه‌دهنده به زودی اضافه می‌شود')),
+      SnackBar(content: Text(context.tr('developer_mode_coming_soon'))),
     );
   }
 
   void _showNetworkSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تنظیمات شبکه به زودی اضافه می‌شود')),
+      SnackBar(content: Text(context.tr('network_settings_coming_soon'))),
     );
   }
 
   void _exportSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('تنظیمات صادر شد'),
+        content: Text(context.tr('settings_exported')),
         backgroundColor: AppColors.success,
       ),
     );
@@ -840,7 +864,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _showUserGuide() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('راهنمای کاربری به زودی اضافه می‌شود')),
+      SnackBar(content: Text(context.tr('user_guide_coming_soon'))),
     );
   }
 
@@ -863,7 +887,7 @@ class _SettingsPageState extends State<SettingsPage>
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('تمام تنظیمات بازنشانی شد'),
+        content: Text(context.tr('all_settings_reset')),
         backgroundColor: AppColors.success,
       ),
     );

@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class ReviewsPage extends StatefulWidget {
   const ReviewsPage({super.key});
@@ -140,7 +141,7 @@ class _ReviewsPageState extends State<ReviewsPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('نظرات و امتیازات'),
+        title: Text(context.tr('reviews_ratings')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         bottom: TabBar(
@@ -155,7 +156,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 children: [
                   const Icon(Icons.rate_review_outlined),
                   const SizedBox(width: 8),
-                  Text('نظرات من (${_myReviews.length})'),
+                  Text('${context.tr('my_reviews')} (${_myReviews.length})'),
                 ],
               ),
             ),
@@ -165,7 +166,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 children: [
                   const Icon(Icons.pending_outlined),
                   const SizedBox(width: 8),
-                  Text('در انتظار نظر (${_pendingReviews.length})'),
+                  Text('${context.tr('pending_reviews')} (${_pendingReviews.length})'),
                 ],
               ),
             ),
@@ -196,7 +197,7 @@ class _ReviewsPageState extends State<ReviewsPage>
         children: [
           CircularProgressIndicator(),
           SizedBox(height: AppDimensions.paddingL),
-          Text('در حال بارگذاری نظرات...'),
+          Text(context.tr('loading_reviews')),
         ],
       ),
     );
@@ -488,15 +489,15 @@ class _ReviewsPageState extends State<ReviewsPage>
                     value: 'edit',
                     child: ListTile(
                       leading: Icon(Icons.edit),
-                      title: Text('ویرایش نظر'),
+                      title: Text(context.tr('edit_review')),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'share',
                     child: ListTile(
                       leading: Icon(Icons.share),
-                      title: Text('اشتراک‌گذاری'),
+                      title: Text(context.tr('share')),
                       contentPadding: EdgeInsets.zero,
                     ),
                   ),
@@ -600,7 +601,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               if (review.shopResponse != null)
                 TextButton(
                   onPressed: () => _showShopResponse(review),
-                  child: const Text('پاسخ فروشگاه'),
+                  child: Text(context.tr('shop_response')),
                 ),
             ],
           ),
@@ -684,7 +685,7 @@ class _ReviewsPageState extends State<ReviewsPage>
             child: ElevatedButton.icon(
               onPressed: () => _writeReview(review),
               icon: const Icon(Icons.rate_review),
-              label: const Text('نوشتن نظر'),
+              label: Text(context.tr('write_review')),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.white,
@@ -767,8 +768,8 @@ class _ReviewsPageState extends State<ReviewsPage>
             }
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('نظر شما با موفقیت ویرایش شد'),
+            SnackBar(
+              content: Text(context.tr('review_edited_successfully')),
               backgroundColor: AppColors.success,
             ),
           );
@@ -780,7 +781,7 @@ class _ReviewsPageState extends State<ReviewsPage>
   void _shareReview(Review review) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('اشتراک‌گذاری نظر')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('share_review'))));
   }
 
   void _deleteReview(Review review) {

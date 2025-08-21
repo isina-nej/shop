@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class SecuritySettingsPage extends StatefulWidget {
   const SecuritySettingsPage({super.key});
@@ -86,7 +87,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('تنظیمات امنیتی'),
+        title: Text(context.tr('security_settings')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
       ),
@@ -243,8 +244,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('تغییر رمز عبور'),
-            subtitle: Text('آخرین تغییر: $_lastPasswordChange'),
+            title: Text(context.tr('change_password')),
+            subtitle: Text('${context.tr('last_change')}: $_lastPasswordChange'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _changePassword,
           ),
@@ -262,8 +263,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
               child: Icon(Icons.history, color: AppColors.info, size: 20),
             ),
-            title: const Text('تاریخچه تغییرات رمز عبور'),
-            subtitle: const Text('مشاهده تغییرات اخیر'),
+            title: Text(context.tr('password_history')),
+            subtitle: Text(context.tr('view_recent_changes')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _showPasswordHistory,
           ),
@@ -329,7 +330,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('فعال‌سازی تأیید دو مرحله‌ای'),
+            title: Text(context.tr('enable_two_factor')),
             subtitle: Text(
               _twoFactorEnabled
                   ? 'حساب شما با تأیید دو مرحله‌ای محافظت می‌شود'
@@ -376,7 +377,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                         child: OutlinedButton.icon(
                           onPressed: _manageTwoFactorMethods,
                           icon: const Icon(Icons.settings, size: 18),
-                          label: const Text('مدیریت روش‌ها'),
+                          label: Text(context.tr('manage_methods')),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: AppColors.success),
                             foregroundColor: AppColors.success,
@@ -388,7 +389,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                         child: OutlinedButton.icon(
                           onPressed: _showBackupCodes,
                           icon: const Icon(Icons.code, size: 18),
-                          label: const Text('کدهای بازیابی'),
+                          label: Text(context.tr('recovery_codes')),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: AppColors.success),
                             foregroundColor: AppColors.success,
@@ -457,8 +458,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('ورود با اثر انگشت'),
-            subtitle: const Text('استفاده از اثر انگشت برای ورود سریع'),
+            title: Text(context.tr('fingerprint_login')),
+            subtitle: Text(context.tr('fingerprint_description')),
             value: _biometricEnabled,
             onChanged: (value) {
               setState(() {
@@ -530,8 +531,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('اطلاع‌رسانی ورود جدید'),
-            subtitle: const Text('ارسال پیام در صورت ورود از دستگاه جدید'),
+            title: Text(context.tr('login_notifications')),
+            subtitle: Text(context.tr('login_notifications_description')),
             value: _loginNotifications,
             onChanged: (value) {
               setState(() {
@@ -563,8 +564,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('هشدار فعالیت مشکوک'),
-            subtitle: const Text('اطلاع‌رسانی در صورت فعالیت غیرعادی'),
+            title: Text(context.tr('suspicious_activity')),
+            subtitle: Text(context.tr('suspicious_activity_description')),
             value: _suspiciousActivityAlerts,
             onChanged: (value) {
               setState(() {
@@ -610,7 +611,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
               TextButton(
                 onPressed: _terminateAllSessions,
-                child: const Text('خروج از همه'),
+                child: Text(context.tr('logout_all')),
                 style: TextButton.styleFrom(foregroundColor: AppColors.error),
               ),
             ],
@@ -754,8 +755,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('دانلود اطلاعات شخصی'),
-            subtitle: const Text('دریافت کپی از داده‌های شما'),
+            title: Text(context.tr('download_personal_data')),
+            subtitle: Text(context.tr('download_personal_data_description')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _downloadPersonalData,
           ),
@@ -777,8 +778,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('حذف حساب کاربری'),
-            subtitle: const Text('حذف دائمی حساب و تمام اطلاعات'),
+            title: Text(context.tr('delete_account')),
+            subtitle: Text(context.tr('delete_account_description')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _deleteAccount,
           ),
@@ -839,7 +840,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     // TODO: Show password history
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('تاریخچه تغییرات رمز عبور')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('password_history_view'))));
   }
 
   void _toggleTwoFactor(bool? value) {
@@ -854,7 +855,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('فعال‌سازی تأیید دو مرحله‌ای'),
+        title: Text(context.tr('enable_two_factor_title')),
         content: const Text(
           'برای فعال‌سازی تأیید دو مرحله‌ای، شماره موبایل خود را تأیید کنید.',
         ),
@@ -871,7 +872,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               });
               _showSecurityMessage('تأیید دو مرحله‌ای فعال شد');
             },
-            child: const Text('تأیید'),
+            child: Text(context.tr('confirm')),
           ),
         ],
       ),
@@ -882,7 +883,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('غیرفعال‌سازی تأیید دو مرحله‌ای'),
+        title: Text(context.tr('disable_two_factor')),
         content: const Text(
           'آیا مطمئن هستید که می‌خواهید تأیید دو مرحله‌ای را غیرفعال کنید؟ این کار امنیت حساب شما را کاهش می‌دهد.',
         ),
@@ -900,7 +901,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               _showSecurityMessage('تأیید دو مرحله‌ای غیرفعال شد');
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('غیرفعال کن'),
+            child: Text(context.tr('disable')),
           ),
         ],
       ),
@@ -909,21 +910,21 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
 
   void _manageTwoFactorMethods() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('مدیریت روش‌های تأیید دو مرحله‌ای')),
+      SnackBar(content: Text(context.tr('two_factor_methods'))),
     );
   }
 
   void _showBackupCodes() {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('نمایش کدهای بازیابی')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('show_recovery_codes'))));
   }
 
   void _terminateSession(LoginSession session) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('خروج از دستگاه'),
+        title: Text(context.tr('logout_device')),
         content: Text(
           'آیا مطمئن هستید که می‌خواهید از "${session.device}" خارج شوید؟',
         ),
@@ -939,11 +940,11 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 _activeSessions.removeWhere((s) => s.id == session.id);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('از ${session.device} خارج شدید')),
+                SnackBar(content: Text('${context.tr('logged_out_from_device')}: ${session.device}')),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('خروج'),
+            child: Text(context.tr('logout')),
           ),
         ],
       ),
@@ -954,7 +955,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('خروج از همه دستگاه‌ها'),
+        title: Text(context.tr('logout_all_devices')),
         content: const Text(
           'آیا مطمئن هستید که می‌خواهید از تمام دستگاه‌ها به جز دستگاه فعلی خارج شوید؟',
         ),
@@ -971,7 +972,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               });
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('از تمام دستگاه‌های دیگر خارج شدید'),
+                  content: Text(context.tr('logged_out_all_devices')),
                 ),
               );
             },
@@ -985,7 +986,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
 
   void _downloadPersonalData() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('درخواست دانلود اطلاعات ارسال شد')),
+      SnackBar(content: Text(context.tr('download_request_sent'))),
     );
   }
 
@@ -997,7 +998,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           children: [
             Icon(Icons.warning, color: AppColors.error),
             const SizedBox(width: 8),
-            const Text('حذف حساب کاربری'),
+            Text(context.tr('delete_account_title')),
           ],
         ),
         content: const Text(
@@ -1013,7 +1014,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('درخواست حذف حساب ارسال شد'),
+                  content: Text(context.tr('delete_account_request_sent')),
                   backgroundColor: AppColors.error,
                 ),
               );
@@ -1047,7 +1048,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('تغییر رمز عبور'),
+      title: Text(context.tr('change_password')),
       content: SizedBox(
         width: double.maxFinite,
         child: Form(
@@ -1145,7 +1146,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
           onPressed: _isLoading ? null : _changePassword,
           child: _isLoading
               ? const CircularProgressIndicator()
-              : const Text('تغییر رمز عبور'),
+              : Text(context.tr('change_password')),
         ),
       ],
     );
@@ -1161,7 +1162,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('رمز عبور با موفقیت تغییر کرد'),
+        content: Text(context.tr('password_changed_successfully')),
         backgroundColor: AppColors.success,
       ),
     );

@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -122,7 +123,7 @@ class _SupportPageState extends State<SupportPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('پشتیبانی و تماس با ما'),
+        title: Text(context.tr('support_contact')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         bottom: TabBar(
@@ -621,12 +622,30 @@ class _SupportPageState extends State<SupportPage>
               prefixIcon: Icon(Icons.category),
             ),
             items: const [
-              DropdownMenuItem(value: 'general', child: Text('عمومی')),
-              DropdownMenuItem(value: 'orders', child: Text('سفارشات')),
-              DropdownMenuItem(value: 'payment', child: Text('پرداخت')),
-              DropdownMenuItem(value: 'delivery', child: Text('ارسال')),
-              DropdownMenuItem(value: 'technical', child: Text('مشکلات فنی')),
-              DropdownMenuItem(value: 'account', child: Text('حساب کاربری')),
+              DropdownMenuItem(
+                value: 'general',
+                child: Text(context.tr('general')),
+              ),
+              DropdownMenuItem(
+                value: 'orders',
+                child: Text(context.tr('orders')),
+              ),
+              DropdownMenuItem(
+                value: 'payment',
+                child: Text(context.tr('payment')),
+              ),
+              DropdownMenuItem(
+                value: 'delivery',
+                child: Text(context.tr('delivery')),
+              ),
+              DropdownMenuItem(
+                value: 'technical',
+                child: Text(context.tr('technical_issues')),
+              ),
+              DropdownMenuItem(
+                value: 'account',
+                child: Text(context.tr('user_account')),
+              ),
             ],
             onChanged: (value) {
               setState(() {
@@ -644,10 +663,16 @@ class _SupportPageState extends State<SupportPage>
               prefixIcon: Icon(Icons.priority_high),
             ),
             items: const [
-              DropdownMenuItem(value: 'low', child: Text('کم')),
-              DropdownMenuItem(value: 'normal', child: Text('معمولی')),
-              DropdownMenuItem(value: 'high', child: Text('بالا')),
-              DropdownMenuItem(value: 'urgent', child: Text('فوری')),
+              DropdownMenuItem(value: 'low', child: Text(context.tr('low'))),
+              DropdownMenuItem(
+                value: 'normal',
+                child: Text(context.tr('normal')),
+              ),
+              DropdownMenuItem(value: 'high', child: Text(context.tr('high'))),
+              DropdownMenuItem(
+                value: 'urgent',
+                child: Text(context.tr('urgent')),
+              ),
             ],
             onChanged: (value) {
               setState(() {
@@ -705,7 +730,7 @@ class _SupportPageState extends State<SupportPage>
               ),
               child: _isLoading
                   ? const CircularProgressIndicator(color: AppColors.white)
-                  : const Text('ارسال تیکت'),
+                  : Text(context.tr('submit_ticket')),
             ),
           ),
         ],
@@ -767,7 +792,7 @@ class _SupportPageState extends State<SupportPage>
             const SizedBox(height: AppDimensions.paddingXL),
             ElevatedButton(
               onPressed: () => _tabController.index = 1,
-              child: const Text('ارسال تیکت جدید'),
+              child: Text(context.tr('new_ticket')),
             ),
           ],
         ),
@@ -886,7 +911,7 @@ class _SupportPageState extends State<SupportPage>
               OutlinedButton.icon(
                 onPressed: () => _viewTicket(ticket),
                 icon: const Icon(Icons.visibility, size: 16),
-                label: const Text('مشاهده'),
+                label: Text(context.tr('view')),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                 ),
@@ -896,7 +921,7 @@ class _SupportPageState extends State<SupportPage>
                 OutlinedButton.icon(
                   onPressed: () => _replyTicket(ticket),
                   icon: const Icon(Icons.reply, size: 16),
-                  label: const Text('پاسخ'),
+                  label: Text(context.tr('reply')),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.success,
                   ),
@@ -1003,27 +1028,27 @@ class _SupportPageState extends State<SupportPage>
     Clipboard.setData(ClipboardData(text: phoneNumber));
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('شماره تلفن کپی شد')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('phone_copied'))));
   }
 
   void _emailSupport(String email) {
     Clipboard.setData(ClipboardData(text: email));
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('ایمیل کپی شد')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('email_copied'))));
   }
 
   void _startLiveChat() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('چت آنلاین به زودی راه‌اندازی می‌شود')),
+      SnackBar(content: Text(context.tr('online_chat_coming_soon'))),
     );
   }
 
   void _openTelegram(String username) {
     Clipboard.setData(ClipboardData(text: username));
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('نام کاربری تلگرام کپی شد')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.tr('telegram_username_copied'))),
+    );
   }
 
   void _reportBug() {
@@ -1044,7 +1069,7 @@ class _SupportPageState extends State<SupportPage>
 
   void _showTutorials() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('آموزش‌ها به زودی اضافه می‌شوند')),
+      SnackBar(content: Text(context.tr('tutorials_coming_soon'))),
     );
   }
 
@@ -1066,7 +1091,7 @@ class _SupportPageState extends State<SupportPage>
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('تیکت شما با موفقیت ارسال شد'),
+        content: Text(context.tr('ticket_submitted_successfully')),
         backgroundColor: AppColors.success,
       ),
     );
@@ -1091,7 +1116,7 @@ class _SupportPageState extends State<SupportPage>
           // Add reply to ticket
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text('پاسخ شما ارسال شد')));
+          ).showSnackBar(SnackBar(content: Text(context.tr('your_reply_sent'))));
         },
       ),
     );
@@ -1224,7 +1249,7 @@ class _ReplyTicketDialogState extends State<ReplyTicketDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('پاسخ به تیکت ${widget.ticket.id}'),
+      title: Text('${context.tr('reply_to_ticket')} ${widget.ticket.id}'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1247,7 +1272,7 @@ class _ReplyTicketDialogState extends State<ReplyTicketDialog> {
           onPressed: _isLoading ? null : _sendReply,
           child: _isLoading
               ? const CircularProgressIndicator()
-              : const Text('ارسال'),
+              : Text(context.tr('send')),
         ),
       ],
     );

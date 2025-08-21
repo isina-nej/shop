@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class AddressesPage extends StatefulWidget {
   const AddressesPage({super.key});
@@ -80,7 +81,7 @@ class _AddressesPageState extends State<AddressesPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('آدرس‌های من'),
+        title: Text(context.tr('my_addresses')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
       ),
@@ -147,7 +148,7 @@ class _AddressesPageState extends State<AddressesPage>
           ElevatedButton.icon(
             onPressed: () => _showAddAddressDialog(context),
             icon: const Icon(Icons.add),
-            label: const Text('افزودن آدرس جدید'),
+            label: Text(context.tr('add_new_address')),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
@@ -261,34 +262,37 @@ class _AddressesPageState extends State<AddressesPage>
                   PopupMenuButton<String>(
                     onSelected: (value) => _handleAddressAction(value, address),
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'edit',
                         child: Row(
                           children: [
-                            Icon(Icons.edit_outlined),
-                            SizedBox(width: 8),
-                            Text('ویرایش'),
+                            const Icon(Icons.edit_outlined),
+                            const SizedBox(width: 8),
+                            Text(context.tr('edit')),
                           ],
                         ),
                       ),
                       if (!address.isDefault)
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'default',
                           child: Row(
                             children: [
-                              Icon(Icons.star_outline),
-                              SizedBox(width: 8),
-                              Text('تنظیم به عنوان پیش‌فرض'),
+                              const Icon(Icons.star_outline),
+                              const SizedBox(width: 8),
+                              Text(context.tr('set_as_default')),
                             ],
                           ),
                         ),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete_outline, color: Colors.red),
-                            SizedBox(width: 8),
-                            Text('حذف', style: TextStyle(color: Colors.red)),
+                            const Icon(Icons.delete_outline, color: Colors.red),
+                            const SizedBox(width: 8),
+                            Text(
+                              context.tr('delete'),
+                              style: const TextStyle(color: Colors.red),
+                            ),
                           ],
                         ),
                       ),
@@ -383,7 +387,7 @@ class _AddressesPageState extends State<AddressesPage>
                     child: OutlinedButton.icon(
                       onPressed: () => _showOnMap(address),
                       icon: const Icon(Icons.map_outlined, size: 18),
-                      label: const Text('نمایش روی نقشه'),
+                      label: Text(context.tr('show_on_map')),
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: AppColors.info),
                         foregroundColor: AppColors.info,
@@ -395,7 +399,7 @@ class _AddressesPageState extends State<AddressesPage>
                     child: ElevatedButton.icon(
                       onPressed: () => _editAddress(address),
                       icon: const Icon(Icons.edit_outlined, size: 18),
-                      label: const Text('ویرایش'),
+                      label: Text(context.tr('edit')),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: AppColors.white,
@@ -419,7 +423,7 @@ class _AddressesPageState extends State<AddressesPage>
         child: ElevatedButton.icon(
           onPressed: () => _showAddAddressDialog(context),
           icon: const Icon(Icons.add),
-          label: const Text('افزودن آدرس جدید'),
+          label: Text(context.tr('add_new_address')),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             foregroundColor: AppColors.white,
@@ -487,7 +491,7 @@ class _AddressesPageState extends State<AddressesPage>
           });
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text('آدرس جدید اضافه شد')));
+          ).showSnackBar(SnackBar(content: Text(context.tr('address_added'))));
         },
       ),
     );
@@ -507,9 +511,9 @@ class _AddressesPageState extends State<AddressesPage>
               _addresses[index] = updatedAddress;
             }
           });
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('آدرس ویرایش شد')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.tr('address_updated'))),
+          );
         },
       ),
     );
@@ -523,14 +527,14 @@ class _AddressesPageState extends State<AddressesPage>
     });
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('آدرس پیش‌فرض تنظیم شد')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('default_address_set'))));
   }
 
   void _deleteAddress(AddressModel address) {
     if (address.isDefault && _addresses.length > 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('ابتدا آدرس دیگری را به عنوان پیش‌فرض تنظیم کنید'),
+        SnackBar(
+          content: Text(context.tr('set_other_default_first')),
           backgroundColor: AppColors.warning,
         ),
       );
@@ -540,14 +544,16 @@ class _AddressesPageState extends State<AddressesPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('حذف آدرس'),
+        title: Text(context.tr('delete_address')),
         content: Text(
-          'آیا مطمئن هستید که می‌خواهید آدرس "${address.title}" را حذف کنید؟',
+          context
+              .tr('confirm_delete_address')
+              .replaceAll('{title}', address.title),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -555,11 +561,14 @@ class _AddressesPageState extends State<AddressesPage>
               setState(() {
                 _addresses.removeWhere((a) => a.id == address.id);
               });
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('آدرس حذف شد')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(context.tr('address_deleted'))),
+              );
             },
-            child: const Text('حذف', style: TextStyle(color: Colors.red)),
+            child: Text(
+              context.tr('delete'),
+              style: const TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),
@@ -568,9 +577,15 @@ class _AddressesPageState extends State<AddressesPage>
 
   void _showOnMap(AddressModel address) {
     // TODO: Implement map functionality
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('نمایش ${address.title} روی نقشه')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          context
+              .tr('show_address_on_map')
+              .replaceAll('{title}', address.title),
+        ),
+      ),
+    );
   }
 }
 
@@ -739,7 +754,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                     ),
                     const SizedBox(height: AppDimensions.paddingL),
                     CheckboxListTile(
-                      title: const Text('تنظیم به عنوان آدرس پیش‌فرض'),
+                      title: Text(context.tr('set_as_default')),
                       value: _isDefault,
                       onChanged: (value) {
                         setState(() {
@@ -762,7 +777,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('انصراف'),
+                    child: Text(context.tr('cancel')),
                   ),
                 ),
                 const SizedBox(width: AppDimensions.paddingM),

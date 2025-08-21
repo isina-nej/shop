@@ -821,7 +821,7 @@ class _ProfilePageState extends State<ProfilePage>
             const SizedBox(height: AppDimensions.paddingL),
             ListTile(
               leading: const Icon(Icons.share_outlined),
-              title: const Text('اشتراک گذاری پروفایل'),
+              title: Text(context.tr('share_profile')),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement profile sharing
@@ -829,7 +829,7 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             ListTile(
               leading: const Icon(Icons.qr_code_outlined),
-              title: const Text('نمایش کد QR'),
+              title: Text(context.tr('show_qr_code')),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Show QR code
@@ -837,7 +837,7 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             ListTile(
               leading: const Icon(Icons.backup_outlined),
-              title: const Text('پشتیبان‌گیری اطلاعات'),
+              title: Text(context.tr('backup_data')),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement data backup
@@ -1012,7 +1012,7 @@ class _ProfilePageState extends State<ProfilePage>
               backgroundColor: AppColors.error,
               foregroundColor: AppColors.white,
             ),
-            child: const Text('خروج'),
+            child: Text(context.tr('logout')),
           ),
         ],
       ),
@@ -1026,7 +1026,7 @@ class _ProfilePageState extends State<ProfilePage>
     // Show success message
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('با موفقیت خارج شدید'),
+  content: Text(context.tr('logout_successful')),
         backgroundColor: AppColors.success,
         behavior: SnackBarBehavior.floating,
       ),
