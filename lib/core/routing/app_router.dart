@@ -6,6 +6,17 @@ import '../../features/products/presentation/pages/products_page.dart';
 import '../../features/products/presentation/pages/product_details_page.dart';
 import '../../features/cart/presentation/pages/cart_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/pages/edit_profile_page.dart';
+import '../../features/profile/presentation/pages/addresses_page.dart';
+import '../../features/profile/presentation/pages/security_settings_page.dart';
+import '../../features/profile/presentation/pages/payment_methods_page.dart';
+import '../../features/profile/presentation/pages/reviews_page.dart';
+import '../../features/profile/presentation/pages/notifications_settings_page.dart';
+import '../../features/profile/presentation/pages/faq_page.dart';
+import '../../features/profile/presentation/pages/support_page.dart';
+import '../../features/profile/presentation/pages/about_page.dart';
+import '../../features/profile/presentation/pages/privacy_policy_page.dart';
+import '../../features/profile/presentation/pages/settings_page.dart';
 
 class AppRouter {
   // Route names
@@ -26,6 +37,16 @@ class AppRouter {
   static const String orders = '/orders';
   static const String orderDetails = '/order-details';
   static const String profile = '/profile';
+  static const String editProfile = '/edit-profile';
+  static const String securitySettings = '/security-settings';
+  static const String addresses = '/addresses';
+  static const String paymentMethods = '/payment-methods';
+  static const String reviews = '/reviews';
+  static const String notifications = '/notifications';
+  static const String faq = '/faq';
+  static const String support = '/support';
+  static const String about = '/about';
+  static const String privacy = '/privacy';
   static const String settings = '/settings';
   static const String search = '/search';
   static const String wishlist = '/wishlist';
@@ -101,6 +122,38 @@ class AppRouter {
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
 
+      case editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+
+      case securitySettings:
+        return MaterialPageRoute(builder: (_) => const SecuritySettingsPage());
+
+      case addresses:
+        return MaterialPageRoute(builder: (_) => const AddressesPage());
+
+      case paymentMethods:
+        return MaterialPageRoute(builder: (_) => const PaymentMethodsPage());
+
+      case reviews:
+        return MaterialPageRoute(builder: (_) => const ReviewsPage());
+
+      case notifications:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationsSettingsPage(),
+        );
+
+      case faq:
+        return MaterialPageRoute(builder: (_) => const FAQPage());
+
+      case support:
+        return MaterialPageRoute(builder: (_) => const SupportPage());
+
+      case about:
+        return MaterialPageRoute(builder: (_) => const AboutPage());
+
+      case privacy:
+        return MaterialPageRoute(builder: (_) => const PrivacyPolicyPage());
+
       case search:
         final args = settings.arguments as Map<String, dynamic>?;
         final query = args?['query'] as String?;
@@ -117,12 +170,7 @@ class AppRouter {
         );
 
       case AppRouter.settings:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(title: const Text('تنظیمات')),
-            body: const Center(child: Text('صفحه تنظیمات')),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
 
       default:
         return _errorRoute('صفحه مورد نظر یافت نشد');

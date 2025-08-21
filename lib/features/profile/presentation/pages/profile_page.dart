@@ -1,4 +1,4 @@
-// Profile Page - User Profile and Settings
+// Modern Profile Page - Redesigned for Better UX
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -8,6 +8,7 @@ import '../../../../core/theme/advanced_theme_manager.dart';
 import '../../../../core/localization/language_manager.dart';
 import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/routing/app_router.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,178 +17,336 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  // Mock user data - TODO: Replace with API call
+class _ProfilePageState extends State<ProfilePage>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+
+  // Mock user data
   final UserModel _user = const UserModel(
     id: '1',
-    name: 'علی احمدی',
-    email: 'ali.ahmadi@example.com',
+    name: 'سینا احمدزاده',
+    email: 'sina.ahmadzadeh@sinashop.com',
     phone: '09123456789',
-    profileImage: 'https://via.placeholder.com/200x200/667EEA/FFFFFF?text=User',
-    joinDate: '۱۴۰۲/۰۵/۱۵',
+    profileImage: 'https://via.placeholder.com/150x150/667EEA/FFFFFF?text=S',
+    joinDate: '۱۴۰۳/۰۵/۲۱',
     isVerified: true,
+    totalOrders: 24,
+    totalSpent: 12450000,
   );
 
   @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isTablet = screenWidth > 768;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+    _animationController.forward();
+  }
 
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDark
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-
-      // Custom App Bar
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          context.tr('profile'),
-          style: AppTextStyles.headlineMedium.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => _showSettingsBottomSheet(context),
-            icon: const Icon(Icons.settings_outlined),
-          ),
-        ],
-      ),
-
-      body: ResponsiveContainer(
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(
-            horizontal: isTablet
-                ? AppDimensions.paddingXL
-                : AppDimensions.paddingM,
-            vertical: AppDimensions.paddingM,
-          ),
-          child: Column(
-            children: [
-              // User Profile Header
-              _buildProfileHeader(context),
-
-              const SizedBox(height: AppDimensions.paddingXL),
-
-              // Profile Menu Items
-              _buildMenuSection(context, context.tr('user_account'), [
-                ProfileMenuItem(
-                  icon: Icons.person_outline,
-                  title: context.tr('edit_profile'),
-                  subtitle: context.tr('edit_personal_info'),
-                  onTap: () => _navigateToEditProfile(),
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: CustomScrollView(
+          slivers: [
+            _buildSliverAppBar(context),
+            SliverToBoxAdapter(
+              child: ResponsiveContainer(
+                child: Column(
+                  children: [
+                    const SizedBox(height: AppDimensions.paddingL),
+                    _buildStatsCards(context),
+                    const SizedBox(height: AppDimensions.paddingXL),
+                    _buildQuickActions(context),
+                    const SizedBox(height: AppDimensions.paddingXL),
+                    _buildMenuSections(context),
+                    const SizedBox(height: AppDimensions.paddingXL),
+                    _buildLogoutSection(context),
+                    const SizedBox(height: AppDimensions.paddingXL),
+                  ],
                 ),
-                ProfileMenuItem(
-                  icon: Icons.location_on_outlined,
-                  title: context.tr('my_addresses'),
-                  subtitle: context.tr('manage_addresses'),
-                  onTap: () => _navigateToAddresses(),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.credit_card_outlined,
-                  title: context.tr('payment_cards'),
-                  subtitle: context.tr('manage_payment_methods'),
-                  onTap: () => _navigateToPaymentMethods(),
-                ),
-              ]),
-
-              const SizedBox(height: AppDimensions.paddingL),
-
-              _buildMenuSection(context, context.tr('orders'), [
-                ProfileMenuItem(
-                  icon: Icons.shopping_bag_outlined,
-                  title: context.tr('my_orders'),
-                  subtitle: context.tr('view_order_history'),
-                  onTap: () => _navigateToOrders(),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.favorite_outline,
-                  title: context.tr('wishlist'),
-                  subtitle: context.tr('favorite_products'),
-                  onTap: () => _navigateToWishlist(),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.rate_review_outlined,
-                  title: context.tr('my_reviews'),
-                  subtitle: context.tr('submitted_reviews'),
-                  onTap: () => _navigateToReviews(),
-                ),
-              ]),
-
-              const SizedBox(height: AppDimensions.paddingL),
-
-              _buildMenuSection(context, context.tr('settings'), [
-                ProfileMenuItem(
-                  icon: Icons.notifications_outlined,
-                  title: context.tr('notifications'),
-                  subtitle: context.tr('notification_settings'),
-                  onTap: () => _navigateToNotifications(),
-                ),
-                ProfileMenuItem(
-                  icon: isDark
-                      ? Icons.light_mode_outlined
-                      : Icons.dark_mode_outlined,
-                  title: context.tr('toggle_dark_mode'),
-                  subtitle: isDark
-                      ? context.tr('switch_to_light_mode')
-                      : context.tr('switch_to_dark_mode'),
-                  onTap: () => _toggleTheme(context),
-                  trailing: Switch(
-                    value: isDark,
-                    onChanged: (_) => _toggleTheme(context),
-                    activeColor: AppColors.primary,
-                  ),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.language_outlined,
-                  title: context.tr('language'),
-                  subtitle: context.languageManager.languageName,
-                  onTap: () => _showLanguageSelection(),
-                ),
-              ]),
-
-              const SizedBox(height: AppDimensions.paddingL),
-
-              _buildMenuSection(context, context.tr('help_support'), [
-                ProfileMenuItem(
-                  icon: Icons.help_outline,
-                  title: context.tr('help_support'),
-                  subtitle: 'سوالات متداول و تماس',
-                  onTap: () => _navigateToSupport(),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.info_outline,
-                  title: context.tr('about'),
-                  subtitle: 'اطلاعات برنامه',
-                  onTap: () => _navigateToAbout(),
-                ),
-                ProfileMenuItem(
-                  icon: Icons.privacy_tip_outlined,
-                  title: context.tr('privacy_policy'),
-                  subtitle: 'قوانین و مقررات',
-                  onTap: () => _navigateToPrivacy(),
-                ),
-              ]),
-
-              const SizedBox(height: AppDimensions.paddingXL),
-
-              // Logout Button
-              _buildLogoutButton(context),
-
-              const SizedBox(height: AppDimensions.paddingXL),
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildProfileHeader(BuildContext context) {
+  Widget _buildSliverAppBar(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return SliverAppBar(
+      expandedHeight: 280.0,
+      floating: false,
+      pinned: true,
+      backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
+      elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40),
+                _buildProfileAvatar(context),
+                const SizedBox(height: AppDimensions.paddingM),
+                _buildUserInfo(context),
+              ],
+            ),
+          ),
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () => _showSettingsBottomSheet(context),
+          icon: const Icon(Icons.more_vert, color: AppColors.white),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileAvatar(BuildContext context) {
+    return Hero(
+      tag: 'profile_avatar',
+      child: Stack(
+        children: [
+          Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(60),
+              border: Border.all(color: AppColors.white, width: 4),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(56),
+              child: Image.network(
+                _user.profileImage,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.secondary, AppColors.accent],
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      color: AppColors.white,
+                      size: 60,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          // Verification Badge
+          if (_user.isVerified)
+            Positioned(
+              bottom: 8,
+              right: 8,
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.success,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.white, width: 3),
+                ),
+                child: const Icon(
+                  Icons.verified,
+                  color: AppColors.white,
+                  size: 18,
+                ),
+              ),
+            ),
+
+          // Edit Button
+          Positioned(
+            bottom: 8,
+            left: 8,
+            child: GestureDetector(
+              onTap: () => _navigateToEditProfile(),
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: const Icon(
+                  Icons.camera_alt,
+                  color: AppColors.primary,
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserInfo(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          _user.name,
+          style: AppTextStyles.headlineMedium.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: AppDimensions.paddingXS),
+        Text(
+          _user.email,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.white.withOpacity(0.9),
+          ),
+        ),
+        const SizedBox(height: AppDimensions.paddingS),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.paddingM,
+            vertical: AppDimensions.paddingXS,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.white.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(AppDimensions.radiusS),
+          ),
+          child: Text(
+            'عضو از ${_user.joinDate}',
+            style: AppTextStyles.labelSmall.copyWith(
+              color: AppColors.white,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatsCards(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Row(
+      children: [
+        Expanded(
+          child: _buildStatCard(
+            context,
+            title: 'تعداد سفارشات',
+            value: '${_user.totalOrders}',
+            icon: Icons.shopping_bag,
+            color: AppColors.info,
+            isDark: isDark,
+          ),
+        ),
+        const SizedBox(width: AppDimensions.paddingM),
+        Expanded(
+          child: _buildStatCard(
+            context,
+            title: 'مجموع خرید',
+            value: '${(_user.totalSpent / 1000).toStringAsFixed(0)}K تومان',
+            icon: Icons.account_balance_wallet,
+            color: AppColors.success,
+            isDark: isDark,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatCard(
+    BuildContext context, {
+    required String title,
+    required String value,
+    required IconData icon,
+    required Color color,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.white,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(height: AppDimensions.paddingM),
+          Text(
+            value,
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: AppDimensions.paddingXS),
+          Text(
+            title,
+            style: AppTextStyles.labelMedium.copyWith(color: AppColors.grey600),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickActions(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
@@ -198,243 +357,372 @@ class _ProfilePageState extends State<ProfilePage> {
         boxShadow: [
           BoxShadow(
             color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
-            blurRadius: 16,
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'دسترسی سریع',
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+            ),
+          ),
+          const SizedBox(height: AppDimensions.paddingL),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildQuickActionItem(
+                context,
+                icon: Icons.shopping_bag_outlined,
+                title: 'سفارشات من',
+                color: AppColors.primary,
+                onTap: () => _navigateToOrders(),
+              ),
+              _buildQuickActionItem(
+                context,
+                icon: Icons.favorite_outline,
+                title: 'علاقه‌مندی‌ها',
+                color: AppColors.error,
+                onTap: () => _navigateToWishlist(),
+              ),
+              _buildQuickActionItem(
+                context,
+                icon: Icons.location_on_outlined,
+                title: 'آدرس‌ها',
+                color: AppColors.info,
+                onTap: () => _navigateToAddresses(),
+              ),
+              _buildQuickActionItem(
+                context,
+                icon: Icons.support_agent_outlined,
+                title: 'پشتیبانی',
+                color: AppColors.warning,
+                onTap: () => _navigateToSupport(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickActionItem(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(height: AppDimensions.paddingS),
+          Text(
+            title,
+            style: AppTextStyles.labelSmall.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMenuSections(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      children: [
+        // Account Settings
+        _buildModernMenuSection(
+          context,
+          title: 'تنظیمات حساب کاربری',
+          icon: Icons.person_outline,
+          items: [
+            ModernMenuItem(
+              icon: Icons.edit_outlined,
+              title: 'ویرایش اطلاعات شخصی',
+              subtitle: 'نام، ایمیل، شماره تلفن',
+              onTap: () => _navigateToEditProfile(),
+            ),
+            ModernMenuItem(
+              icon: Icons.security_outlined,
+              title: 'تنظیمات امنیتی',
+              subtitle: 'تغییر رمز عبور، تأیید دو مرحله‌ای',
+              onTap: () => _navigateToSecurity(),
+            ),
+            ModernMenuItem(
+              icon: Icons.notifications_outlined,
+              title: 'اعلان‌ها',
+              subtitle: 'مدیریت اعلان‌های دریافتی',
+              onTap: () => _navigateToNotifications(),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: AppDimensions.paddingL),
+
+        // Shopping
+        _buildModernMenuSection(
+          context,
+          title: 'خرید و فروش',
+          icon: Icons.shopping_cart_outlined,
+          items: [
+            ModernMenuItem(
+              icon: Icons.receipt_long_outlined,
+              title: 'تاریخچه سفارشات',
+              subtitle: 'مشاهده سفارشات قبلی',
+              onTap: () => _navigateToOrders(),
+            ),
+            ModernMenuItem(
+              icon: Icons.rate_review_outlined,
+              title: 'نظرات و امتیازها',
+              subtitle: 'نظرات ثبت شده توسط شما',
+              onTap: () => _navigateToReviews(),
+            ),
+            ModernMenuItem(
+              icon: Icons.credit_card_outlined,
+              title: 'کارت‌های بانکی',
+              subtitle: 'مدیریت روش‌های پرداخت',
+              onTap: () => _navigateToPaymentMethods(),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: AppDimensions.paddingL),
+
+        // App Settings
+        _buildModernMenuSection(
+          context,
+          title: 'تنظیمات برنامه',
+          icon: Icons.settings_outlined,
+          items: [
+            ModernMenuItem(
+              icon: isDark
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined,
+              title: 'حالت تیره/روشن',
+              subtitle: isDark ? 'تغییر به حالت روشن' : 'تغییر به حالت تیره',
+              onTap: () => _toggleTheme(context),
+              trailing: Switch(
+                value: isDark,
+                onChanged: (_) => _toggleTheme(context),
+                activeColor: AppColors.primary,
+              ),
+            ),
+            ModernMenuItem(
+              icon: Icons.language_outlined,
+              title: 'زبان برنامه',
+              subtitle: context.languageManager.languageName,
+              onTap: () => _showLanguageSelection(),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: AppDimensions.paddingL),
+
+        // Help & Support
+        _buildModernMenuSection(
+          context,
+          title: 'راهنما و پشتیبانی',
+          icon: Icons.help_outline,
+          items: [
+            ModernMenuItem(
+              icon: Icons.quiz_outlined,
+              title: 'سوالات متداول',
+              subtitle: 'پاسخ سوالات رایج',
+              onTap: () => _navigateToFAQ(),
+            ),
+            ModernMenuItem(
+              icon: Icons.chat_bubble_outline,
+              title: 'تماس با پشتیبانی',
+              subtitle: 'درخواست کمک از تیم پشتیبانی',
+              onTap: () => _navigateToSupport(),
+            ),
+            ModernMenuItem(
+              icon: Icons.info_outline,
+              title: 'درباره سینا شاپ',
+              subtitle: 'اطلاعات برنامه و نسخه',
+              onTap: () => _navigateToAbout(),
+            ),
+            ModernMenuItem(
+              icon: Icons.policy_outlined,
+              title: 'حریم خصوصی و قوانین',
+              subtitle: 'شرایط استفاده و حریم خصوصی',
+              onTap: () => _navigateToPrivacy(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildModernMenuSection(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required List<ModernMenuItem> items,
+  }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.white,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
         children: [
-          // Profile Image
-          Stack(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: AppColors.primary, width: 3),
+          // Section Header
+          Container(
+            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Icon(icon, color: AppColors.primary, size: 20),
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(47),
-                  child: Image.network(
-                    _user.profileImage,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: AppColors.grey200,
-                        child: const Icon(
-                          Icons.person,
-                          color: AppColors.grey500,
-                          size: 50,
-                        ),
-                      );
-                    },
+                const SizedBox(width: AppDimensions.paddingM),
+                Text(
+                  title,
+                  style: AppTextStyles.headlineSmall.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
                   ),
                 ),
-              ),
-
-              // Verified Badge
-              if (_user.isVerified)
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: isDark ? AppColors.surfaceDark : AppColors.white,
-                        width: 3,
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.verified,
-                      color: AppColors.white,
-                      size: 18,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-
-          const SizedBox(height: AppDimensions.paddingM),
-
-          // User Name
-          Text(
-            _user.name,
-            style: AppTextStyles.headlineMedium.copyWith(
-              fontWeight: FontWeight.bold,
+              ],
             ),
           ),
 
-          const SizedBox(height: AppDimensions.paddingS),
+          // Menu Items
+          ...items.asMap().entries.map((entry) {
+            final index = entry.key;
+            final item = entry.value;
 
-          // Email
-          Text(
-            _user.email,
-            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.grey600),
-          ),
-
-          const SizedBox(height: AppDimensions.paddingS),
-
-          // Join Date
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.calendar_today_outlined,
-                size: 16,
-                color: AppColors.grey500,
-              ),
-              const SizedBox(width: AppDimensions.paddingXS),
-              Text(
-                'عضو از ${_user.joinDate}',
-                style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.grey500,
-                ),
-              ),
-            ],
-          ),
+            return Column(
+              children: [
+                if (index > 0)
+                  Divider(
+                    height: 1,
+                    color: isDark ? AppColors.grey800 : AppColors.grey200,
+                    indent: AppDimensions.paddingL,
+                    endIndent: AppDimensions.paddingL,
+                  ),
+                _buildModernMenuItem(context, item),
+              ],
+            );
+          }).toList(),
         ],
       ),
     );
   }
 
-  Widget _buildMenuSection(
-    BuildContext context,
-    String title,
-    List<ProfileMenuItem> items,
-  ) {
+  Widget _buildModernMenuItem(BuildContext context, ModernMenuItem item) {
+    return ListTile(
+      onTap: item.onTap,
+      leading: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.grey100,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(item.icon, color: AppColors.grey700, size: 20),
+      ),
+      title: Text(
+        item.title,
+        style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w600),
+      ),
+      subtitle: item.subtitle != null
+          ? Text(
+              item.subtitle!,
+              style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
+            )
+          : null,
+      trailing:
+          item.trailing ??
+          Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.grey500),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppDimensions.paddingL,
+        vertical: AppDimensions.paddingXS,
+      ),
+    );
+  }
+
+  Widget _buildLogoutSection(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Section Title
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingS,
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.white,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+        boxShadow: [
+          BoxShadow(
+            color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
-          child: Text(
-            title,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.grey600,
-            ),
-          ),
-        ),
-
-        const SizedBox(height: AppDimensions.paddingM),
-
-        // Menu Items
-        Container(
+        ],
+      ),
+      child: ListTile(
+        onTap: () => _showLogoutDialog(context),
+        leading: Container(
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
-            color: isDark ? AppColors.surfaceDark : AppColors.white,
-            borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-            boxShadow: [
-              BoxShadow(
-                color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
-                blurRadius: 12,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            color: AppColors.error.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
-            children: items.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              final isLast = index == items.length - 1;
-
-              return _buildMenuItem(context, item, !isLast);
-            }).toList(),
+          child: const Icon(Icons.logout, color: AppColors.error, size: 20),
+        ),
+        title: Text(
+          'خروج از حساب کاربری',
+          style: AppTextStyles.bodyLarge.copyWith(
+            fontWeight: FontWeight.w600,
+            color: AppColors.error,
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildMenuItem(
-    BuildContext context,
-    ProfileMenuItem item,
-    bool showDivider,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Column(
-      children: [
-        ListTile(
-          onTap: item.onTap,
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Icon(item.icon, color: AppColors.primary, size: 20),
-          ),
-          title: Text(
-            item.title,
-            style: AppTextStyles.bodyLarge.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          subtitle: item.subtitle != null
-              ? Text(
-                  item.subtitle!,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.grey600,
-                  ),
-                )
-              : null,
-          trailing:
-              item.trailing ??
-              Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.grey500),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingL,
-            vertical: AppDimensions.paddingS,
-          ),
+        subtitle: Text(
+          'خروج امن از حساب کاربری',
+          style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
         ),
-
-        if (showDivider)
-          Divider(
-            height: 1,
-            color: isDark ? AppColors.grey800 : AppColors.grey200,
-            indent: AppDimensions.paddingXL + 40,
-          ),
-      ],
-    );
-  }
-
-  Widget _buildLogoutButton(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton(
-        onPressed: () => _showLogoutDialog(context),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.error,
-          side: const BorderSide(color: AppColors.error),
-          padding: const EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: AppColors.error,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.logout, size: 20),
-            const SizedBox(width: AppDimensions.paddingS),
-            Text(
-              'خروج از حساب کاربری',
-              style: AppTextStyles.labelLarge.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
+        contentPadding: const EdgeInsets.all(AppDimensions.paddingL),
       ),
     );
   }
@@ -448,51 +736,118 @@ class _ProfilePageState extends State<ProfilePage> {
     themeManager.toggleTheme();
   }
 
-  // Navigation Methods
+  // Navigation Methods with proper routing
   void _navigateToEditProfile() {
-    debugPrint('Navigate to edit profile');
+    Navigator.pushNamed(context, '/edit-profile');
+  }
+
+  void _navigateToSecurity() {
+    Navigator.pushNamed(context, '/security-settings');
   }
 
   void _navigateToAddresses() {
-    debugPrint('Navigate to addresses');
+    Navigator.pushNamed(context, '/addresses');
   }
 
   void _navigateToPaymentMethods() {
-    debugPrint('Navigate to payment methods');
+    Navigator.pushNamed(context, '/payment-methods');
   }
 
   void _navigateToOrders() {
-    debugPrint('Navigate to orders');
+    Navigator.pushNamed(context, AppRouter.orders);
   }
 
   void _navigateToWishlist() {
-    debugPrint('Navigate to wishlist');
+    Navigator.pushNamed(context, AppRouter.wishlist);
   }
 
   void _navigateToReviews() {
-    debugPrint('Navigate to reviews');
+    Navigator.pushNamed(context, '/reviews');
   }
 
   void _navigateToNotifications() {
-    debugPrint('Navigate to notifications');
+    Navigator.pushNamed(context, '/notifications');
+  }
+
+  void _navigateToFAQ() {
+    Navigator.pushNamed(context, '/faq');
   }
 
   void _navigateToSupport() {
-    debugPrint('Navigate to support');
+    Navigator.pushNamed(context, '/support');
   }
 
   void _navigateToAbout() {
-    debugPrint('Navigate to about');
+    Navigator.pushNamed(context, '/about');
   }
 
   void _navigateToPrivacy() {
-    debugPrint('Navigate to privacy');
+    Navigator.pushNamed(context, '/privacy');
   }
 
   // Dialog Methods
   void _showSettingsBottomSheet(BuildContext context) {
-    // TODO: Show settings bottom sheet
-    debugPrint('Show settings bottom sheet');
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.surfaceDark : AppColors.white,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(AppDimensions.radiusL),
+          ),
+        ),
+        padding: const EdgeInsets.all(AppDimensions.paddingL),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.grey300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: AppDimensions.paddingL),
+            Text(
+              'تنظیمات بیشتر',
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: AppDimensions.paddingL),
+            ListTile(
+              leading: const Icon(Icons.share_outlined),
+              title: const Text('اشتراک گذاری پروفایل'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Implement profile sharing
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.qr_code_outlined),
+              title: const Text('نمایش کد QR'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Show QR code
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.backup_outlined),
+              title: const Text('پشتیبان‌گیری اطلاعات'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Implement data backup
+              },
+            ),
+            const SizedBox(height: AppDimensions.paddingL),
+          ],
+        ),
+      ),
+    );
   }
 
   void _showLanguageSelection() {
@@ -500,53 +855,73 @@ class _ProfilePageState extends State<ProfilePage> {
       context,
       listen: false,
     );
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.tr('changeLanguage'),
-                style: AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.surfaceDark : AppColors.white,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(AppDimensions.radiusL),
+          ),
+        ),
+        padding: const EdgeInsets.all(AppDimensions.paddingL),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.grey300,
+                borderRadius: BorderRadius.circular(2),
               ),
-              const SizedBox(height: 20),
-              ...LanguageManager.supportedLocales.map((locale) {
-                final languageNames = {
-                  'fa': context.tr('farsi'),
-                  'en': context.tr('english'),
-                  'ar': context.tr('arabic'),
-                  'ru': context.tr('russian'),
-                  'zh': context.tr('chinese'),
-                };
+            ),
+            const SizedBox(height: AppDimensions.paddingL),
+            Text(
+              'انتخاب زبان',
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: AppDimensions.paddingL),
+            ...LanguageManager.supportedLocales.map((locale) {
+              final languageData = _getLanguageData(locale.languageCode);
 
-                final flags = {
-                  'fa': '🇮🇷',
-                  'en': '🇺🇸',
-                  'ar': '🇸🇦',
-                  'ru': '🇷🇺',
-                  'zh': '🇨🇳',
-                };
-
-                return ListTile(
+              return Container(
+                margin: const EdgeInsets.only(bottom: AppDimensions.paddingS),
+                decoration: BoxDecoration(
+                  color:
+                      languageManager.locale.languageCode == locale.languageCode
+                      ? AppColors.primary.withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+                  border:
+                      languageManager.locale.languageCode == locale.languageCode
+                      ? Border.all(color: AppColors.primary)
+                      : null,
+                ),
+                child: ListTile(
                   leading: Text(
-                    flags[locale.languageCode] ?? '🌐',
-                    style: const TextStyle(fontSize: 24),
+                    languageData['flag']!,
+                    style: const TextStyle(fontSize: 28),
                   ),
                   title: Text(
-                    languageNames[locale.languageCode] ?? locale.languageCode,
+                    languageData['name']!,
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      fontWeight:
+                          languageManager.locale.languageCode ==
+                              locale.languageCode
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
+                  subtitle: Text(languageData['nativeName']!),
                   trailing:
                       languageManager.locale.languageCode == locale.languageCode
-                      ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                      ? Icon(Icons.check_circle, color: AppColors.primary)
                       : null,
                   onTap: () async {
                     switch (locale.languageCode) {
@@ -568,43 +943,95 @@ class _ProfilePageState extends State<ProfilePage> {
                     }
                     Navigator.of(context).pop();
                   },
-                );
-              }).toList(),
-            ],
-          ),
-        );
-      },
+                ),
+              );
+            }).toList(),
+            const SizedBox(height: AppDimensions.paddingL),
+          ],
+        ),
+      ),
     );
+  }
+
+  Map<String, String> _getLanguageData(String languageCode) {
+    switch (languageCode) {
+      case 'fa':
+        return {'flag': '🇮🇷', 'name': 'فارسی', 'nativeName': 'Persian'};
+      case 'en':
+        return {'flag': '🇺🇸', 'name': 'English', 'nativeName': 'English'};
+      case 'ar':
+        return {'flag': '🇸🇦', 'name': 'العربية', 'nativeName': 'Arabic'};
+      case 'ru':
+        return {'flag': '🇷🇺', 'name': 'Русский', 'nativeName': 'Russian'};
+      case 'zh':
+        return {'flag': '🇨🇳', 'name': '中文', 'nativeName': 'Chinese'};
+      default:
+        return {
+          'flag': '🌐',
+          'name': languageCode.toUpperCase(),
+          'nativeName': 'Unknown',
+        };
+    }
   }
 
   void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('خروج از حساب'),
-        content: const Text(
-          'آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟',
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+        ),
+        icon: Icon(Icons.logout, color: AppColors.error, size: 48),
+        title: Text(
+          'خروج از حساب کاربری',
+          style: AppTextStyles.headlineSmall.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          'آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟\n\nشما می‌توانید دوباره با اطلاعات خود وارد شوید.',
+          style: AppTextStyles.bodyMedium,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('انصراف'),
+            child: Text('انصراف', style: TextStyle(color: AppColors.grey600)),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // TODO: Implement logout
-              debugPrint('User logged out');
+              _performLogout();
             },
-            child: const Text('خروج', style: TextStyle(color: AppColors.error)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              foregroundColor: AppColors.white,
+            ),
+            child: const Text('خروج'),
           ),
         ],
       ),
     );
   }
+
+  void _performLogout() {
+    // TODO: Implement actual logout logic
+    debugPrint('User logged out');
+
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('با موفقیت خارج شدید'),
+        backgroundColor: AppColors.success,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+
+    // Navigate to login page (for now just print)
+    // Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
 }
 
-// User Model
+// Updated User Model with additional fields
 class UserModel {
   final String id;
   final String name;
@@ -613,6 +1040,8 @@ class UserModel {
   final String profileImage;
   final String joinDate;
   final bool isVerified;
+  final int totalOrders;
+  final double totalSpent;
 
   const UserModel({
     required this.id,
@@ -622,10 +1051,29 @@ class UserModel {
     required this.profileImage,
     required this.joinDate,
     required this.isVerified,
+    required this.totalOrders,
+    required this.totalSpent,
   });
 }
 
-// Profile Menu Item Model
+// Modern Menu Item Model
+class ModernMenuItem {
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback onTap;
+  final Widget? trailing;
+
+  const ModernMenuItem({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    required this.onTap,
+    this.trailing,
+  });
+}
+
+// Profile Menu Item Model (legacy support)
 class ProfileMenuItem {
   final IconData icon;
   final String title;

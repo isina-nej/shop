@@ -69,4 +69,7 @@ class AppColors {
   // Shadow Colors
   static const Color shadowLight = Color(0x1F000000);
   static const Color shadowDark = Color(0x3F000000);
+  static const Color purple = Color.fromARGB(255, 235, 37, 189);
+
+
 }
