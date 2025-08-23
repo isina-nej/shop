@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:shimmer/shimmer.dart';
 import 'dart:math' as math;
 import '../../../core/localization/translation_manager.dart';
@@ -8,8 +7,14 @@ import '../../../core/localization/translation_manager.dart';
 class ModernLoadingScreen extends StatefulWidget {
   final Widget? child;
   final Future<void>? initializationFuture;
+  final String? status;
 
-  const ModernLoadingScreen({super.key, this.child, this.initializationFuture});
+  const ModernLoadingScreen({
+    super.key,
+    this.child,
+    this.initializationFuture,
+    this.status,
+  });
 
   @override
   State<ModernLoadingScreen> createState() => _ModernLoadingScreenState();
@@ -30,7 +35,23 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
   void initState() {
     super.initState();
     _setupAnimations();
-    _initializeApp();
+    // Only initialize if we need to wait for something
+    if (widget.initializationFuture != null) {
+      _initializeApp();
+    } else {
+      // If no initialization future, check if we have a child to show
+      if (widget.child != null) {
+        // Show loading for a short time then show child
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (mounted) {
+            setState(() {
+              _showContent = true;
+            });
+          }
+        });
+      }
+      // If no child, just keep showing loading (controlled externally)
+    }
   }
 
   void _setupAnimations() {
@@ -72,12 +93,6 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
       if (widget.initializationFuture != null) {
         await widget.initializationFuture!;
       }
-
-      // Add minimum loading time for better UX
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      // Wait a bit more then show content
-      await Future.delayed(const Duration(milliseconds: 500));
 
       if (mounted) {
         setState(() {
@@ -273,28 +288,24 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
   Widget _buildLoadingText(ThemeData theme) {
     return Column(
       children: [
-        AnimatedTextKit(
-          animatedTexts: [
-            TyperAnimatedText(
-              TranslationManager.instance.translate('loading') != 'loading'
+        // Show custom status if provided, otherwise show default
+        Text(
+          widget.status ??
+              (TranslationManager.instance.translate('loading') != 'loading'
                   ? TranslationManager.instance.translate('loading')
-                  : 'بارگذاری...',
-              textStyle: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: theme.brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black87,
-              ),
-              speed: const Duration(milliseconds: 100),
-            ),
-          ],
-          totalRepeatCount: 1,
+                  : 'Loading...'),
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: theme.brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black87,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
           TranslationManager.instance.translate('please_wait') != 'please_wait'
               ? TranslationManager.instance.translate('please_wait')
-              : 'لطفا منتظر بمانید',
+              : 'Please wait...',
           style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.brightness == Brightness.dark
                 ? Colors.grey[400]
@@ -341,7 +352,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
 
         // Version info
         Text(
-          'نسخه 1.0.0',
+          'Version 1.0.0',
           style: theme.textTheme.bodySmall?.copyWith(
             color: isDark ? Colors.grey[500] : Colors.grey[400],
           ),

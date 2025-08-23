@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
@@ -11,73 +12,140 @@ import 'shared/widgets/loading/modern_loading_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const InitializingApp());
+  runApp(const ShopApp());
 }
 
-class InitializingApp extends StatefulWidget {
-  const InitializingApp({super.key});
+class ShopApp extends StatefulWidget {
+  const ShopApp({super.key});
 
   @override
-  State<InitializingApp> createState() => _InitializingAppState();
+  State<ShopApp> createState() => _ShopAppState();
 }
 
-class _InitializingAppState extends State<InitializingApp> {
-  late Future<AppManagers?> _initializationFuture;
+class _ShopAppState extends State<ShopApp> {
+  AppManagers? _appManagers;
+  String _loadingStatus = 'Starting...';
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    _initializationFuture = _initializeApp();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    try {
+      setState(() {
+        _loadingStatus = 'Loading translations...';
+      });
+
+      await TranslationManager.instance.initialize();
+
+      setState(() {
+        _loadingStatus = 'Loading themes...';
+      });
+
+      final themeManager = AdvancedThemeManager();
+      await themeManager.initialize();
+
+      setState(() {
+        _loadingStatus = 'Loading language settings...';
+      });
+
+      final languageManager = LanguageManager();
+      await languageManager.loadLanguage();
+
+      setState(() {
+        _loadingStatus = 'Ready!';
+      });
+
+      _appManagers = AppManagers(
+        themeManager: themeManager,
+        languageManager: languageManager,
+      );
+
+      // Small delay to show "Ready!" message
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (mounted) {
+        setState(() {
+          // This will trigger showing the main app
+        });
+      }
+    } catch (e) {
+      debugPrint('Initialization error: $e');
+      setState(() {
+        _hasError = true;
+        _loadingStatus = 'Error occurred';
+      });
+
+      // Still try to create managers with defaults
+      _appManagers = AppManagers(
+        themeManager: AdvancedThemeManager(),
+        languageManager: LanguageManager(),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shop',
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
-      home: ModernLoadingScreen(
-        initializationFuture: _initializationFuture.then((_) {}),
-        child: FutureBuilder<AppManagers?>(
-          future: _initializationFuture,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return MyApp(
-                themeManager: snapshot.data!.themeManager,
-                languageManager: snapshot.data!.languageManager,
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-
-  Future<AppManagers?> _initializeApp() async {
-    try {
-      // Initialize translation manager
-      await TranslationManager.instance.initialize();
-
-      // Initialize theme manager
-      final themeManager = AdvancedThemeManager();
-      await themeManager.initialize();
-
-      // Initialize language manager
-      final languageManager = LanguageManager();
-      await languageManager.loadLanguage();
-
-      // Add minimum loading time for better UX
-      await Future.delayed(const Duration(milliseconds: 2000));
-
-      return AppManagers(
-        themeManager: themeManager,
-        languageManager: languageManager,
+    // Show loading screen until managers are ready
+    if (_appManagers == null) {
+      return MaterialApp(
+        title: 'SinaShop',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: ModernLoadingScreen(status: _loadingStatus),
+        debugShowCheckedModeBanner: false,
       );
-    } catch (e) {
-      debugPrint('Initialization error: $e');
-      return null;
     }
+
+    // Show the actual app
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: _appManagers!.themeManager),
+        ChangeNotifierProvider.value(value: _appManagers!.languageManager),
+      ],
+      child: Consumer2<AdvancedThemeManager, LanguageManager>(
+        builder: (context, themeManager, languageManager, child) {
+          return AnimatedTheme(
+            data:
+                themeManager.themeMode == ThemeMode.dark ||
+                    (themeManager.themeMode == ThemeMode.system &&
+                        MediaQuery.platformBrightnessOf(context) ==
+                            Brightness.dark)
+                ? themeManager.getDarkTheme()
+                : themeManager.getLightTheme(),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: MaterialApp(
+              title: TranslationManager.instance.translate('app_name'),
+              theme: themeManager.getLightTheme(),
+              darkTheme: themeManager.getDarkTheme(),
+              themeMode: themeManager.themeMode,
+              locale: languageManager.locale,
+              supportedLocales: LanguageManager.supportedLocales,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              onGenerateRoute: AppRouter.generateRoute,
+              builder: (context, child) {
+                return Directionality(
+                  textDirection: languageManager.textDirection,
+                  child: child!,
+                );
+              },
+              home: ThemeProvider(
+                themeManager: themeManager,
+                child: const MainLayout(),
+              ),
+              debugShowCheckedModeBanner: false,
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
