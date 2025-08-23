@@ -7,7 +7,6 @@ import 'core/localization/language_manager.dart';
 import 'core/routing/app_router.dart';
 import 'shared/widgets/layouts/main_layout.dart';
 import 'core/localization/translation_manager.dart';
-import 'shared/widgets/loading/modern_loading_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +23,6 @@ class ShopApp extends StatefulWidget {
 
 class _ShopAppState extends State<ShopApp> {
   AppManagers? _appManagers;
-  String _loadingStatus = 'Starting...';
-  bool _hasError = false;
 
   @override
   void initState() {
@@ -35,37 +32,19 @@ class _ShopAppState extends State<ShopApp> {
 
   Future<void> _initializeApp() async {
     try {
-      setState(() {
-        _loadingStatus = 'Loading translations...';
-      });
-
+      // Initialize all managers in the background
       await TranslationManager.instance.initialize();
-
-      setState(() {
-        _loadingStatus = 'Loading themes...';
-      });
 
       final themeManager = AdvancedThemeManager();
       await themeManager.initialize();
 
-      setState(() {
-        _loadingStatus = 'Loading language settings...';
-      });
-
       final languageManager = LanguageManager();
       await languageManager.loadLanguage();
-
-      setState(() {
-        _loadingStatus = 'Ready!';
-      });
 
       _appManagers = AppManagers(
         themeManager: themeManager,
         languageManager: languageManager,
       );
-
-      // Small delay to show "Ready!" message
-      await Future.delayed(const Duration(milliseconds: 300));
 
       if (mounted) {
         setState(() {
@@ -74,10 +53,6 @@ class _ShopAppState extends State<ShopApp> {
       }
     } catch (e) {
       debugPrint('Initialization error: $e');
-      setState(() {
-        _hasError = true;
-        _loadingStatus = 'Error occurred';
-      });
 
       // Still try to create managers with defaults
       _appManagers = AppManagers(
@@ -89,12 +64,20 @@ class _ShopAppState extends State<ShopApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Show loading screen until managers are ready
+    // Show a minimal loading widget until managers are ready
     if (_appManagers == null) {
       return MaterialApp(
         title: 'SinaShop',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: ModernLoadingScreen(status: _loadingStatus),
+        home: const Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
       );
     }
