@@ -3,29 +3,89 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_manager.dart';
-import 'core/routing/enhanced_app_router.dart'; // استفاده از router جدید
-import 'shared/widgets/layouts/enhanced_main_layout.dart'; // استفاده از layout جدید
+import 'core/routing/app_router.dart';
+import 'shared/widgets/layouts/main_layout.dart';
 import 'core/localization/translation_manager.dart';
+import 'shared/widgets/loading/modern_loading_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize translation manager
-  await TranslationManager.instance.initialize();
+  runApp(const InitializingApp());
+}
 
-  // Initialize theme manager
-  final themeManager = AdvancedThemeManager();
-  await themeManager.initialize();
+class InitializingApp extends StatefulWidget {
+  const InitializingApp({super.key});
 
-  // Initialize language manager
-  final languageManager = LanguageManager();
-  await languageManager.loadLanguage();
+  @override
+  State<InitializingApp> createState() => _InitializingAppState();
+}
 
-  // Preload critical pages for better performance
-  // این خط صفحات مهم را از قبل لود می‌کند
-  await EnhancedAppRouter.preloadCriticalPages();
+class _InitializingAppState extends State<InitializingApp> {
+  late Future<AppManagers?> _initializationFuture;
 
-  runApp(MyApp(themeManager: themeManager, languageManager: languageManager));
+  @override
+  void initState() {
+    super.initState();
+    _initializationFuture = _initializeApp();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Shop',
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
+      home: ModernLoadingScreen(
+        initializationFuture: _initializationFuture.then((_) {}),
+        child: FutureBuilder<AppManagers?>(
+          future: _initializationFuture,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return MyApp(
+                themeManager: snapshot.data!.themeManager,
+                languageManager: snapshot.data!.languageManager,
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+
+  Future<AppManagers?> _initializeApp() async {
+    try {
+      // Initialize translation manager
+      await TranslationManager.instance.initialize();
+
+      // Initialize theme manager
+      final themeManager = AdvancedThemeManager();
+      await themeManager.initialize();
+
+      // Initialize language manager
+      final languageManager = LanguageManager();
+      await languageManager.loadLanguage();
+
+      // Add minimum loading time for better UX
+      await Future.delayed(const Duration(milliseconds: 2000));
+
+      return AppManagers(
+        themeManager: themeManager,
+        languageManager: languageManager,
+      );
+    } catch (e) {
+      debugPrint('Initialization error: $e');
+      return null;
+    }
+  }
+}
+
+class AppManagers {
+  final AdvancedThemeManager themeManager;
+  final LanguageManager languageManager;
+
+  AppManagers({required this.themeManager, required this.languageManager});
 }
 
 class MyApp extends StatelessWidget {
@@ -69,18 +129,16 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              // استفاده از Enhanced Router با Lazy Loading
-              onGenerateRoute: EnhancedAppRouter.generateRoute,
+              onGenerateRoute: AppRouter.generateRoute,
               builder: (context, child) {
                 return Directionality(
                   textDirection: languageManager.textDirection,
                   child: child!,
                 );
               },
-              // استفاده از Enhanced Main Layout با Lazy Loading
               home: ThemeProvider(
                 themeManager: themeManager,
-                child: const EnhancedMainLayout(),
+                child: const MainLayout(),
               ),
               debugShowCheckedModeBanner: false,
             ),

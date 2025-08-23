@@ -1,5 +1,7 @@
 // Lazy Loading Router Implementation
 import 'package:flutter/material.dart';
+import '../../shared/widgets/loading/modern_loading_screen.dart';
+import '../localization/translation_manager.dart';
 
 class LazyRouter {
   // Route names (same as AppRouter)
@@ -364,18 +366,64 @@ class LazyLoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: 16),
-            Text(
-              'در حال بارگیری...',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ],
+      backgroundColor: isDark
+          ? const Color(0xFF0A0A0A)
+          : const Color(0xFFF8F9FA),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isDark
+                ? [const Color(0xFF0A0A0A), const Color(0xFF1A1A1A)]
+                : [const Color(0xFFF8F9FA), const Color(0xFFE3F2FD)],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Modern loading indicator
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [const Color(0xFF3B82F6), const Color(0xFF6366F1)],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF3B82F6).withOpacity(0.3),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(12),
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                TranslationManager.instance.translate('loading') != 'loading'
+                    ? TranslationManager.instance.translate('loading')
+                    : 'بارگذاری...',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: isDark ? Colors.white : Colors.black87,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

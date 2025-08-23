@@ -326,34 +326,86 @@ class DeferredLoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: 24),
-            Text(
-              'در حال بارگیری $pageName...',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 16),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 32),
-              child: LinearProgressIndicator(
-                value: DeferredPageLoader.getLoadingProgress(),
-                backgroundColor: Colors.grey.shade300,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor,
+      backgroundColor: isDark
+          ? const Color(0xFF0A0A0A)
+          : const Color(0xFFF8F9FA),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isDark
+                ? [const Color(0xFF0A0A0A), const Color(0xFF1A1A1A)]
+                : [const Color(0xFFF8F9FA), const Color(0xFFE3F2FD)],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Modern loading indicator
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xFF3B82F6),
+                      const Color(0xFF6366F1),
+                      const Color(0xFF8B5CF6),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF3B82F6).withOpacity(0.3),
+                      blurRadius: 20,
+                      spreadRadius: 3,
+                    ),
+                  ],
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${(DeferredPageLoader.getLoadingProgress() * 100).toInt()}% کامل شده',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
+              const SizedBox(height: 32),
+              Text(
+                'در حال بارگیری $pageName...',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: isDark ? Colors.white : Colors.black87,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 32),
+                width: 200,
+                child: LinearProgressIndicator(
+                  value: DeferredPageLoader.getLoadingProgress(),
+                  backgroundColor: isDark ? Colors.grey[800] : Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    const Color(0xFF3B82F6),
+                  ),
+                  minHeight: 4,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                '${(DeferredPageLoader.getLoadingProgress() * 100).toInt()}% کامل شده',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

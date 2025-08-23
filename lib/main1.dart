@@ -3,8 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_manager.dart';
-import 'core/routing/app_router.dart';
-import 'shared/widgets/layouts/main_layout.dart';
+import 'core/routing/enhanced_app_router.dart'; // استفاده از router جدید
+import 'shared/widgets/layouts/enhanced_main_layout.dart'; // استفاده از layout جدید
 import 'core/localization/translation_manager.dart';
 
 void main() async {
@@ -20,6 +20,10 @@ void main() async {
   // Initialize language manager
   final languageManager = LanguageManager();
   await languageManager.loadLanguage();
+
+  // Preload critical pages for better performance
+  // این خط صفحات مهم را از قبل لود می‌کند
+  await EnhancedAppRouter.preloadCriticalPages();
 
   runApp(MyApp(themeManager: themeManager, languageManager: languageManager));
 }
@@ -65,16 +69,18 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              onGenerateRoute: AppRouter.generateRoute,
+              // استفاده از Enhanced Router با Lazy Loading
+              onGenerateRoute: EnhancedAppRouter.generateRoute,
               builder: (context, child) {
                 return Directionality(
                   textDirection: languageManager.textDirection,
                   child: child!,
                 );
               },
+              // استفاده از Enhanced Main Layout با Lazy Loading
               home: ThemeProvider(
                 themeManager: themeManager,
-                child: const MainLayout(),
+                child: const EnhancedMainLayout(),
               ),
               debugShowCheckedModeBanner: false,
             ),
