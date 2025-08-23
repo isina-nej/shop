@@ -131,12 +131,12 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AppDimensions.paddingL),
+          const CircularProgressIndicator(),
+          const SizedBox(height: AppDimensions.paddingL),
           Text(context.tr('loading')),
         ],
       ),
@@ -154,7 +154,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(60),
               ),
               child: Icon(Icons.payment, size: 60, color: AppColors.primary),
@@ -286,7 +286,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
       child: Container(
         padding: const EdgeInsets.all(AppDimensions.paddingM),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         ),
         child: Column(
@@ -412,7 +412,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         boxShadow: [
           BoxShadow(
-            color: _getPaymentMethodColor(method.type).withOpacity(0.3),
+            color: _getPaymentMethodColor(method.type).withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -433,7 +433,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.2),
+                        color: AppColors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Icon(
@@ -465,7 +465,9 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                                     vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.white.withOpacity(0.2),
+                                    color: AppColors.white.withValues(
+                                      alpha: 0.2,
+                                    ),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -482,7 +484,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                           Text(
                             method.subtitle,
                             style: AppTextStyles.bodyMedium.copyWith(
-                              color: AppColors.white.withOpacity(0.8),
+                              color: AppColors.white.withValues(alpha: 0.8),
                             ),
                           ),
                           if (method.type == PaymentMethodType.card &&
@@ -490,7 +492,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                             Text(
                               'انقضا: ${method.expiryDate}',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.white.withOpacity(0.7),
+                                color: AppColors.white.withValues(alpha: 0.7),
                               ),
                             ),
                         ],
@@ -502,18 +504,18 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                           _handlePaymentMethodAction(method, value),
                       itemBuilder: (context) => [
                         if (!method.isDefault)
-                          const PopupMenuItem(
+                          PopupMenuItem(
                             value: 'set_default',
                             child: ListTile(
-                              leading: Icon(Icons.star_border),
+                              leading: const Icon(Icons.star_border),
                               title: Text(context.tr('set_as_default')),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'edit',
                           child: ListTile(
-                            leading: Icon(Icons.edit),
+                            leading: const Icon(Icons.edit),
                             title: Text(context.tr('edit')),
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -541,7 +543,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                         child: Text(
                           method.holderName ?? '',
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.white.withOpacity(0.8),
+                            color: AppColors.white.withValues(alpha: 0.8),
                           ),
                         ),
                       ),
@@ -549,7 +551,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                         Text(
                           method.bankName!,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.white.withOpacity(0.7),
+                            color: AppColors.white.withValues(alpha: 0.7),
                           ),
                         ),
                     ],
@@ -595,7 +597,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
     return LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      colors: [color, color.withOpacity(0.8)],
+      colors: [color, color.withValues(alpha: 0.8)],
     );
   }
 
@@ -786,7 +788,7 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Icon(Icons.credit_card, color: AppColors.primary),
@@ -805,7 +807,7 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
+                  color: AppColors.success.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Icon(
@@ -835,7 +837,7 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: AppColors.warning.withOpacity(0.1),
+                  color: AppColors.warning.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Icon(Icons.payment, color: AppColors.warning),
@@ -1022,6 +1024,7 @@ class _AddCardSheetState extends State<AddCardSheet> {
     );
 
     setState(() => _isLoading = false);
+    if (!mounted) return;
     Navigator.pop(context);
     widget.onCardAdded(cardMethod);
   }
@@ -1072,7 +1075,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
+                        color: AppColors.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
@@ -1108,6 +1111,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
     await Future.delayed(const Duration(seconds: 2));
     setState(() => _isLoading = false);
 
+    if (!mounted) return;
     Navigator.pop(context);
     widget.onCharged(_amountController.text);
   }

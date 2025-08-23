@@ -5,7 +5,6 @@ import '../../../features/products/presentation/pages/products_page.dart';
 import '../../../features/cart/presentation/pages/cart_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/routing/app_router.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});

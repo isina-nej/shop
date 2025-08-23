@@ -1,6 +1,5 @@
 // Security Settings Page - Complete Security Management
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -24,9 +23,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
   bool _biometricEnabled = true;
   bool _loginNotifications = true;
   bool _suspiciousActivityAlerts = true;
-  String _lastPasswordChange = '۳ ماه پیش';
+  final String _lastPasswordChange = '۳ ماه پیش';
   List<LoginSession> _activeSessions = [];
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -145,7 +143,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: _getSecurityLevelColor(securityLevel).withOpacity(0.1),
+                  color: _getSecurityLevelColor(securityLevel).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
@@ -235,7 +233,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.warning.withOpacity(0.1),
+                color: AppColors.warning.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -245,7 +243,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ),
             title: Text(context.tr('change_password')),
-            subtitle: Text('${context.tr('last_change')}: $_lastPasswordChange'),
+            subtitle: Text(
+              '${context.tr('last_change')}: $_lastPasswordChange',
+            ),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _changePassword,
           ),
@@ -258,7 +258,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.info.withOpacity(0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(Icons.history, color: AppColors.info, size: 20),
@@ -319,7 +319,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               decoration: BoxDecoration(
                 color:
                     (_twoFactorEnabled ? AppColors.success : AppColors.grey400)
-                        .withOpacity(0.1),
+                        .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -345,9 +345,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
             Container(
               padding: const EdgeInsets.all(AppDimensions.paddingM),
               decoration: BoxDecoration(
-                color: AppColors.success.withOpacity(0.1),
+                color: AppColors.success.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-                border: Border.all(color: AppColors.success.withOpacity(0.3)),
+                border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
               ),
               child: Column(
                 children: [
@@ -447,7 +447,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               height: 40,
               decoration: BoxDecoration(
                 color: (_biometricEnabled ? AppColors.info : AppColors.grey400)
-                    .withOpacity(0.1),
+                    .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -520,7 +520,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                     (_loginNotifications
                             ? AppColors.warning
                             : AppColors.grey400)
-                        .withOpacity(0.1),
+                        .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -553,7 +553,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                     (_suspiciousActivityAlerts
                             ? AppColors.error
                             : AppColors.grey400)
-                        .withOpacity(0.1),
+                        .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -611,16 +611,15 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
               TextButton(
                 onPressed: _terminateAllSessions,
-                child: Text(context.tr('logout_all')),
                 style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                child: Text(context.tr('logout_all')),
               ),
             ],
           ),
           const SizedBox(height: AppDimensions.paddingL),
 
           ..._activeSessions
-              .map((session) => _buildSessionItem(session))
-              .toList(),
+              .map((session) => _buildSessionItem(session)),
         ],
       ),
     );
@@ -632,11 +631,11 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
       padding: const EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
         color: session.isCurrent
-            ? AppColors.primary.withOpacity(0.1)
+            ? AppColors.primary.withValues(alpha: 0.1)
             : AppColors.grey100,
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         border: session.isCurrent
-            ? Border.all(color: AppColors.primary.withOpacity(0.3))
+            ? Border.all(color: AppColors.primary.withValues(alpha: 0.3))
             : null,
       ),
       child: Column(
@@ -746,7 +745,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.info.withOpacity(0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -769,7 +768,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.warning.withOpacity(0.1),
+                color: AppColors.warning.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -838,9 +837,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
 
   void _showPasswordHistory() {
     // TODO: Show password history
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(context.tr('password_history_view'))));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.tr('password_history_view'))),
+    );
   }
 
   void _toggleTwoFactor(bool? value) {
@@ -909,9 +908,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
   }
 
   void _manageTwoFactorMethods() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.tr('two_factor_methods'))),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(context.tr('two_factor_methods'))));
   }
 
   void _showBackupCodes() {
@@ -940,7 +939,11 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 _activeSessions.removeWhere((s) => s.id == session.id);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${context.tr('logged_out_from_device')}: ${session.device}')),
+                SnackBar(
+                  content: Text(
+                    '${context.tr('logged_out_from_device')}: ${session.device}',
+                  ),
+                ),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
@@ -971,7 +974,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 _activeSessions.removeWhere((s) => !s.isCurrent);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                 SnackBar(
                   content: Text(context.tr('logged_out_all_devices')),
                 ),
               );
@@ -1013,7 +1016,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                 SnackBar(
                   content: Text(context.tr('delete_account_request_sent')),
                   backgroundColor: AppColors.error,
                 ),
@@ -1159,9 +1162,11 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     await Future.delayed(const Duration(seconds: 2));
     setState(() => _isLoading = false);
 
+    if (!mounted) return;
+    
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(context.tr('password_changed_successfully')),
         backgroundColor: AppColors.success,
       ),

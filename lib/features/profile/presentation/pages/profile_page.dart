@@ -1026,7 +1026,7 @@ class _ProfilePageState extends State<ProfilePage>
     // Show success message
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-  content: Text(context.tr('logout_successful')),
+        content: Text(context.tr('logout_successful')),
         backgroundColor: AppColors.success,
         behavior: SnackBarBehavior.floating,
       ),

@@ -120,7 +120,6 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
   }
 
   Widget _buildNotificationOverview(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final activeNotifications = _getActiveNotificationsCount();
 
     return Container(

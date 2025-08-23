@@ -121,12 +121,12 @@ class _SettingsPageState extends State<SettingsPage>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -138,7 +138,7 @@ class _SettingsPageState extends State<SettingsPage>
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(40),
             ),
             child: Icon(Icons.person, color: AppColors.white, size: 40),
@@ -159,14 +159,14 @@ class _SettingsPageState extends State<SettingsPage>
                 Text(
                   'ali.ahmadi@email.com',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.white.withOpacity(0.9),
+                    color: AppColors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 const SizedBox(height: AppDimensions.paddingS),
                 Text(
                   'عضو از: آذر ۱۴۰۲',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.white.withOpacity(0.8),
+                    color: AppColors.white.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -562,7 +562,7 @@ class _SettingsPageState extends State<SettingsPage>
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(icon, color: color, size: 20),
@@ -746,7 +746,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _showLanguageChangeDialog() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(context.tr('language_changed_restart')),
         duration: Duration(seconds: 3),
       ),
@@ -755,7 +755,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _enableBiometricAuth() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(context.tr('biometric_enabled')),
         backgroundColor: AppColors.success,
       ),
@@ -788,7 +788,7 @@ class _SettingsPageState extends State<SettingsPage>
               Navigator.pop(context);
               setState(() => _cacheSize = 0.0);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text(context.tr('cache_cleared')),
                   backgroundColor: AppColors.success,
                 ),
@@ -822,7 +822,7 @@ class _SettingsPageState extends State<SettingsPage>
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text(context.tr('backup_completed')),
                   backgroundColor: AppColors.success,
                 ),
@@ -855,7 +855,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   void _exportSettings() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(context.tr('settings_exported')),
         backgroundColor: AppColors.success,
       ),
@@ -886,7 +886,7 @@ class _SettingsPageState extends State<SettingsPage>
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(context.tr('all_settings_reset')),
         backgroundColor: AppColors.success,
       ),

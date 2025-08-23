@@ -166,7 +166,9 @@ class _ReviewsPageState extends State<ReviewsPage>
                 children: [
                   const Icon(Icons.pending_outlined),
                   const SizedBox(width: 8),
-                  Text('${context.tr('pending_reviews')} (${_pendingReviews.length})'),
+                  Text(
+                    '${context.tr('pending_reviews')} (${_pendingReviews.length})',
+                  ),
                 ],
               ),
             ),
@@ -191,12 +193,12 @@ class _ReviewsPageState extends State<ReviewsPage>
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: AppDimensions.paddingL),
+          const CircularProgressIndicator(),
+          const SizedBox(height: AppDimensions.paddingL),
           Text(context.tr('loading_reviews')),
         ],
       ),
@@ -260,7 +262,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.grey400.withOpacity(0.1),
+                color: AppColors.grey400.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(60),
               ),
               child: Icon(icon, size: 60, color: AppColors.grey400),
@@ -367,7 +369,7 @@ class _ReviewsPageState extends State<ReviewsPage>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -393,9 +395,9 @@ class _ReviewsPageState extends State<ReviewsPage>
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
-        color: AppColors.info.withOpacity(0.1),
+        color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-        border: Border.all(color: AppColors.info.withOpacity(0.3)),
+        border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -485,10 +487,10 @@ class _ReviewsPageState extends State<ReviewsPage>
               PopupMenuButton<String>(
                 onSelected: (value) => _handleReviewAction(review, value),
                 itemBuilder: (context) => [
-                  const PopupMenuItem(
+                  PopupMenuItem(
                     value: 'edit',
                     child: ListTile(
-                      leading: Icon(Icons.edit),
+                      leading: const Icon(Icons.edit),
                       title: Text(context.tr('edit_review')),
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -496,7 +498,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                   PopupMenuItem(
                     value: 'share',
                     child: ListTile(
-                      leading: Icon(Icons.share),
+                      leading: const Icon(Icons.share),
                       title: Text(context.tr('share')),
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -619,7 +621,7 @@ class _ReviewsPageState extends State<ReviewsPage>
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-        border: Border.all(color: AppColors.warning.withOpacity(0.3)),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
             color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
@@ -788,14 +790,12 @@ class _ReviewsPageState extends State<ReviewsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('حذف نظر'),
-        content: const Text(
-          'آیا مطمئن هستید که می‌خواهید این نظر را حذف کنید؟',
-        ),
+        title: Text(context.tr('delete_review')),
+        content: Text(context.tr('confirm_delete_review')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -804,14 +804,14 @@ class _ReviewsPageState extends State<ReviewsPage>
                 _myReviews.removeWhere((r) => r.id == review.id);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('نظر حذف شد'),
+                SnackBar(
+                  content: Text(context.tr('review_deleted')),
                   backgroundColor: AppColors.error,
                 ),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            child: Text(context.tr('delete')),
           ),
         ],
       ),
@@ -830,8 +830,8 @@ class _ReviewsPageState extends State<ReviewsPage>
             _myReviews.insert(0, newReview);
           });
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('نظر شما با موفقیت ثبت شد'),
+            SnackBar(
+              content: Text(context.tr('review_submitted_successfully')),
               backgroundColor: AppColors.success,
             ),
           );
@@ -1011,8 +1011,10 @@ class _WriteReviewDialogState extends State<WriteReviewDialog> {
       isPending: false,
     );
 
-    Navigator.pop(context);
-    widget.onReviewSubmitted(updatedReview);
+    if (mounted) {
+      Navigator.pop(context);
+      widget.onReviewSubmitted(updatedReview);
+    }
   }
 }
 

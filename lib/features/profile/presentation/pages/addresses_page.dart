@@ -20,7 +20,6 @@ class _AddressesPageState extends State<AddressesPage>
   late Animation<double> _fadeAnimation;
 
   List<AddressModel> _addresses = [];
-  bool _isLoading = false;
 
   @override
   void initState() {

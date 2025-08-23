@@ -178,12 +178,12 @@ class _SupportPageState extends State<SupportPage>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -195,7 +195,7 @@ class _SupportPageState extends State<SupportPage>
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(40),
             ),
             child: Icon(Icons.support_agent, color: AppColors.white, size: 40),
@@ -212,7 +212,7 @@ class _SupportPageState extends State<SupportPage>
           Text(
             'ما اینجا هستیم تا به شما کمک کنیم\n۷ روز هفته، ۲۴ ساعت شبانه‌روز',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.white.withOpacity(0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
             ),
             textAlign: TextAlign.center,
           ),
@@ -303,7 +303,7 @@ class _SupportPageState extends State<SupportPage>
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Icon(icon, color: color, size: 24),
@@ -367,7 +367,7 @@ class _SupportPageState extends State<SupportPage>
           Container(
             padding: const EdgeInsets.all(AppDimensions.paddingM),
             decoration: BoxDecoration(
-              color: AppColors.info.withOpacity(0.1),
+              color: AppColors.info.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
             ),
             child: Row(
@@ -518,7 +518,7 @@ class _SupportPageState extends State<SupportPage>
       child: Container(
         padding: const EdgeInsets.all(AppDimensions.paddingM),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         ),
         child: Column(
@@ -536,7 +536,7 @@ class _SupportPageState extends State<SupportPage>
             Text(
               subtitle,
               style: AppTextStyles.labelSmall.copyWith(
-                color: color.withOpacity(0.8),
+                color: color.withValues(alpha: 0.8),
               ),
               textAlign: TextAlign.center,
             ),
@@ -621,7 +621,7 @@ class _SupportPageState extends State<SupportPage>
               labelText: 'بخش مربوطه',
               prefixIcon: Icon(Icons.category),
             ),
-            items: const [
+            items:  [
               DropdownMenuItem(
                 value: 'general',
                 child: Text(context.tr('general')),
@@ -662,7 +662,7 @@ class _SupportPageState extends State<SupportPage>
               labelText: 'اولویت',
               prefixIcon: Icon(Icons.priority_high),
             ),
-            items: const [
+            items:  [
               DropdownMenuItem(value: 'low', child: Text(context.tr('low'))),
               DropdownMenuItem(
                 value: 'normal',
@@ -764,7 +764,7 @@ class _SupportPageState extends State<SupportPage>
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.grey400.withOpacity(0.1),
+                color: AppColors.grey400.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(60),
               ),
               child: Icon(
@@ -810,7 +810,7 @@ class _SupportPageState extends State<SupportPage>
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         border: Border.all(
-          color: _getStatusColor(ticket.status).withOpacity(0.3),
+          color: _getStatusColor(ticket.status).withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
@@ -828,7 +828,7 @@ class _SupportPageState extends State<SupportPage>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _getStatusColor(ticket.status).withOpacity(0.1),
+                  color: _getStatusColor(ticket.status).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -843,7 +843,7 @@ class _SupportPageState extends State<SupportPage>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _getPriorityColor(ticket.priority).withOpacity(0.1),
+                  color: _getPriorityColor(ticket.priority).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -1090,7 +1090,7 @@ class _SupportPageState extends State<SupportPage>
     _messageController.clear();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+       SnackBar(
         content: Text(context.tr('ticket_submitted_successfully')),
         backgroundColor: AppColors.success,
       ),
@@ -1114,9 +1114,9 @@ class _SupportPageState extends State<SupportPage>
         ticket: ticket,
         onReply: (message) {
           // Add reply to ticket
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(context.tr('your_reply_sent'))));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.tr('your_reply_sent'))),
+          );
         },
       ),
     );
@@ -1169,7 +1169,7 @@ class TicketDetailsDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(AppDimensions.paddingM),
                     decoration: BoxDecoration(
                       color: message.isFromUser
-                          ? AppColors.primary.withOpacity(0.1)
+                          ? AppColors.primary.withValues(alpha: 0.1)
                           : AppColors.grey100,
                       borderRadius: BorderRadius.circular(
                         AppDimensions.radiusM,
@@ -1212,7 +1212,7 @@ class TicketDetailsDialog extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('بستن'),
+                  child: Text(context.tr('close')),
                 ),
               ],
             ),
@@ -1255,9 +1255,9 @@ class _ReplyTicketDialogState extends State<ReplyTicketDialog> {
         children: [
           TextField(
             controller: _replyController,
-            decoration: const InputDecoration(
-              hintText: 'پاسخ خود را بنویسید...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              hintText: context.tr('reply_hint'),
+              border: const OutlineInputBorder(),
             ),
             maxLines: 4,
           ),
@@ -1266,7 +1266,7 @@ class _ReplyTicketDialogState extends State<ReplyTicketDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('انصراف'),
+          child: Text(context.tr('cancel')),
         ),
         ElevatedButton(
           onPressed: _isLoading ? null : _sendReply,
