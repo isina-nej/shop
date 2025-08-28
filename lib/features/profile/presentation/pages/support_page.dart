@@ -621,7 +621,7 @@ class _SupportPageState extends State<SupportPage>
               labelText: 'بخش مربوطه',
               prefixIcon: Icon(Icons.category),
             ),
-            items:  [
+            items: [
               DropdownMenuItem(
                 value: 'general',
                 child: Text(context.tr('general')),
@@ -662,7 +662,7 @@ class _SupportPageState extends State<SupportPage>
               labelText: 'اولویت',
               prefixIcon: Icon(Icons.priority_high),
             ),
-            items:  [
+            items: [
               DropdownMenuItem(value: 'low', child: Text(context.tr('low'))),
               DropdownMenuItem(
                 value: 'normal',
@@ -843,7 +843,9 @@ class _SupportPageState extends State<SupportPage>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _getPriorityColor(ticket.priority).withValues(alpha: 0.1),
+                  color: _getPriorityColor(
+                    ticket.priority,
+                  ).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -1089,15 +1091,17 @@ class _SupportPageState extends State<SupportPage>
     _subjectController.clear();
     _messageController.clear();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        content: Text(context.tr('ticket_submitted_successfully')),
-        backgroundColor: AppColors.success,
-      ),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.tr('ticket_submitted_successfully')),
+          backgroundColor: AppColors.success,
+        ),
+      );
 
-    // Switch to my tickets tab
-    _tabController.index = 2;
+      // Switch to my tickets tab
+      _tabController.index = 2;
+    }
   }
 
   void _viewTicket(SupportTicket ticket) {
@@ -1284,7 +1288,9 @@ class _ReplyTicketDialogState extends State<ReplyTicketDialog> {
     setState(() => _isLoading = true);
     await Future.delayed(const Duration(seconds: 1));
 
-    Navigator.pop(context);
+    if (mounted) {
+      Navigator.pop(context);
+    }
     widget.onReply(_replyController.text);
   }
 }

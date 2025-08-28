@@ -143,7 +143,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: _getSecurityLevelColor(securityLevel).withValues(alpha: 0.1),
+                  color: _getSecurityLevelColor(
+                    securityLevel,
+                  ).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
@@ -347,7 +349,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               decoration: BoxDecoration(
                 color: AppColors.success.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-                border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.success.withValues(alpha: 0.3),
+                ),
               ),
               child: Column(
                 children: [
@@ -618,8 +622,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           ),
           const SizedBox(height: AppDimensions.paddingL),
 
-          ..._activeSessions
-              .map((session) => _buildSessionItem(session)),
+          ..._activeSessions.map((session) => _buildSessionItem(session)),
         ],
       ),
     );
@@ -974,9 +977,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                 _activeSessions.removeWhere((s) => !s.isCurrent);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
-                  content: Text(context.tr('logged_out_all_devices')),
-                ),
+                SnackBar(content: Text(context.tr('logged_out_all_devices'))),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
@@ -1016,7 +1017,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(
+                SnackBar(
                   content: Text(context.tr('delete_account_request_sent')),
                   backgroundColor: AppColors.error,
                 ),
@@ -1033,6 +1034,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
 
 // Change Password Dialog
 class ChangePasswordDialog extends StatefulWidget {
+  const ChangePasswordDialog({super.key});
+
   @override
   State<ChangePasswordDialog> createState() => _ChangePasswordDialogState();
 }
@@ -1163,7 +1166,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     setState(() => _isLoading = false);
 
     if (!mounted) return;
-    
+
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -4,7 +4,7 @@ import '../models/product_model.dart';
 
 /// Example screen showing how to use the DataManager
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({Key? key}) : super(key: key);
+  const ProductListScreen({super.key});
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -396,8 +396,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 class ProductDetailScreen extends StatefulWidget {
   final String productId;
 
-  const ProductDetailScreen({Key? key, required this.productId})
-    : super(key: key);
+  const ProductDetailScreen({super.key, required this.productId});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -541,7 +540,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Column(
         children: [
           // Product Images
-          Container(
+          SizedBox(
             height: 300,
             child: PageView.builder(
               itemCount: _product!.images.length,

@@ -3,7 +3,7 @@ import '../../core/localization/localization_extension.dart';
 
 /// صفحه تست ترجمه‌ها
 class TranslationTestPage extends StatefulWidget {
-  const TranslationTestPage({Key? key}) : super(key: key);
+  const TranslationTestPage({super.key});
 
   @override
   State<TranslationTestPage> createState() => _TranslationTestPageState();

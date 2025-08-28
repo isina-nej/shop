@@ -1,6 +1,5 @@
 // Notifications Settings Page - Complete Notification Management
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';

@@ -3,7 +3,7 @@ import '../../core/localization/localization_extension.dart';
 
 /// نمونه صفحه که از سیستم ترجمه JSON استفاده می‌کند
 class JsonTranslationDemo extends StatelessWidget {
-  const JsonTranslationDemo({Key? key}) : super(key: key);
+  const JsonTranslationDemo({super.key});
 
   @override
   Widget build(BuildContext context) {

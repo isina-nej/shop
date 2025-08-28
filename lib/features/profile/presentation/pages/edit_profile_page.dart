@@ -747,14 +747,16 @@ class _EditProfilePageState extends State<EditProfilePage>
       _isLoading = false;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('اطلاعات با موفقیت ذخیره شد'),
-        backgroundColor: AppColors.success,
-      ),
-    );
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('اطلاعات با موفقیت ذخیره شد'),
+          backgroundColor: AppColors.success,
+        ),
+      );
 
-    Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
 
   void _resetForm() {

@@ -645,7 +645,7 @@ class _ProfilePageState extends State<ProfilePage>
                 _buildModernMenuItem(context, item),
               ],
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -932,28 +932,36 @@ class _ProfilePageState extends State<ProfilePage>
                         ? Icon(Icons.check_circle, color: AppColors.primary)
                         : null,
                     onTap: () async {
-                      switch (locale.languageCode) {
-                        case 'fa':
-                          await languageManager.setFarsi();
-                          break;
-                        case 'en':
-                          await languageManager.setEnglish();
-                          break;
-                        case 'ar':
-                          await languageManager.setArabic();
-                          break;
-                        case 'ru':
-                          await languageManager.setRussian();
-                          break;
-                        case 'zh':
-                          await languageManager.setChinese();
-                          break;
+                      try {
+                        switch (locale.languageCode) {
+                          case 'fa':
+                            await languageManager.setFarsi();
+                            break;
+                          case 'en':
+                            await languageManager.setEnglish();
+                            break;
+                          case 'ar':
+                            await languageManager.setArabic();
+                            break;
+                          case 'ru':
+                            await languageManager.setRussian();
+                            break;
+                          case 'zh':
+                            await languageManager.setChinese();
+                            break;
+                        }
+                      } catch (e) {
+                        // Handle error if needed
+                        return;
                       }
-                      Navigator.of(context).pop();
+
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
                     },
                   ),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: AppDimensions.paddingL),
             ],
           ),

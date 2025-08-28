@@ -259,26 +259,26 @@ class _ErrorPage extends StatelessWidget {
 
 // Mock modules for testing (replace with actual pages)
 class _HomeModule {
-  Widget HomePage() => const _MockPage('خانه', Icons.home, Colors.blue);
+  Widget homePage() => const _MockPage('خانه', Icons.home, Colors.blue);
 }
 
 class _ProductsModule {
-  Widget ProductsPage() =>
+  Widget productsPage() =>
       const _MockPage('محصولات', Icons.shopping_bag, Colors.green);
 }
 
 class _CartModule {
-  Widget CartPage() =>
+  Widget cartPage() =>
       const _MockPage('سبد خرید', Icons.shopping_cart, Colors.orange);
 }
 
 class _ProfileModule {
-  Widget ProfilePage() =>
+  Widget profilePage() =>
       const _MockPage('پروفایل', Icons.person, Colors.purple);
 }
 
 class _DefaultModule {
-  Widget DefaultPage() => const _MockPage('پیش‌فرض', Icons.error, Colors.red);
+  Widget defaultPage() => const _MockPage('پیش‌فرض', Icons.error, Colors.red);
 }
 
 // Mock page for testing

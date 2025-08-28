@@ -289,7 +289,7 @@ class _LoadingPage extends StatelessWidget {
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 16),
-            Container(
+            SizedBox(
               width: 200,
               child: LinearProgressIndicator(
                 value: DeferredPageLoader.getLoadingProgress(),

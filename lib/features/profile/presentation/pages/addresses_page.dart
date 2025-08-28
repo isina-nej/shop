@@ -970,7 +970,9 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
     );
 
     widget.onAddressAdded(address);
-    Navigator.pop(context);
+    if (mounted) {
+      Navigator.pop(context);
+    }
   }
 }
 
