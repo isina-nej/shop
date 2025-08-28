@@ -155,7 +155,7 @@ class AdvancedThemeManager extends ChangeNotifier {
   /// Save custom color
   Future<void> _saveCustomColor(Color color) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_customColorKey, color.value);
+    await prefs.setInt(_customColorKey, color.toARGB32());
     await prefs.remove(_colorSchemeKey); // Remove predefined scheme
   }
 

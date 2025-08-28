@@ -216,8 +216,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                category.color.withOpacity(0.1),
-                category.color.withOpacity(0.05),
+                category.color.withValues(alpha: 0.1),
+                category.color.withValues(alpha: 0.05),
               ],
             ),
           ),
@@ -229,7 +229,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: category.color.withOpacity(0.2),
+                  color: category.color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusXL),
                 ),
                 child: Icon(category.icon, size: 40, color: category.color),
@@ -262,7 +262,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   vertical: AppDimensions.paddingXS,
                 ),
                 decoration: BoxDecoration(
-                  color: category.color.withOpacity(0.1),
+                  color: category.color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusS),
                 ),
                 child: Text(
@@ -286,7 +286,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   style: AppTextStyles.bodySmall.copyWith(
                     color: Theme.of(
                       context,
-                    ).textTheme.bodySmall?.color?.withOpacity(0.7),
+                    ).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,

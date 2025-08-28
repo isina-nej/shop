@@ -94,12 +94,12 @@ class _AboutPageState extends State<AboutPage>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusXL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -112,7 +112,7 @@ class _AboutPageState extends State<AboutPage>
             height: 100,
             padding: const EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Icon(Icons.shopping_bag, color: AppColors.white, size: 50),
@@ -129,14 +129,14 @@ class _AboutPageState extends State<AboutPage>
           Text(
             'بهترین تجربه خرید آنلاین',
             style: AppTextStyles.headlineSmall.copyWith(
-              color: AppColors.white.withOpacity(0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
             ),
           ),
           const SizedBox(height: AppDimensions.paddingL),
           Text(
             'سینا شاپ از سال ۱۴۰۰ با هدف ارائه بهترین محصولات و خدمات به مشتریان عزیز فعالیت می‌کند. ما به دنبال ایجاد تجربه‌ای منحصربفرد و رضایت‌بخش برای همه کاربران هستیم.',
             style: AppTextStyles.bodyLarge.copyWith(
-              color: AppColors.white.withOpacity(0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -217,7 +217,7 @@ class _AboutPageState extends State<AboutPage>
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Icon(icon, color: color, size: 30),
@@ -353,7 +353,7 @@ class _AboutPageState extends State<AboutPage>
       margin: const EdgeInsets.all(AppDimensions.paddingS),
       padding: const EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
       ),
       child: Column(
@@ -362,7 +362,7 @@ class _AboutPageState extends State<AboutPage>
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -464,9 +464,9 @@ class _AboutPageState extends State<AboutPage>
       margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
       padding: const EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+        color: color.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
@@ -474,7 +474,7 @@ class _AboutPageState extends State<AboutPage>
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -590,7 +590,7 @@ class _AboutPageState extends State<AboutPage>
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.05),
+        color: AppColors.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
       ),
       child: Column(
@@ -599,7 +599,7 @@ class _AboutPageState extends State<AboutPage>
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.2),
+              color: AppColors.primary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Icon(avatar, color: AppColors.primary, size: 30),
@@ -710,7 +710,7 @@ class _AboutPageState extends State<AboutPage>
               Container(
                 width: 2,
                 height: 60,
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primary.withValues(alpha: 0.3),
               ),
           ],
         ),
@@ -725,7 +725,7 @@ class _AboutPageState extends State<AboutPage>
                   vertical: AppDimensions.paddingS,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                 ),
                 child: Text(
@@ -766,12 +766,12 @@ class _AboutPageState extends State<AboutPage>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.primary.withOpacity(0.1),
-            AppColors.primary.withOpacity(0.05),
+            AppColors.primary.withValues(alpha: 0.1),
+            AppColors.primary.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
       ),
       child: Column(
         children: [
@@ -858,7 +858,7 @@ class _AboutPageState extends State<AboutPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(icon, color: AppColors.primary, size: 20),
@@ -905,7 +905,7 @@ class _AboutPageState extends State<AboutPage>
           vertical: AppDimensions.paddingM,
         ),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         ),
         child: Column(

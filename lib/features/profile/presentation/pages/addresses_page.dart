@@ -121,7 +121,7 @@ class _AddressesPageState extends State<AddressesPage>
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(60),
             ),
             child: Icon(
@@ -202,7 +202,7 @@ class _AddressesPageState extends State<AddressesPage>
                     decoration: BoxDecoration(
                       color: _getAddressTypeColor(
                         address.title,
-                      ).withOpacity(0.1),
+                      ).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(
                         AppDimensions.radiusS,
                       ),
@@ -234,7 +234,7 @@ class _AddressesPageState extends State<AddressesPage>
                         vertical: AppDimensions.paddingXS,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.success.withOpacity(0.1),
+                        color: AppColors.success.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(
                           AppDimensions.radiusS,
                         ),
@@ -833,7 +833,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primary
-                        : AppColors.primary.withOpacity(0.1),
+                        : AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border: Border.all(
                       color: isSelected ? AppColors.primary : AppColors.grey300,

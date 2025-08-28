@@ -223,8 +223,8 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
               boxShadow: [
                 BoxShadow(
                   color: isDark
-                      ? const Color(0xFF6366F1).withOpacity(0.3)
-                      : const Color(0xFF3B82F6).withOpacity(0.3),
+                      ? const Color(0xFF6366F1).withValues(alpha: 0.3)
+                      : const Color(0xFF3B82F6).withValues(alpha: 0.3),
                   blurRadius: 20,
                   spreadRadius: 5,
                 ),
@@ -341,7 +341,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
                         (isDark
                                 ? const Color(0xFF6366F1)
                                 : const Color(0xFF3B82F6))
-                            .withOpacity(opacity),
+                            .withValues(alpha: opacity),
                   ),
                 );
               },

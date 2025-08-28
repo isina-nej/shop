@@ -206,7 +206,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, -2),
             ),
@@ -295,7 +295,7 @@ class _LoadingPage extends StatelessWidget {
                 value: DeferredPageLoader.getLoadingProgress(),
                 backgroundColor: Colors.grey.shade300,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor.withOpacity(0.7),
+                  Theme.of(context).primaryColor.withValues(alpha: 0.7),
                 ),
               ),
             ),

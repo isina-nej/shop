@@ -177,7 +177,7 @@ class DeferredPageLoader {
       await loader();
       _loadedLibraries[key] = true;
     } catch (e) {
-      print('Error loading library $key: $e');
+      debugPrint('Error loading library $key: $e');
       rethrow;
     }
   }
@@ -193,7 +193,7 @@ class DeferredPageLoader {
     try {
       await Future.wait(futures, eagerError: false);
     } catch (e) {
-      print('Error preloading critical pages: $e');
+      debugPrint('Error preloading critical pages: $e');
     }
   }
 

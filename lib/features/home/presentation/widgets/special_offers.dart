@@ -43,35 +43,31 @@ class SpecialOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Offers List
-          SizedBox(
-            height: 160,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.paddingM,
-              ),
-              itemCount: _offers.length,
-              itemBuilder: (context, index) {
-                final offer = _offers[index];
-                return Container(
-                  width: 320,
-                  margin: EdgeInsets.only(
-                    left: index < _offers.length - 1
-                        ? AppDimensions.paddingM
-                        : 0,
-                  ),
-                  child: _OfferCard(offer: offer),
-                );
-              },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Offers List
+        SizedBox(
+          height: 160,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.paddingM,
             ),
+            itemCount: _offers.length,
+            itemBuilder: (context, index) {
+              final offer = _offers[index];
+              return Container(
+                width: 320,
+                margin: EdgeInsets.only(
+                  left: index < _offers.length - 1 ? AppDimensions.paddingM : 0,
+                ),
+                child: _OfferCard(offer: offer),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -95,13 +91,13 @@ class _OfferCard extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               offer.backgroundColor,
-              offer.backgroundColor.withOpacity(0.8),
+              offer.backgroundColor.withValues(alpha: 0.8),
             ],
           ),
           borderRadius: BorderRadius.circular(AppDimensions.radiusL),
           boxShadow: [
             BoxShadow(
-              color: offer.backgroundColor.withOpacity(0.3),
+              color: offer.backgroundColor.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -119,7 +115,7 @@ class _OfferCard extends StatelessWidget {
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [
-                        Colors.white.withOpacity(0.1),
+                        Colors.white.withValues(alpha: 0.1),
                         Colors.transparent,
                       ],
                     ),
@@ -141,12 +137,12 @@ class _OfferCard extends StatelessWidget {
                       vertical: AppDimensions.paddingS,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(
                         AppDimensions.radiusXL,
                       ),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 1,
                       ),
                     ),
@@ -179,7 +175,7 @@ class _OfferCard extends StatelessWidget {
                     child: Text(
                       offer.description,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: offer.textColor.withOpacity(0.9),
+                        color: offer.textColor.withValues(alpha: 0.9),
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -192,13 +188,13 @@ class _OfferCard extends StatelessWidget {
                       Icon(
                         Icons.schedule,
                         size: 16,
-                        color: offer.textColor.withOpacity(0.8),
+                        color: offer.textColor.withValues(alpha: 0.8),
                       ),
                       const SizedBox(width: AppDimensions.paddingXS),
                       Text(
                         'معتبر تا: ${offer.validUntil}',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: offer.textColor.withOpacity(0.8),
+                          color: offer.textColor.withValues(alpha: 0.8),
                         ),
                       ),
                     ],
@@ -215,10 +211,10 @@ class _OfferCard extends StatelessWidget {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),

@@ -74,35 +74,33 @@ class FeaturedProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Products List
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppDimensions.paddingM,
-              ),
-              itemCount: _featuredProducts.length,
-              itemBuilder: (context, index) {
-                final product = _featuredProducts[index];
-                return Container(
-                  width: 200,
-                  margin: EdgeInsets.only(
-                    left: index < _featuredProducts.length - 1
-                        ? AppDimensions.paddingM
-                        : 0,
-                  ),
-                  child: _ProductCard(product: product),
-                );
-              },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Products List
+        SizedBox(
+          height: 300,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppDimensions.paddingM,
             ),
+            itemCount: _featuredProducts.length,
+            itemBuilder: (context, index) {
+              final product = _featuredProducts[index];
+              return Container(
+                width: 200,
+                margin: EdgeInsets.only(
+                  left: index < _featuredProducts.length - 1
+                      ? AppDimensions.paddingM
+                      : 0,
+                ),
+                child: _ProductCard(product: product),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -195,7 +193,7 @@ class _ProductCard extends StatelessWidget {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.9),
+                      color: AppColors.white.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(

@@ -37,7 +37,7 @@ class JsonTranslationLoader {
     } catch (e) {
       // در محیط Debug خطا را نمایش دهید
       if (kDebugMode) {
-        print('Error loading translations for $languageCode: $e');
+        debugPrint('Error loading translations for $languageCode: $e');
       }
       return {};
     }

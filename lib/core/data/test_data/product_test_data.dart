@@ -1151,8 +1151,9 @@ class ProductTestData {
       if (minPrice != null && product.price < minPrice) return false;
       if (maxPrice != null && product.price > maxPrice) return false;
       if (minRating != null && product.rating.average < minRating) return false;
-      if (inStockOnly == true && product.inventory.stockStatus != 'in_stock')
+      if (inStockOnly == true && product.inventory.stockStatus != 'in_stock') {
         return false;
+      }
 
       if (colors != null && colors.isNotEmpty) {
         bool hasColor = colors.any(

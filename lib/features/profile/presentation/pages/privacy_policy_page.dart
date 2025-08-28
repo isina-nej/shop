@@ -179,12 +179,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusXL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -196,7 +196,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(40),
             ),
             child: Icon(Icons.privacy_tip, color: AppColors.white, size: 40),
@@ -213,7 +213,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
           Text(
             'ما به حفاظت از حریم خصوصی و اطلاعات شخصی شما متعهد هستیم',
             style: AppTextStyles.bodyLarge.copyWith(
-              color: AppColors.white.withOpacity(0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -228,9 +228,9 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
       margin: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
       padding: const EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
-        color: AppColors.info.withOpacity(0.1),
+        color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-        border: Border.all(color: AppColors.info.withOpacity(0.3)),
+        border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -305,8 +305,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
           ),
         ),
         avatar: Icon(section.icon, color: section.color, size: 18),
-        backgroundColor: section.color.withOpacity(0.1),
-        side: BorderSide(color: section.color.withOpacity(0.3)),
+        backgroundColor: section.color.withValues(alpha: 0.1),
+        side: BorderSide(color: section.color.withValues(alpha: 0.3)),
       ),
     );
   }
@@ -331,7 +331,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-        border: Border.all(color: section.color.withOpacity(0.3)),
+        border: Border.all(color: section.color.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
             color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
@@ -347,7 +347,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: section.color.withOpacity(0.1),
+              color: section.color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Icon(section.icon, color: section.color, size: 24),
@@ -409,12 +409,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.success.withOpacity(0.1),
-            AppColors.success.withOpacity(0.05),
+            AppColors.success.withValues(alpha: 0.1),
+            AppColors.success.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-        border: Border.all(color: AppColors.success.withOpacity(0.3)),
+        border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -422,7 +422,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: AppColors.success.withOpacity(0.2),
+              color: AppColors.success.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Icon(
@@ -509,9 +509,11 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
           Container(
             padding: const EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
-              color: AppColors.warning.withOpacity(0.1),
+              color: AppColors.warning.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-              border: Border.all(color: AppColors.warning.withOpacity(0.3)),
+              border: Border.all(
+                color: AppColors.warning.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [

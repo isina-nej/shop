@@ -27,14 +27,14 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   final DataManager _dataManager = DataManager.instance;
-  
+
   List<ProductModel> _products = [];
   List<ProductModel> _filteredProducts = [];
   String _searchQuery = '';
   bool _isGridView = true;
   bool _isLoading = false;
   String? _errorMessage;
-  
+
   // Filter options
   String? _selectedCategoryId;
   double? _minPrice;
@@ -264,11 +264,7 @@ class _ProductsPageState extends State<ProductsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             _errorMessage!,
@@ -290,11 +286,7 @@ class _ProductsPageState extends State<ProductsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.search_off,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'محصولی یافت نشد',
@@ -466,7 +458,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     left: 8,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
@@ -690,30 +682,15 @@ class _ProductsPageState extends State<ProductsPage> {
     return DropdownButton<String>(
       value: '$_sortBy-$_sortOrder',
       items: const [
-        DropdownMenuItem(
-          value: 'name-asc',
-          child: Text('نام (الف-ی)'),
-        ),
-        DropdownMenuItem(
-          value: 'name-desc',
-          child: Text('نام (ی-الف)'),
-        ),
-        DropdownMenuItem(
-          value: 'price-asc',
-          child: Text('قیمت (کم به زیاد)'),
-        ),
-        DropdownMenuItem(
-          value: 'price-desc',
-          child: Text('قیمت (زیاد به کم)'),
-        ),
+        DropdownMenuItem(value: 'name-asc', child: Text('نام (الف-ی)')),
+        DropdownMenuItem(value: 'name-desc', child: Text('نام (ی-الف)')),
+        DropdownMenuItem(value: 'price-asc', child: Text('قیمت (کم به زیاد)')),
+        DropdownMenuItem(value: 'price-desc', child: Text('قیمت (زیاد به کم)')),
         DropdownMenuItem(
           value: 'rating-desc',
           child: Text('امتیاز (بالا به پایین)'),
         ),
-        DropdownMenuItem(
-          value: 'popularity-desc',
-          child: Text('پرفروش‌ترین'),
-        ),
+        DropdownMenuItem(value: 'popularity-desc', child: Text('پرفروش‌ترین')),
       ],
       onChanged: (value) {
         if (value != null) {
@@ -739,13 +716,11 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
         ),
         const SizedBox(height: 16),
-        
+
         // Price Range
         Text(
           'محدوده قیمت',
-          style: AppTextStyles.bodyLarge.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
         Row(
@@ -777,9 +752,9 @@ class _ProductsPageState extends State<ProductsPage> {
             ),
           ],
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Stock filter
         CheckboxListTile(
           title: const Text('فقط کالاهای موجود'),
@@ -790,9 +765,9 @@ class _ProductsPageState extends State<ProductsPage> {
             });
           },
         ),
-        
+
         const SizedBox(height: 16),
-        
+
         // Apply Filters Button
         SizedBox(
           width: double.infinity,
@@ -801,9 +776,9 @@ class _ProductsPageState extends State<ProductsPage> {
             child: const Text('اعمال فیلتر'),
           ),
         ),
-        
+
         const SizedBox(height: 8),
-        
+
         // Clear Filters Button
         SizedBox(
           width: double.infinity,

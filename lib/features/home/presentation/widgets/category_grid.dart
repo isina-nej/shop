@@ -72,7 +72,7 @@ class CategoryGrid extends StatelessWidget {
   Widget _buildMobileGrid(BuildContext context, int crossAxisCount) {
     final categories = _getCategories(context);
 
-    return Container(
+    return SizedBox(
       height: 200,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,

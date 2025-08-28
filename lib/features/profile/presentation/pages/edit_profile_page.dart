@@ -517,7 +517,7 @@ class _EditProfilePageState extends State<EditProfilePage>
         ),
         filled: true,
         fillColor: Theme.of(context).brightness == Brightness.dark
-            ? AppColors.grey800.withOpacity(0.3)
+            ? AppColors.grey800.withValues(alpha: 0.3)
             : AppColors.grey50,
       ),
     );
@@ -603,7 +603,7 @@ class _EditProfilePageState extends State<EditProfilePage>
         ),
         filled: true,
         fillColor: Theme.of(context).brightness == Brightness.dark
-            ? AppColors.grey800.withOpacity(0.3)
+            ? AppColors.grey800.withValues(alpha: 0.3)
             : AppColors.grey50,
       ),
       items: cities.map((city) {

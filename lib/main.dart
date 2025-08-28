@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/advanced_theme_manager.dart';
@@ -137,67 +136,6 @@ class AppManagers {
   final LanguageManager languageManager;
 
   AppManagers({required this.themeManager, required this.languageManager});
-}
-
-class MyApp extends StatelessWidget {
-  final AdvancedThemeManager themeManager;
-  final LanguageManager languageManager;
-
-  const MyApp({
-    super.key,
-    required this.themeManager,
-    required this.languageManager,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: themeManager),
-        ChangeNotifierProvider.value(value: languageManager),
-      ],
-      child: Consumer2<AdvancedThemeManager, LanguageManager>(
-        builder: (context, themeManager, languageManager, child) {
-          return AnimatedTheme(
-            data:
-                themeManager.themeMode == ThemeMode.dark ||
-                    (themeManager.themeMode == ThemeMode.system &&
-                        MediaQuery.platformBrightnessOf(context) ==
-                            Brightness.dark)
-                ? themeManager.getDarkTheme()
-                : themeManager.getLightTheme(),
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: MaterialApp(
-              title: TranslationManager.instance.translate('app_name'),
-              theme: themeManager.getLightTheme(),
-              darkTheme: themeManager.getDarkTheme(),
-              themeMode: themeManager.themeMode,
-              locale: languageManager.locale,
-              supportedLocales: LanguageManager.supportedLocales,
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              onGenerateRoute: AppRouter.generateRoute,
-              builder: (context, child) {
-                return Directionality(
-                  textDirection: languageManager.textDirection,
-                  child: child!,
-                );
-              },
-              home: ThemeProvider(
-                themeManager: themeManager,
-                child: const MainLayout(),
-              ),
-              debugShowCheckedModeBanner: false,
-            ),
-          );
-        },
-      ),
-    );
-  }
 }
 
 // Custom ThemeProvider for passing theme manager down the widget tree

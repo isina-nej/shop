@@ -192,7 +192,9 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                       width: double.infinity,
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerHighest,
                         borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(8),
                         ),
@@ -267,7 +269,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: color.withOpacity(0.3),
+                              color: color.withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),

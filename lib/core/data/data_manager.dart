@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'models/product_model.dart';
 import 'models/user_model.dart';
 import 'services/product_api_service.dart';
@@ -460,12 +461,12 @@ class DataManager {
   Future<void> initialize() async {
     // Perform any initialization tasks here
     // For example: load configuration, setup cache, etc.
-    print('DataManager initialized successfully');
+    debugPrint('DataManager initialized successfully');
   }
 
   /// Clear any cached data (useful for logout or refresh operations)
   Future<void> clearCache() async {
     // Clear any cached data here
-    print('DataManager cache cleared');
+    debugPrint('DataManager cache cleared');
   }
 }

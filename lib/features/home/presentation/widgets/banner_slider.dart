@@ -81,7 +81,7 @@ class _BannerSliderState extends State<BannerSlider> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                   gradient: LinearGradient(
-                    colors: [banner.color, banner.color.withOpacity(0.8)],
+                    colors: [banner.color, banner.color.withValues(alpha: 0.8)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -97,7 +97,7 @@ class _BannerSliderState extends State<BannerSlider> {
                           ),
                           gradient: LinearGradient(
                             colors: [
-                              Colors.black.withOpacity(0.1),
+                              Colors.black.withValues(alpha: 0.1),
                               Colors.transparent,
                             ],
                             begin: Alignment.topCenter,
@@ -191,7 +191,7 @@ class _BannerSliderState extends State<BannerSlider> {
                       shape: BoxShape.circle,
                       color: _currentPage == entry.key
                           ? AppColors.white
-                          : AppColors.white.withOpacity(0.4),
+                          : AppColors.white.withValues(alpha: 0.4),
                     ),
                   ),
                 );

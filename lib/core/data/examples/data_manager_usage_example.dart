@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
@@ -347,9 +346,9 @@ class SimpleDataExample {
       limit: 5,
     );
 
-    print('نتایج جستجو: ${response.data.length}');
+    debugPrint('نتایج جستجو: ${response.data.length}');
     for (final product in response.data) {
-      print('- ${product.name}');
+      debugPrint('- ${product.name}');
     }
   }
 
@@ -359,9 +358,9 @@ class SimpleDataExample {
 
     if (response.success && response.data != null) {
       final user = response.data!;
-      print('کاربر: ${user.profile.firstName} ${user.profile.lastName}');
-      print('ایمیل: ${user.email}');
-      print('امتیاز وفاداری: ${user.loyalty.currentPoints}');
+      debugPrint('کاربر: ${user.profile.firstName} ${user.profile.lastName}');
+      debugPrint('ایمیل: ${user.email}');
+      debugPrint('امتیاز وفاداری: ${user.loyalty.currentPoints}');
     }
   }
 
@@ -371,10 +370,10 @@ class SimpleDataExample {
 
     if (response.success) {
       final stats = response.data;
-      print('آمار کلی:');
-      print('- محصولات: ${stats['totalProducts']}');
-      print('- دسته‌بندی‌ها: ${stats['totalCategories']}');
-      print('- برندها: ${stats['totalBrands']}');
+      debugPrint('آمار کلی:');
+      debugPrint('- محصولات: ${stats['totalProducts']}');
+      debugPrint('- دسته‌بندی‌ها: ${stats['totalCategories']}');
+      debugPrint('- برندها: ${stats['totalBrands']}');
     }
   }
 
@@ -382,9 +381,9 @@ class SimpleDataExample {
   static Future<void> getFeaturedProductsExample() async {
     final response = await _dataManager.getFeaturedProducts(limit: 3);
 
-    print('محصولات ویژه:');
+    debugPrint('محصولات ویژه:');
     for (final product in response.data) {
-      print('- ${product.name}: ${product.formattedPrice}');
+      debugPrint('- ${product.name}: ${product.formattedPrice}');
     }
   }
 
@@ -396,9 +395,9 @@ class SimpleDataExample {
       limit: 10,
     );
 
-    print('محصولات در بازه قیمتی:');
+    debugPrint('محصولات در بازه قیمتی:');
     for (final product in response.data) {
-      print('- ${product.name}: ${product.formattedPrice}');
+      debugPrint('- ${product.name}: ${product.formattedPrice}');
     }
   }
 
@@ -406,9 +405,9 @@ class SimpleDataExample {
   static Future<void> getSaleProductsExample() async {
     final response = await _dataManager.getProductsOnSale(limit: 5);
 
-    print('محصولات حراجی:');
+    debugPrint('محصولات حراجی:');
     for (final product in response.data) {
-      print(
+      debugPrint(
         '- ${product.name}: ${product.formattedPrice} (${product.discountPercentage.toInt()}% تخفیف)',
       );
     }
@@ -419,9 +418,9 @@ class SimpleDataExample {
     final response = await _dataManager.getSearchSuggestions('موب');
 
     if (response.success) {
-      print('پیشنهادات جستجو:');
+      debugPrint('پیشنهادات جستجو:');
       for (final suggestion in response.data) {
-        print('- $suggestion');
+        debugPrint('- $suggestion');
       }
     }
   }
@@ -432,11 +431,11 @@ class SimpleDataExample {
 
     if (response.success) {
       final health = response.data;
-      print('وضعیت سیستم:');
-      print('- API: ${health['apiStatus']}');
-      print('- دیتابیس: ${health['databaseStatus']}');
-      print('- حافظه: ${health['memoryUsage']}');
-      print('- درخواست‌ها: ${health['requestCount']}');
+      debugPrint('وضعیت سیستم:');
+      debugPrint('- API: ${health['apiStatus']}');
+      debugPrint('- دیتابیس: ${health['databaseStatus']}');
+      debugPrint('- حافظه: ${health['memoryUsage']}');
+      debugPrint('- درخواست‌ها: ${health['requestCount']}');
     }
   }
 }

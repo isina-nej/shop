@@ -128,12 +128,12 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
         ),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -147,7 +147,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.2),
+                  color: AppColors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Icon(
@@ -172,7 +172,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                     Text(
                       '$activeNotifications نوع اعلان فعال',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.white.withOpacity(0.9),
+                        color: AppColors.white.withValues(alpha: 0.9),
                       ),
                     ),
                   ],
@@ -222,12 +222,12 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(isEnabled ? 0.2 : 0.1),
+            color: AppColors.white.withValues(alpha: isEnabled ? 0.2 : 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
             icon,
-            color: AppColors.white.withOpacity(isEnabled ? 1.0 : 0.5),
+            color: AppColors.white.withValues(alpha: isEnabled ? 1.0 : 0.5),
             size: 20,
           ),
         ),
@@ -235,14 +235,14 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
         Text(
           title,
           style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.white.withOpacity(isEnabled ? 1.0 : 0.7),
+            color: AppColors.white.withValues(alpha: isEnabled ? 1.0 : 0.7),
             fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           isEnabled ? 'فعال' : 'غیرفعال',
           style: AppTextStyles.labelSmall.copyWith(
-            color: AppColors.white.withOpacity(0.7),
+            color: AppColors.white.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -652,7 +652,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               decoration: BoxDecoration(
                 color:
                     (_quietHoursEnabled ? AppColors.primary : AppColors.grey400)
-                        .withOpacity(0.1),
+                        .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -678,9 +678,11 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
             Container(
               padding: const EdgeInsets.all(AppDimensions.paddingM),
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
@@ -777,7 +779,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.info.withOpacity(0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(Icons.history, color: AppColors.info, size: 20),
@@ -796,7 +798,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.warning.withOpacity(0.1),
+                color: AppColors.warning.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(Icons.clear_all, color: AppColors.warning, size: 20),
@@ -815,7 +817,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.success.withOpacity(0.1),
+                color: AppColors.success.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(Icons.restore, color: AppColors.success, size: 20),
@@ -846,7 +848,9 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: (value ? iconColor : AppColors.grey400).withOpacity(0.1),
+            color: (value ? iconColor : AppColors.grey400).withValues(
+              alpha: 0.1,
+            ),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(

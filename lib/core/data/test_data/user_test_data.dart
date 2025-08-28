@@ -777,15 +777,20 @@ class UserTestData {
     DateTime? memberSince,
   }) {
     return users.where((user) {
-      if (accountType != null && user.account.accountType != accountType)
+      if (accountType != null && user.account.accountType != accountType) {
         return false;
-      if (loyaltyTier != null && user.loyalty.tier != loyaltyTier) return false;
+      }
+      if (loyaltyTier != null && user.loyalty.tier != loyaltyTier) {
+        return false;
+      }
       if (city != null && user.profile.city != city) return false;
       if (isPremium != null && user.isPremium != isPremium) return false;
       if (isActive != null && user.isActive != isActive) return false;
       if (isVerified != null && user.isVerified != isVerified) return false;
-      if (memberSince != null && user.account.memberSince.isBefore(memberSince))
+      if (memberSince != null &&
+          user.account.memberSince.isBefore(memberSince)) {
         return false;
+      }
 
       return true;
     }).toList();

@@ -12,79 +12,69 @@ abstract class AppException implements Exception {
 
 // Network Exceptions
 class NetworkException extends AppException {
-  const NetworkException({
-    required String message,
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+  const NetworkException({required super.message, super.code, super.details});
 }
 
 class TimeoutException extends NetworkException {
   const TimeoutException({
-    String message = 'Request timeout',
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    super.message = 'Request timeout',
+    super.code,
+    super.details,
+  });
 }
 
 class NoInternetException extends NetworkException {
   const NoInternetException({
-    String message = 'No internet connection',
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    super.message = 'No internet connection',
+    super.code,
+    super.details,
+  });
 }
 
 class ServerException extends NetworkException {
   const ServerException({
-    String message = 'Server error',
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    super.message = 'Server error',
+    super.code,
+    super.details,
+  });
 }
 
 // Auth Exceptions
 class AuthException extends AppException {
-  const AuthException({required String message, String? code, dynamic details})
-    : super(message: message, code: code, details: details);
+  const AuthException({required super.message, super.code, super.details});
 }
 
 class UnauthorizedException extends AuthException {
   const UnauthorizedException({
-    String message = 'Unauthorized access',
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    super.message = 'Unauthorized access',
+    super.code,
+    super.details,
+  });
 }
 
 class TokenExpiredException extends AuthException {
   const TokenExpiredException({
-    String message = 'Token expired',
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    super.message = 'Token expired',
+    super.code,
+    super.details,
+  });
 }
 
 // Validation Exceptions
 class ValidationException extends AppException {
   const ValidationException({
-    required String message,
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+    required super.message,
+    super.code,
+    super.details,
+  });
 }
 
 // Storage Exceptions
 class StorageException extends AppException {
-  const StorageException({
-    required String message,
-    String? code,
-    dynamic details,
-  }) : super(message: message, code: code, details: details);
+  const StorageException({required super.message, super.code, super.details});
 }
 
 // Cache Exceptions
 class CacheException extends AppException {
-  const CacheException({required String message, String? code, dynamic details})
-    : super(message: message, code: code, details: details);
+  const CacheException({required super.message, super.code, super.details});
 }

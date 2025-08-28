@@ -377,7 +377,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: AppColors.grey400.withOpacity(0.1),
+                color: AppColors.grey400.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(60),
               ),
               child: Icon(Icons.search_off, size: 60, color: AppColors.grey400),
@@ -425,8 +425,8 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
           height: 40,
           decoration: BoxDecoration(
             color: faq.isPopular
-                ? AppColors.warning.withOpacity(0.1)
-                : AppColors.primary.withOpacity(0.1),
+                ? AppColors.warning.withValues(alpha: 0.1)
+                : AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
@@ -467,7 +467,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
               color: isDark
-                  ? AppColors.surfaceDark.withOpacity(0.5)
+                  ? AppColors.surfaceDark.withValues(alpha: 0.5)
                   : AppColors.grey50,
               borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(AppDimensions.radiusM),
@@ -493,7 +493,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.1),
+                              color: AppColors.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(

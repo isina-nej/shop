@@ -103,7 +103,10 @@ class _ProfilePageState extends State<ProfilePage>
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+              colors: [
+                AppColors.primary,
+                AppColors.primary.withValues(alpha: 0.8),
+              ],
             ),
           ),
           child: SafeArea(
@@ -141,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage>
               border: Border.all(color: AppColors.white, width: 4),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -205,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage>
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -238,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage>
         Text(
           _user.email,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.white.withOpacity(0.9),
+            color: AppColors.white.withValues(alpha: 0.9),
           ),
         ),
         const SizedBox(height: AppDimensions.paddingS),
@@ -248,7 +251,7 @@ class _ProfilePageState extends State<ProfilePage>
             vertical: AppDimensions.paddingXS,
           ),
           decoration: BoxDecoration(
-            color: AppColors.white.withOpacity(0.2),
+            color: AppColors.white.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(AppDimensions.radiusS),
           ),
           child: Text(
@@ -320,7 +323,7 @@ class _ProfilePageState extends State<ProfilePage>
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -428,7 +431,7 @@ class _ProfilePageState extends State<ProfilePage>
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(28),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -606,7 +609,7 @@ class _ProfilePageState extends State<ProfilePage>
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Icon(icon, color: AppColors.primary, size: 20),
@@ -701,7 +704,7 @@ class _ProfilePageState extends State<ProfilePage>
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppColors.error.withOpacity(0.1),
+            color: AppColors.error.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: const Icon(Icons.logout, color: AppColors.error, size: 20),
@@ -898,7 +901,7 @@ class _ProfilePageState extends State<ProfilePage>
                     color:
                         languageManager.locale.languageCode ==
                             locale.languageCode
-                        ? AppColors.primary.withOpacity(0.1)
+                        ? AppColors.primary.withValues(alpha: 0.1)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border:

@@ -1,7 +1,35 @@
 // Lazy Loading Router Implementation
 import 'package:flutter/material.dart';
-import '../../shared/widgets/loading/modern_loading_screen.dart';
 import '../localization/translation_manager.dart';
+
+// Mock modules for simulating dynamic imports
+class _HomePageModule {
+  Widget homePage() => const _PlaceholderPage('صفحه خانه');
+}
+
+class _CategoriesPageModule {
+  Widget categoriesPage() => const _PlaceholderPage('صفحه دسته‌بندی‌ها');
+}
+
+class _ProductsPageModule {
+  Widget productsPage() => const _PlaceholderPage('صفحه محصولات');
+}
+
+class _ProductDetailsPageModule {
+  Widget productDetailsPage() => const _PlaceholderPage('صفحه جزئیات محصول');
+}
+
+class _CartPageModule {
+  Widget cartPage() => const _PlaceholderPage('صفحه سبد خرید');
+}
+
+class _ProfilePageModule {
+  Widget profilePage() => const _PlaceholderPage('صفحه پروفایل');
+}
+
+class _DefaultModule {
+  Widget defaultPage() => const _PlaceholderPage('صفحه پیش‌فرض');
+}
 
 class LazyRouter {
   // Route names (same as AppRouter)
@@ -65,7 +93,7 @@ class LazyRouter {
     final module = await import(
       '../../features/home/presentation/pages/home_page.dart',
     );
-    return module.HomePage();
+    return module.homePage();
   }
 
   static Future<Widget> _loadCategoriesPage() async {
@@ -73,7 +101,7 @@ class LazyRouter {
     final module = await import(
       '../../features/categories/presentation/pages/categories_page.dart',
     );
-    return module.CategoriesPage();
+    return module.categoriesPage();
   }
 
   static Future<Widget> _loadProductsPage() async {
@@ -81,7 +109,7 @@ class LazyRouter {
     final module = await import(
       '../../features/products/presentation/pages/products_page.dart',
     );
-    return module.ProductsPage();
+    return module.productsPage();
   }
 
   static Future<Widget> _loadProductDetailsPage() async {
@@ -89,7 +117,7 @@ class LazyRouter {
     final module = await import(
       '../../features/products/presentation/pages/product_details_page.dart',
     );
-    return module.ProductDetailsPage(productId: ''); // This will be overridden
+    return module.productDetailsPage(productId: ''); // This will be overridden
   }
 
   static Future<Widget> _loadCartPage() async {
@@ -97,7 +125,7 @@ class LazyRouter {
     final module = await import(
       '../../features/cart/presentation/pages/cart_page.dart',
     );
-    return module.CartPage();
+    return module.cartPage();
   }
 
   static Future<Widget> _loadProfilePage() async {
@@ -105,7 +133,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/profile_page.dart',
     );
-    return module.ProfilePage();
+    return module.profilePage();
   }
 
   static Future<Widget> _loadEditProfilePage() async {
@@ -113,7 +141,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/edit_profile_page.dart',
     );
-    return module.EditProfilePage();
+    return module.editProfilePage();
   }
 
   static Future<Widget> _loadSecuritySettingsPage() async {
@@ -121,7 +149,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/security_settings_page.dart',
     );
-    return module.SecuritySettingsPage();
+    return module.securitySettingsPage();
   }
 
   static Future<Widget> _loadAddressesPage() async {
@@ -129,7 +157,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/addresses_page.dart',
     );
-    return module.AddressesPage();
+    return module.addressesPage();
   }
 
   static Future<Widget> _loadPaymentMethodsPage() async {
@@ -137,7 +165,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/payment_methods_page.dart',
     );
-    return module.PaymentMethodsPage();
+    return module.paymentMethodsPage();
   }
 
   static Future<Widget> _loadReviewsPage() async {
@@ -145,7 +173,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/reviews_page.dart',
     );
-    return module.ReviewsPage();
+    return module.reviewsPage();
   }
 
   static Future<Widget> _loadNotificationsPage() async {
@@ -153,7 +181,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/notifications_settings_page.dart',
     );
-    return module.NotificationsSettingsPage();
+    return module.notificationsSettingsPage();
   }
 
   static Future<Widget> _loadFAQPage() async {
@@ -161,7 +189,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/faq_page.dart',
     );
-    return module.FAQPage();
+    return module.faqPage();
   }
 
   static Future<Widget> _loadSupportPage() async {
@@ -169,7 +197,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/support_page.dart',
     );
-    return module.SupportPage();
+    return module.supportPage();
   }
 
   static Future<Widget> _loadAboutPage() async {
@@ -177,7 +205,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/about_page.dart',
     );
-    return module.AboutPage();
+    return module.aboutPage();
   }
 
   static Future<Widget> _loadPrivacyPolicyPage() async {
@@ -185,7 +213,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/privacy_policy_page.dart',
     );
-    return module.PrivacyPolicyPage();
+    return module.privacyPolicyPage();
   }
 
   static Future<Widget> _loadSettingsPage() async {
@@ -193,7 +221,7 @@ class LazyRouter {
     final module = await import(
       '../../features/profile/presentation/pages/settings_page.dart',
     );
-    return module.SettingsPage();
+    return module.settingsPage();
   }
 
   // Simulate dynamic import - In a real implementation, this would use deferred imports
@@ -398,7 +426,7 @@ class LazyLoadingPage extends StatelessWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF3B82F6).withOpacity(0.3),
+                      color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
                       blurRadius: 15,
                       spreadRadius: 2,
                     ),
@@ -466,40 +494,6 @@ class LazyErrorPage extends StatelessWidget {
       ),
     );
   }
-}
-
-// Mock modules for simulating dynamic imports
-class _HomePageModule {
-  Widget HomePage() => const _PlaceholderPage('صفحه خانه');
-}
-
-class _CategoriesPageModule {
-  Widget CategoriesPage() => const _PlaceholderPage('صفحه دسته‌بندی‌ها');
-}
-
-class _ProductsPageModule {
-  Widget ProductsPage({
-    String? categoryId,
-    String? categoryName,
-    String? searchQuery,
-  }) => const _PlaceholderPage('صفحه محصولات');
-}
-
-class _ProductDetailsPageModule {
-  Widget ProductDetailsPage({required String productId}) =>
-      const _PlaceholderPage('جزئیات محصول');
-}
-
-class _CartPageModule {
-  Widget CartPage() => const _PlaceholderPage('سبد خرید');
-}
-
-class _ProfilePageModule {
-  Widget ProfilePage() => const _PlaceholderPage('پروفایل');
-}
-
-class _DefaultModule {
-  Widget DefaultPage() => const _PlaceholderPage('صفحه پیش‌فرض');
 }
 
 class _PlaceholderPage extends StatelessWidget {
