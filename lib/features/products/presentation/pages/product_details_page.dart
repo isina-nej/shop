@@ -151,7 +151,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loadProductDetails,
-            child: const Text('تلاش مجدد'),
+            child: Text(context.tr('retry')),
           ),
         ],
       ),
@@ -517,7 +517,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           height: 48,
           child: ElevatedButton.icon(
             icon: const Icon(Icons.shopping_cart),
-            label: const Text('افزودن به سبد خرید'),
+            label: Text(context.tr('add_to_cart')),
             onPressed: _product!.isInStock ? _addToCart : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
@@ -534,7 +534,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           height: 48,
           child: OutlinedButton.icon(
             icon: const Icon(Icons.flash_on),
-            label: const Text('خرید فوری'),
+            label: Text(context.tr('buy_now')),
             onPressed: _product!.isInStock ? _buyNow : null,
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.primary,
@@ -574,7 +574,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               height: 48,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.shopping_cart),
-                label: const Text('افزودن به سبد'),
+                label: Text(context.tr('add_to_cart')),
                 onPressed: _product!.isInStock ? _addToCart : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
@@ -592,7 +592,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               height: 48,
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.flash_on),
-                label: const Text('خرید فوری'),
+                label: Text(context.tr('buy_now')),
                 onPressed: _product!.isInStock ? _buyNow : null,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
@@ -683,7 +683,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               onPressed: () {
                 // TODO: Navigate to reviews page
               },
-              child: const Text('مشاهده همه'),
+              child: Text(context.tr('view_all')),
             ),
           ],
         ),
@@ -811,7 +811,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     // TODO: Implement product sharing
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('لینک محصول کپی شد')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('product_link_copied'))));
   }
 
   void _addToCart() {
@@ -827,8 +827,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   void _buyNow() {
     // TODO: Navigate to checkout page
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('انتقال به صفحه پرداخت...')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.tr('redirecting_to_payment'))),
+    );
   }
 }

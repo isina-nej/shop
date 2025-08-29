@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class BannerSlider extends StatefulWidget {
   const BannerSlider({super.key});
@@ -18,15 +19,15 @@ class _BannerSliderState extends State<BannerSlider> {
   final List<BannerModel> _banners = [
     BannerModel(
       id: '1',
-      title: 'تخفیف ویژه ۵۰٪',
-      subtitle: 'روی تمام محصولات الکترونیکی',
+      title: 'electronic_discount',
+      subtitle: 'electronic_discount_desc',
       imageUrl: 'assets/images/banners/banner1.jpg',
       color: AppColors.primary,
     ),
     BannerModel(
       id: '2',
-      title: 'ارسال رایگان',
-      subtitle: 'برای سفارش‌های بالای ۱۰۰ هزار تومان',
+      title: 'free_shipping',
+      subtitle: 'free_shipping_offer',
       imageUrl: 'assets/images/banners/banner2.jpg',
       color: AppColors.secondary,
     ),
@@ -117,7 +118,7 @@ class _BannerSliderState extends State<BannerSlider> {
                           children: [
                             Flexible(
                               child: Text(
-                                banner.title,
+                                context.tr(banner.title),
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class _BannerSliderState extends State<BannerSlider> {
                             const SizedBox(height: AppDimensions.paddingS),
                             Flexible(
                               child: Text(
-                                banner.subtitle,
+                                context.tr(banner.subtitle),
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: AppColors.white,
@@ -143,7 +144,9 @@ class _BannerSliderState extends State<BannerSlider> {
                             ElevatedButton(
                               onPressed: () {
                                 // TODO: Handle banner action
-                                debugPrint('Banner clicked: ${banner.title}');
+                                debugPrint(
+                                  'Banner clicked: ${context.tr(banner.title)}',
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.white,
@@ -158,7 +161,7 @@ class _BannerSliderState extends State<BannerSlider> {
                                   vertical: AppDimensions.paddingS,
                                 ),
                               ),
-                              child: const Text('مشاهده'),
+                              child: Text(context.tr('view')),
                             ),
                           ],
                         ),

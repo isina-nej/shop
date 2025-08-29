@@ -1,5 +1,6 @@
 // Custom Input Widgets
 import 'package:flutter/material.dart';
+import '../../../core/localization/localization_extension.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? label;
@@ -82,7 +83,7 @@ class SearchTextField extends StatelessWidget {
       onChanged: onChanged,
       onFieldSubmitted: onSubmitted,
       decoration: InputDecoration(
-        hintText: hint ?? 'Search...',
+        hintText: hint ?? context.tr('search_hint'),
         prefixIcon: const Icon(Icons.search),
         suffixIcon: controller?.text.isNotEmpty == true
             ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)
@@ -120,7 +121,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      label: widget.label ?? 'Password',
+      label: widget.label ?? context.tr('password'),
       hint: widget.hint,
       controller: widget.controller,
       validator: widget.validator,

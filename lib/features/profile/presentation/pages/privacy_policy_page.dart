@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class PrivacyPolicyPage extends StatefulWidget {
   const PrivacyPolicyPage({super.key});
@@ -464,7 +465,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
                 child: ElevatedButton.icon(
                   onPressed: _callPrivacySupport,
                   icon: const Icon(Icons.phone, size: 18),
-                  label: const Text('تماس مستقیم'),
+                  label: Text(context.tr('direct_contact')),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.success,
                     foregroundColor: AppColors.white,
@@ -637,8 +638,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
   void _callPrivacySupport() {
     Clipboard.setData(const ClipboardData(text: '02112345678'));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('شماره تماس کپی شد: ۰۲۱-۱۲۳۴۵۶۷۸'),
+      SnackBar(
+        content: Text(context.tr('contact_number_copied')),
         backgroundColor: AppColors.info,
       ),
     );

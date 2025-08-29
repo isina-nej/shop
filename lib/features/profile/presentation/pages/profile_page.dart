@@ -556,14 +556,14 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             ModernMenuItem(
               icon: Icons.chat_bubble_outline,
-              title: 'تماس با پشتیبانی',
+              title: context.tr('contact_support'),
               subtitle: 'درخواست کمک از تیم پشتیبانی',
               onTap: () => _navigateToSupport(),
             ),
             ModernMenuItem(
               icon: Icons.info_outline,
-              title: 'درباره سینا شاپ',
-              subtitle: 'اطلاعات برنامه و نسخه',
+              title: context.tr('about_sina_shop'),
+              subtitle: context.tr('app_info_and_version'),
               onTap: () => _navigateToAbout(),
             ),
             ModernMenuItem(

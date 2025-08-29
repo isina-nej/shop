@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
+import '../../localization/localization_extension.dart';
 
 /// Example screen showing how to use the DataManager
 class ProductListScreen extends StatefulWidget {
@@ -88,7 +89,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'خطای غیرمنتظره: ${e.toString()}';
+        _errorMessage = '${context.tr('unexpected_error')}: ${e.toString()}';
         _isLoading = false;
       });
     }
@@ -119,7 +120,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('محصولات'),
+        title: Text(context.tr('products_title')),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(120),
           child: Column(
@@ -129,10 +130,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   controller: _searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'جستجوی محصولات...',
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    hintText: context.tr('search_products_hint'),
+                    prefixIcon: const Icon(Icons.search),
+                    border: const OutlineInputBorder(),
                   ),
                   onSubmitted: _onSearch,
                 ),
@@ -145,32 +146,32 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: DropdownButton<String>(
                         value: _selectedCategory,
-                        hint: const Text('دسته‌بندی'),
+                        hint: Text(context.tr('category_hint')),
                         isExpanded: true,
                         items: [
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: null,
-                            child: Text('همه دسته‌ها'),
+                            child: Text(context.tr('all_categories')),
                           ),
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'electronics',
-                            child: Text('الکترونیک'),
+                            child: Text(context.tr('electronics')),
                           ),
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'fashion',
-                            child: Text('پوشاک'),
+                            child: Text(context.tr('clothing')),
                           ),
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'home-appliances',
-                            child: Text('لوازم خانگی'),
+                            child: Text(context.tr('homeAndLifestyle')),
                           ),
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'beauty-health',
-                            child: Text('زیبایی و سلامت'),
+                            child: Text(context.tr('beautyAndHealth')),
                           ),
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'sports',
-                            child: Text('ورزش'),
+                            child: Text(context.tr('sportsAndRecreation')),
                           ),
                         ],
                         onChanged: _onCategoryChanged,
@@ -183,30 +184,30 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       child: DropdownButton<String>(
                         value: '$_sortBy-$_sortOrder',
                         isExpanded: true,
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'name-asc',
-                            child: Text('نام (الف-ی)'),
+                            child: Text(context.tr('sort_name_asc')),
                           ),
                           DropdownMenuItem(
                             value: 'name-desc',
-                            child: Text('نام (ی-الف)'),
+                            child: Text(context.tr('sort_name_desc')),
                           ),
                           DropdownMenuItem(
                             value: 'price-asc',
-                            child: Text('قیمت (کم به زیاد)'),
+                            child: Text(context.tr('sort_price_asc')),
                           ),
                           DropdownMenuItem(
                             value: 'price-desc',
-                            child: Text('قیمت (زیاد به کم)'),
+                            child: Text(context.tr('sort_price_desc')),
                           ),
                           DropdownMenuItem(
                             value: 'rating-desc',
-                            child: Text('امتیاز (بالا به پایین)'),
+                            child: Text(context.tr('sort_rating_desc')),
                           ),
                           DropdownMenuItem(
                             value: 'popularity-desc',
-                            child: Text('پرفروش‌ترین'),
+                            child: Text(context.tr('sort_popularity_desc')),
                           ),
                         ],
                         onChanged: (value) {
@@ -247,7 +248,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => _loadProducts(refresh: true),
-              child: const Text('تلاش مجدد'),
+              child: Text(context.tr('try_again')),
             ),
           ],
         ),
@@ -255,8 +256,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
     }
 
     if (_products.isEmpty) {
-      return const Center(
-        child: Text('هیچ محصولی یافت نشد', style: TextStyle(fontSize: 18)),
+      return Center(
+        child: Text(
+          context.tr('no_products_found'),
+          style: const TextStyle(fontSize: 18),
+        ),
       );
     }
 
@@ -449,7 +453,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'خطای غیرمنتظره: ${e.toString()}';
+        _errorMessage = '${context.tr('unexpected_error')}: ${e.toString()}';
         _isLoading = false;
       });
     }
@@ -459,7 +463,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_product?.name ?? 'جزئیات محصول'),
+        title: Text(_product?.name ?? context.tr('product_details')),
         actions: [
           IconButton(
             onPressed: () {
@@ -486,7 +490,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onPressed: () {
                         // Add to cart logic
                       },
-                      child: const Text('افزودن به سبد'),
+                      child: Text(context.tr('add_to_cart')),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -495,7 +499,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onPressed: () {
                         // Buy now logic
                       },
-                      child: const Text('خرید فوری'),
+                      child: Text(context.tr('buy_now')),
                     ),
                   ),
                 ],
@@ -525,7 +529,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _loadProductDetails,
-              child: const Text('تلاش مجدد'),
+              child: Text(context.tr('try_again')),
             ),
           ],
         ),
@@ -533,7 +537,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
 
     if (_product == null) {
-      return const Center(child: Text('محصول یافت نشد'));
+      return Center(child: Text(context.tr('product_not_found')));
     }
 
     return SingleChildScrollView(
@@ -572,7 +576,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'برند: ${_product!.brand}',
+                  '${context.tr('brand_label')} ${_product!.brand}',
                   style: TextStyle(color: Colors.grey[600], fontSize: 16),
                 ),
 
@@ -609,7 +613,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          '${_product!.discountPercentage.toInt()}% تخفیف',
+                          '${_product!.discountPercentage.toInt()}% ${context.tr('discount_label')}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -646,7 +650,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      '(${_product!.rating.totalReviews} نظر)',
+                      '(${_product!.rating.totalReviews} ${context.tr('reviews_label')})',
                       style: TextStyle(color: Colors.grey[600]),
                     ),
                   ],
@@ -654,7 +658,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                 // Description
                 const SizedBox(height: 24),
-                Text('توضیحات', style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  context.tr('description'),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 8),
                 Text(
                   _product!.description,
@@ -665,7 +672,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 if (_product!.availableColors.isNotEmpty) ...[
                   const SizedBox(height: 24),
                   Text(
-                    'رنگ‌های موجود',
+                    context.tr('available_colors'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
@@ -694,7 +701,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 if (_relatedProducts.isNotEmpty) ...[
                   const SizedBox(height: 32),
                   Text(
-                    'محصولات مرتبط',
+                    context.tr('related_products'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),

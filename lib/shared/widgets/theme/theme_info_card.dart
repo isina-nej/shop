@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/advanced_theme_manager.dart';
+import '../../../core/localization/localization_extension.dart';
 import '../../../main.dart';
 
 /// Widget to show current theme info with animation
@@ -48,14 +49,14 @@ class ThemeInfoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'تم فعلی: ${themeManager.currentColorScheme.name}',
+                  '${context.tr('current_theme')} ${themeManager.currentColorScheme.name}',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  'حالت: ${_getThemeModeText(themeManager.currentMode)}',
+                  '${context.tr('theme_mode')}: ${_getThemeModeText(context, themeManager.currentMode)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(
                       context,
@@ -88,14 +89,14 @@ class ThemeInfoCard extends StatelessWidget {
     }
   }
 
-  String _getThemeModeText(AppThemeMode mode) {
+  String _getThemeModeText(BuildContext context, AppThemeMode mode) {
     switch (mode) {
       case AppThemeMode.light:
-        return 'روشن';
+        return context.tr('light_theme');
       case AppThemeMode.dark:
-        return 'تیره';
+        return context.tr('dark_theme');
       case AppThemeMode.system:
-        return 'سیستم';
+        return context.tr('system_theme');
     }
   }
 }

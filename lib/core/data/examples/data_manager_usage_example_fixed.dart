@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
 import '../models/user_model.dart';
+import '../../../core/localization/localization_extension.dart';
 
 /// Fixed example of how to use the DataManager in your app
 class DataManagerExampleFixed extends StatefulWidget {
@@ -175,9 +176,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('نمونه استفاده از DataManager (اصلاح شده)'),
-      ),
+      appBar: AppBar(title: Text(context.tr('data_manager_example_title'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -206,15 +205,15 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
               children: [
                 ElevatedButton(
                   onPressed: _isLoading ? null : _loadExampleData,
-                  child: const Text('بارگذاری داده‌ها'),
+                  child: Text(context.tr('load_data')),
                 ),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _testSearchAndFilter,
-                  child: const Text('تست جستجو و فیلتر'),
+                  child: Text(context.tr('test_search_and_filters')),
                 ),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _testUserOperations,
-                  child: const Text('تست عملیات کاربری'),
+                  child: Text(context.tr('test_user_operations')),
                 ),
               ],
             ),
@@ -230,7 +229,9 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
             // Products Preview
             if (_products.isNotEmpty) ...[
               Text(
-                'محصولات (${_products.length}):',
+                context
+                    .tr('products_with_count')
+                    .replaceAll('{count}', _products.length.toString()),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
@@ -283,7 +284,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
             // Current User Info
             if (_currentUser != null) ...[
               Text(
-                'کاربر جاری:',
+                context.tr('current_user'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
@@ -300,14 +301,20 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                           fontSize: 16,
                         ),
                       ),
-                      Text('ایمیل: ${_currentUser!.email}'),
                       Text(
-                        'تلفن: ${_currentUser!.profile.phoneNumber ?? "نامشخص"}',
+                        '${context.tr('email_label')}${_currentUser!.email}',
                       ),
-                      Text('نوع حساب: ${_currentUser!.account.accountType}'),
-                      Text('امتیاز: ${_currentUser!.loyalty.currentPoints}'),
                       Text(
-                        'آخرین ورود: ${_currentUser!.activity.lastLoginAt.toString().substring(0, 10)}',
+                        '${context.tr('phone_label')}${_currentUser!.profile.phoneNumber ?? context.tr('unknown')}',
+                      ),
+                      Text(
+                        '${context.tr('account_type_label')}${context.translateAccountType(_currentUser!.account.accountType)}',
+                      ),
+                      Text(
+                        '${context.tr('points_label')}${_currentUser!.loyalty.currentPoints}',
+                      ),
+                      Text(
+                        '${context.tr('last_login_label')}${_currentUser!.activity.lastLoginAt.toString().substring(0, 10)}',
                       ),
                     ],
                   ),

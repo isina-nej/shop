@@ -46,4 +46,32 @@ extension LocalizationExtension on BuildContext {
   /// بررسی زبان چینی
   bool get isChinese =>
       Provider.of<LanguageManager>(this, listen: false).isChinese;
+
+  /// ترجمه نوع حساب کاربری
+  String translateAccountType(String accountType) {
+    switch (accountType.toLowerCase()) {
+      case 'basic':
+        return tr('account_type_basic');
+      case 'premium':
+        return tr('account_type_premium');
+      case 'vip':
+        return tr('account_type_vip');
+      default:
+        return accountType; // fallback to original if not found
+    }
+  }
+
+  /// ترجمه وضعیت حساب
+  String translateAccountStatus(String status) {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return tr('account_status_active');
+      case 'suspended':
+        return tr('account_status_suspended');
+      case 'pending':
+        return tr('account_status_pending');
+      default:
+        return status; // fallback to original if not found
+    }
+  }
 }

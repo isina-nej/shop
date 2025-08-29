@@ -1,6 +1,7 @@
 // Enhanced App Router with Deferred Loading
 import 'package:flutter/material.dart';
 import 'deferred_page_loader.dart';
+import '../localization/localization_extension.dart';
 
 class EnhancedAppRouter {
   // Route names
@@ -249,14 +250,14 @@ class EnhancedAppRouter {
         );
 
       default:
-        return _errorRoute('صفحه مورد نظر یافت نشد');
+        return _errorRoute('page_not_found');
     }
   }
 
-  static Route<dynamic> _errorRoute(String message) {
+  static Route<dynamic> _errorRoute(String messageKey) {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text('خطا')),
+      builder: (context) => Scaffold(
+        appBar: AppBar(title: Text(context.tr('error_title'))),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +265,7 @@ class EnhancedAppRouter {
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                message,
+                context.tr(messageKey),
                 style: const TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),

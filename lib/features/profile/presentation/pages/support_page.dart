@@ -131,10 +131,19 @@ class _SupportPageState extends State<SupportPage>
           labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.grey600,
           indicatorColor: AppColors.primary,
-          tabs: const [
-            Tab(icon: Icon(Icons.contact_support), text: 'تماس با ما'),
-            Tab(icon: Icon(Icons.message), text: 'ارسال تیکت'),
-            Tab(icon: Icon(Icons.history), text: 'تیکت‌های من'),
+          tabs: [
+            Tab(
+              icon: const Icon(Icons.contact_support),
+              text: context.tr('contact_us_tab'),
+            ),
+            Tab(
+              icon: const Icon(Icons.message),
+              text: context.tr('submit_ticket_tab'),
+            ),
+            Tab(
+              icon: const Icon(Icons.history),
+              text: context.tr('my_tickets_tab'),
+            ),
           ],
         ),
       ),
@@ -202,7 +211,7 @@ class _SupportPageState extends State<SupportPage>
           ),
           const SizedBox(height: AppDimensions.paddingL),
           Text(
-            'پشتیبانی سینا شاپ',
+            context.tr('sina_shop_support'),
             style: AppTextStyles.headlineMedium.copyWith(
               color: AppColors.white,
               fontWeight: FontWeight.bold,
@@ -210,7 +219,7 @@ class _SupportPageState extends State<SupportPage>
           ),
           const SizedBox(height: AppDimensions.paddingS),
           Text(
-            'ما اینجا هستیم تا به شما کمک کنیم\n۷ روز هفته، ۲۴ ساعت شبانه‌روز',
+            context.tr('support_message'),
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.white.withValues(alpha: 0.9),
             ),
@@ -241,7 +250,7 @@ class _SupportPageState extends State<SupportPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'راه‌های تماس',
+            context.tr('contact_methods'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -250,18 +259,18 @@ class _SupportPageState extends State<SupportPage>
 
           _buildContactMethod(
             icon: Icons.phone,
-            title: 'تلفن پشتیبانی',
+            title: context.tr('support_phone'),
             subtitle: '۰۲۱-۱۲۳۴۵۶۷۸',
-            action: 'تماس',
+            action: context.tr('call'),
             onTap: () => _callSupport('02112345678'),
             color: AppColors.success,
           ),
 
           _buildContactMethod(
             icon: Icons.email,
-            title: 'ایمیل پشتیبانی',
+            title: context.tr('support_email'),
             subtitle: 'support@sinashop.com',
-            action: 'ارسال ایمیل',
+            action: context.tr('send_email'),
             onTap: () => _emailSupport('support@sinashop.com'),
             color: AppColors.info,
           ),
@@ -277,9 +286,9 @@ class _SupportPageState extends State<SupportPage>
 
           _buildContactMethod(
             icon: Icons.telegram,
-            title: 'پشتیبانی تلگرام',
+            title: context.tr('support_telegram'),
             subtitle: '@SinaShopSupport',
-            action: 'ارسال پیام',
+            action: context.tr('send_message'),
             onTap: () => _openTelegram('@SinaShopSupport'),
             color: AppColors.warning,
           ),
@@ -350,7 +359,7 @@ class _SupportPageState extends State<SupportPage>
               Icon(Icons.access_time, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'ساعات کاری پشتیبانی',
+                context.tr('support_working_hours'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -376,7 +385,7 @@ class _SupportPageState extends State<SupportPage>
                 const SizedBox(width: AppDimensions.paddingS),
                 Expanded(
                   child: Text(
-                    'پشتیبانی آنلاین و چت ۲۴ ساعت فعال است',
+                    context.tr('online_support_active'),
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.info,
                     ),
@@ -444,7 +453,7 @@ class _SupportPageState extends State<SupportPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'عملیات سریع',
+            context.tr('quick_actions'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -576,7 +585,7 @@ class _SupportPageState extends State<SupportPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ارسال تیکت پشتیبانی',
+            context.tr('submit_support_ticket'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -775,7 +784,7 @@ class _SupportPageState extends State<SupportPage>
             ),
             const SizedBox(height: AppDimensions.paddingXL),
             Text(
-              'هیچ تیکتی ندارید',
+              context.tr('no_tickets'),
               style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -783,7 +792,7 @@ class _SupportPageState extends State<SupportPage>
             ),
             const SizedBox(height: AppDimensions.paddingM),
             Text(
-              'تا کنون هیچ درخواست پشتیبانی ثبت نکرده‌اید\nدر صورت نیاز می‌توانید تیکت ارسال کنید',
+              context.tr('no_tickets_message'),
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.grey600,
               ),
@@ -858,7 +867,7 @@ class _SupportPageState extends State<SupportPage>
               ),
               const Spacer(),
               Text(
-                'کد: ${ticket.id}',
+                '${context.tr('ticket_code').replaceAll('{id}', ticket.id)}',
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
@@ -878,7 +887,7 @@ class _SupportPageState extends State<SupportPage>
           const SizedBox(height: AppDimensions.paddingS),
 
           Text(
-            'بخش: ${_getDepartmentText(ticket.department)}',
+            '${context.tr('department').replaceAll('{department}', _getDepartmentText(ticket.department))}',
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
           ),
 
@@ -889,7 +898,7 @@ class _SupportPageState extends State<SupportPage>
               Icon(Icons.access_time, size: 16, color: AppColors.grey600),
               const SizedBox(width: AppDimensions.paddingXS),
               Text(
-                'ایجاد: ${_formatDate(ticket.createdAt)}',
+                '${context.tr('created_at').replaceAll('{date}', _formatDate(ticket.createdAt))}',
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
@@ -898,7 +907,7 @@ class _SupportPageState extends State<SupportPage>
               Icon(Icons.reply, size: 16, color: AppColors.grey600),
               const SizedBox(width: AppDimensions.paddingXS),
               Text(
-                'آخرین پاسخ: ${_formatDate(ticket.lastReply)}',
+                '${context.tr('last_reply').replaceAll('{date}', _formatDate(ticket.lastReply))}',
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
@@ -1144,7 +1153,7 @@ class TicketDetailsDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'جزئیات تیکت ${ticket.id}',
+              '${context.tr('ticket_details').replaceAll('{id}', ticket.id)}',
               style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -1152,7 +1161,7 @@ class TicketDetailsDialog extends StatelessWidget {
             const SizedBox(height: AppDimensions.paddingL),
 
             Text(
-              'موضوع: ${ticket.subject}',
+              '${context.tr('subject').replaceAll('{subject}', ticket.subject)}',
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -1184,8 +1193,8 @@ class TicketDetailsDialog extends StatelessWidget {
                       children: [
                         Text(
                           message.isFromUser
-                              ? 'شما'
-                              : message.adminName ?? 'پشتیبانی',
+                              ? context.tr('you')
+                              : message.adminName ?? context.tr('support_team'),
                           style: AppTextStyles.bodySmall.copyWith(
                             fontWeight: FontWeight.bold,
                             color: message.isFromUser

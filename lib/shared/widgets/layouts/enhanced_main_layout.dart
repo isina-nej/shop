@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/routing/deferred_page_loader.dart';
+import '../../../core/localization/localization_extension.dart';
 
 class EnhancedMainLayout extends StatefulWidget {
   const EnhancedMainLayout({super.key});
@@ -70,7 +71,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
           page = await DeferredPageLoader.loadProfilePage();
           break;
         default:
-          page = const _ErrorPage(message: 'صفحه نامعتبر');
+          page = _ErrorPage(message: context.tr('invalid_page'));
       }
 
       if (mounted) {
@@ -83,7 +84,8 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
       if (mounted) {
         setState(() {
           _pageCache[index] = _ErrorPage(
-            message: 'خطا در بارگیری: $error',
+            message:
+                '${context.tr('loading_error').replaceAll('{error}', error.toString())}',
             onRetry: () => _retryLoadPage(index),
           );
           _loadingStates[index] = false;
@@ -229,7 +231,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
           items: [
             BottomNavigationBarItem(
               icon: _buildTabIcon(Icons.home_outlined, Icons.home, 0),
-              label: 'خانه',
+              label: context.tr('home'),
             ),
             BottomNavigationBarItem(
               icon: _buildTabIcon(
@@ -237,7 +239,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
                 Icons.shopping_bag,
                 1,
               ),
-              label: 'محصولات',
+              label: context.tr('products'),
             ),
             BottomNavigationBarItem(
               icon: _buildTabIcon(
@@ -245,11 +247,11 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
                 Icons.shopping_cart,
                 2,
               ),
-              label: 'سبد خرید',
+              label: context.tr('cart'),
             ),
             BottomNavigationBarItem(
               icon: _buildTabIcon(Icons.person_outline, Icons.person, 3),
-              label: 'پروفایل',
+              label: context.tr('profile'),
             ),
           ],
         ),
@@ -283,7 +285,7 @@ class _LoadingPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'در حال بارگیری $pageName...',
+              '${context.tr('loading_page_name').replaceAll('{pageName}', pageName)}',
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
@@ -301,7 +303,7 @@ class _LoadingPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'بارگیری کامپوننت‌ها...',
+              context.tr('loading_components'),
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
@@ -332,7 +334,7 @@ class _ErrorPage extends StatelessWidget {
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                'خطا در بارگیری صفحه',
+                context.tr('error_loading_page'),
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
@@ -347,7 +349,7 @@ class _ErrorPage extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh),
-                  label: const Text('تلاش مجدد'),
+                  label: Text(context.tr('retry_button')),
                 ),
               ],
             ],

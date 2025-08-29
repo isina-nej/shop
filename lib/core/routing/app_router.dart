@@ -1,5 +1,6 @@
 // App Router Configuration
 import 'package:flutter/material.dart';
+import '../../core/localization/localization_extension.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/categories/presentation/pages/categories_page.dart';
 import '../../features/products/presentation/pages/products_page.dart';
@@ -56,26 +57,27 @@ class AppRouter {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Splash Screen'))),
+          builder: (context) =>
+              Scaffold(body: Center(child: Text(context.tr('splash_screen')))),
         );
 
       case onboarding:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Onboarding Screen'))),
+          builder: (context) => Scaffold(
+            body: Center(child: Text(context.tr('onboarding_screen'))),
+          ),
         );
 
       case login:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Login Screen'))),
+          builder: (context) =>
+              Scaffold(body: Center(child: Text(context.tr('login')))),
         );
 
       case register:
         return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text('Register Screen'))),
+          builder: (context) =>
+              Scaffold(body: Center(child: Text(context.tr('register')))),
         );
 
       case home:
@@ -163,9 +165,9 @@ class AppRouter {
 
       case wishlist:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(title: const Text('لیست علاقه‌مندی‌ها')),
-            body: const Center(child: Text('صفحه لیست علاقه‌مندی‌ها')),
+          builder: (context) => Scaffold(
+            appBar: AppBar(title: Text(context.tr('wishlist_title'))),
+            body: Center(child: Text(context.tr('wishlist_page'))),
           ),
         );
 
@@ -173,14 +175,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SettingsPage());
 
       default:
-        return _errorRoute('صفحه مورد نظر یافت نشد');
+        return _errorRoute('page_not_found');
     }
   }
 
-  static Route<dynamic> _errorRoute(String message) {
+  static Route<dynamic> _errorRoute(String messageKey) {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text('خطا')),
+      builder: (context) => Scaffold(
+        appBar: AppBar(title: Text(context.tr('error_title'))),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +190,7 @@ class AppRouter {
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                message,
+                context.tr(messageKey),
                 style: const TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),

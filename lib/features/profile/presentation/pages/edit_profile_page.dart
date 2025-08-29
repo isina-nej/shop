@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -76,7 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('ویرایش پروفایل'),
+        title: Text(context.tr('edit_profile')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         actions: [
@@ -88,7 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage>
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Text('ذخیره'),
+                : Text(context.tr('save')),
           ),
         ],
       ),
@@ -227,12 +228,12 @@ class _EditProfilePageState extends State<EditProfilePage>
               TextButton.icon(
                 onPressed: _changeProfileImage,
                 icon: const Icon(Icons.photo_camera),
-                label: const Text('تغییر تصویر'),
+                label: Text(context.tr('change_image')),
               ),
               TextButton.icon(
                 onPressed: _removeProfileImage,
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('حذف تصویر'),
+                label: Text(context.tr('delete_image')),
                 style: TextButton.styleFrom(foregroundColor: AppColors.error),
               ),
             ],
@@ -364,7 +365,7 @@ class _EditProfilePageState extends State<EditProfilePage>
               Icon(Icons.contact_phone_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'اطلاعات تماس',
+                context.tr('contact_info'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -536,7 +537,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           children: [
             Expanded(
               child: RadioListTile<String>(
-                title: const Text('مرد'),
+                title: Text(context.tr('male')),
                 value: 'مرد',
                 groupValue: _selectedGender,
                 onChanged: (value) {
@@ -549,7 +550,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             ),
             Expanded(
               child: RadioListTile<String>(
-                title: const Text('زن'),
+                title: Text(context.tr('female')),
                 value: 'زن',
                 groupValue: _selectedGender,
                 onChanged: (value) {
@@ -642,7 +643,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             ),
             child: _isLoading
                 ? const CircularProgressIndicator(color: AppColors.white)
-                : const Text('ذخیره تغییرات'),
+                : Text(context.tr('save_changes')),
           ),
         ),
         const SizedBox(height: AppDimensions.paddingM),

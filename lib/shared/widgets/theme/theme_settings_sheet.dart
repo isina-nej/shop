@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/advanced_theme_manager.dart';
+import '../../../core/localization/localization_extension.dart';
 
 class ThemeSettingsSheet extends StatefulWidget {
   final AdvancedThemeManager themeManager;
@@ -53,7 +54,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'تنظیمات تم',
+                  context.tr('theme_settings'),
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -68,7 +69,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
 
             // Theme Mode Section
             Text(
-              'حالت تم',
+              context.tr('theme_mode'),
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -79,7 +80,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
 
             // Color Scheme Section
             Text(
-              'طرح رنگی',
+              context.tr('color_scheme'),
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -90,7 +91,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
 
             // Custom Color Section
             Text(
-              'رنگ سفارشی',
+              context.tr('custom_color'),
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -117,7 +118,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
               child: OutlinedButton.icon(
                 onPressed: () => widget.themeManager.changeThemeMode(mode),
                 icon: Icon(_getThemeModeIcon(mode)),
-                label: Text(_getThemeModeText(mode)),
+                label: Text(_getThemeModeText(context, mode)),
                 style: OutlinedButton.styleFrom(
                   backgroundColor: isSelected
                       ? Theme.of(context).colorScheme.primaryContainer
@@ -300,14 +301,14 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
     }
   }
 
-  String _getThemeModeText(AppThemeMode mode) {
+  String _getThemeModeText(BuildContext context, AppThemeMode mode) {
     switch (mode) {
       case AppThemeMode.light:
-        return 'روشن';
+        return context.tr('light_theme');
       case AppThemeMode.dark:
-        return 'تیره';
+        return context.tr('dark_theme');
       case AppThemeMode.system:
-        return 'سیستم';
+        return context.tr('system_theme');
     }
   }
 

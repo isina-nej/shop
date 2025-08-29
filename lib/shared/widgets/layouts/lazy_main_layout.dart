@@ -1,6 +1,7 @@
 // Lazy Main Layout Widget with Dynamic Page Loading
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/localization/localization_extension.dart';
 
 class LazyMainLayout extends StatefulWidget {
   const LazyMainLayout({super.key});
@@ -154,22 +155,22 @@ class _LazyMainLayoutState extends State<LazyMainLayout> {
           BottomNavigationBarItem(
             icon: _buildTabIcon(Icons.home_outlined, 0),
             activeIcon: _buildTabIcon(Icons.home, 0),
-            label: 'خانه',
+            label: context.tr('home'),
           ),
           BottomNavigationBarItem(
             icon: _buildTabIcon(Icons.shopping_bag_outlined, 1),
             activeIcon: _buildTabIcon(Icons.shopping_bag, 1),
-            label: 'محصولات',
+            label: context.tr('products'),
           ),
           BottomNavigationBarItem(
             icon: _buildTabIcon(Icons.shopping_cart_outlined, 2),
             activeIcon: _buildTabIcon(Icons.shopping_cart, 2),
-            label: 'سبد خرید',
+            label: context.tr('cart'),
           ),
           BottomNavigationBarItem(
             icon: _buildTabIcon(Icons.person_outline, 3),
             activeIcon: _buildTabIcon(Icons.person, 3),
-            label: 'پروفایل',
+            label: context.tr('profile'),
           ),
         ],
       ),
@@ -215,7 +216,7 @@ class _LoadingPage extends StatelessWidget {
             const CircularProgressIndicator(),
             const SizedBox(height: 16),
             Text(
-              'در حال بارگیری...',
+              context.tr('loading_page'),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -241,7 +242,7 @@ class _ErrorPage extends StatelessWidget {
             const Icon(Icons.error_outline, size: 64, color: Colors.red),
             const SizedBox(height: 16),
             Text(
-              'خطا در بارگیری',
+              context.tr('error_loading'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -259,41 +260,41 @@ class _ErrorPage extends StatelessWidget {
 
 // Mock modules for testing (replace with actual pages)
 class _HomeModule {
-  Widget homePage() => const _MockPage('خانه', Icons.home, Colors.blue);
+  Widget homePage() => const _MockPage('home', Icons.home, Colors.blue);
 }
 
 class _ProductsModule {
   Widget productsPage() =>
-      const _MockPage('محصولات', Icons.shopping_bag, Colors.green);
+      const _MockPage('products', Icons.shopping_bag, Colors.green);
 }
 
 class _CartModule {
   Widget cartPage() =>
-      const _MockPage('سبد خرید', Icons.shopping_cart, Colors.orange);
+      const _MockPage('cart', Icons.shopping_cart, Colors.orange);
 }
 
 class _ProfileModule {
   Widget profilePage() =>
-      const _MockPage('پروفایل', Icons.person, Colors.purple);
+      const _MockPage('profile', Icons.person, Colors.purple);
 }
 
 class _DefaultModule {
-  Widget defaultPage() => const _MockPage('پیش‌فرض', Icons.error, Colors.red);
+  Widget defaultPage() => const _MockPage('default', Icons.error, Colors.red);
 }
 
 // Mock page for testing
 class _MockPage extends StatelessWidget {
-  final String title;
+  final String titleKey;
   final IconData icon;
   final Color color;
 
-  const _MockPage(this.title, this.icon, this.color);
+  const _MockPage(this.titleKey, this.icon, this.color);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(context.tr(titleKey)),
         backgroundColor: color,
         foregroundColor: Colors.white,
       ),
@@ -304,7 +305,7 @@ class _MockPage extends StatelessWidget {
             Icon(icon, size: 120, color: color),
             const SizedBox(height: 24),
             Text(
-              '$title (Lazy Loaded)',
+              '${context.tr(titleKey)} ${context.tr('lazy_loaded')}',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: color,
                 fontWeight: FontWeight.bold,
@@ -318,9 +319,12 @@ class _MockPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: color),
               ),
-              child: const Text(
-                '✅ صفحه به صورت Lazy Load شده است',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              child: Text(
+                context.tr('page_lazy_loaded_success'),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],

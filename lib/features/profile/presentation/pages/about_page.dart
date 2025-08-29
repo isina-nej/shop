@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -52,7 +53,7 @@ class _AboutPageState extends State<AboutPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('درباره ما'),
+        title: Text(context.tr('about_us')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
       ),
@@ -119,7 +120,7 @@ class _AboutPageState extends State<AboutPage>
           ),
           const SizedBox(height: AppDimensions.paddingXL),
           Text(
-            'سینا شاپ',
+            context.tr('sina_shop'),
             style: AppTextStyles.displayMedium.copyWith(
               color: AppColors.white,
               fontWeight: FontWeight.bold,
@@ -127,14 +128,14 @@ class _AboutPageState extends State<AboutPage>
           ),
           const SizedBox(height: AppDimensions.paddingM),
           Text(
-            'بهترین تجربه خرید آنلاین',
+            context.tr('best_online_shopping_experience'),
             style: AppTextStyles.headlineSmall.copyWith(
               color: AppColors.white.withValues(alpha: 0.9),
             ),
           ),
           const SizedBox(height: AppDimensions.paddingL),
           Text(
-            'سینا شاپ از سال ۱۴۰۰ با هدف ارائه بهترین محصولات و خدمات به مشتریان عزیز فعالیت می‌کند. ما به دنبال ایجاد تجربه‌ای منحصربفرد و رضایت‌بخش برای همه کاربران هستیم.',
+            context.tr('sina_shop_description'),
             style: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.white.withValues(alpha: 0.9),
               height: 1.6,
@@ -165,7 +166,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'ماموریت ما',
+            context.tr('our_mission'),
             style: AppTextStyles.headlineMedium.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -174,9 +175,8 @@ class _AboutPageState extends State<AboutPage>
 
           _buildMissionItem(
             icon: Icons.visibility,
-            title: 'چشم‌انداز ما',
-            description:
-                'پیشرو بودن در ارائه خدمات خرید آنلاین با کیفیت و اعتماد در سراسر کشور',
+            title: context.tr('our_vision'),
+            description: context.tr('our_vision_description'),
             color: AppColors.primary,
           ),
 
@@ -184,9 +184,8 @@ class _AboutPageState extends State<AboutPage>
 
           _buildMissionItem(
             icon: Icons.track_changes,
-            title: 'هدف ما',
-            description:
-                'تسهیل فرآیند خرید و ایجاد رضایت حداکثری برای مشتریان با ارائه محصولات اصل و با کیفیت',
+            title: context.tr('our_goal'),
+            description: context.tr('our_goal_description'),
             color: AppColors.success,
           ),
 
@@ -194,9 +193,8 @@ class _AboutPageState extends State<AboutPage>
 
           _buildMissionItem(
             icon: Icons.favorite,
-            title: 'ارزش‌های ما',
-            description:
-                'صداقت، کیفیت، نوآوری، و تعهد به رضایت مشتری اصول اساسی ما هستند',
+            title: context.tr('our_values'),
+            description: context.tr('our_values_description'),
             color: AppColors.error,
           ),
         ],
@@ -265,7 +263,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'آمار ما در یک نگاه',
+            context.tr('our_stats_at_glance'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -277,7 +275,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۲۵۰,۰۰۰+',
-                  label: 'مشتری راضی',
+                  label: context.tr('satisfied_customers'),
                   icon: Icons.people,
                   color: AppColors.primary,
                 ),
@@ -285,7 +283,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۱۵,۰۰۰+',
-                  label: 'محصول',
+                  label: context.tr('products_count'),
                   icon: Icons.inventory,
                   color: AppColors.success,
                 ),
@@ -300,7 +298,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۵۰۰,۰۰۰+',
-                  label: 'سفارش تکمیل شده',
+                  label: context.tr('completed_orders'),
                   icon: Icons.shopping_cart,
                   color: AppColors.warning,
                 ),
@@ -308,7 +306,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۹۸%',
-                  label: 'رضایت مشتریان',
+                  label: context.tr('customer_satisfaction'),
                   icon: Icons.star,
                   color: AppColors.error,
                 ),
@@ -323,7 +321,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۱۵۰+',
-                  label: 'شهر تحت پوشش',
+                  label: context.tr('cities_covered'),
                   icon: Icons.location_city,
                   color: AppColors.info,
                 ),
@@ -331,7 +329,7 @@ class _AboutPageState extends State<AboutPage>
               Expanded(
                 child: _buildStatItem(
                   number: '۲۴/۷',
-                  label: 'پشتیبانی',
+                  label: context.tr('support_247'),
                   icon: Icons.support_agent,
                   color: AppColors.purple,
                 ),
@@ -408,7 +406,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'چرا سینا شاپ؟',
+            context.tr('why_sina_shop'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -417,36 +415,36 @@ class _AboutPageState extends State<AboutPage>
 
           _buildFeatureItem(
             icon: Icons.verified,
-            title: 'ضمانت اصالت کالا',
-            description: 'تمامی محصولات با ضمانت اصالت و گارانتی معتبر',
+            title: context.tr('genuine_product_guarantee'),
+            description: context.tr('genuine_product_description'),
             color: AppColors.success,
           ),
 
           _buildFeatureItem(
             icon: Icons.local_shipping,
-            title: 'ارسال سریع و رایگان',
-            description: 'ارسال رایگان برای خریدهای بالای ۵۰۰ هزار تومان',
+            title: context.tr('fast_free_shipping'),
+            description: context.tr('fast_free_shipping_description'),
             color: AppColors.primary,
           ),
 
           _buildFeatureItem(
             icon: Icons.payment,
-            title: 'پرداخت امن',
-            description: 'درگاه‌های پرداخت معتبر و امن با رمزنگاری بانکی',
+            title: context.tr('secure_payment'),
+            description: context.tr('secure_payment_description'),
             color: AppColors.info,
           ),
 
           _buildFeatureItem(
             icon: Icons.support_agent,
-            title: 'پشتیبانی ۲۴ ساعته',
-            description: 'تیم پشتیبانی ما همیشه آماده کمک به شما هستند',
+            title: context.tr('24_7_support'),
+            description: context.tr('24_7_support_description'),
             color: AppColors.warning,
           ),
 
           _buildFeatureItem(
             icon: Icons.refresh,
-            title: 'بازگشت کالا',
-            description: 'امکان بازگشت کالا تا ۷ روز بدون هیچ شرطی',
+            title: context.tr('product_return'),
+            description: context.tr('product_return_description'),
             color: AppColors.error,
           ),
         ],
@@ -524,7 +522,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'تیم مدیریت',
+            context.tr('management_team'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -535,18 +533,18 @@ class _AboutPageState extends State<AboutPage>
             children: [
               Expanded(
                 child: _buildTeamMember(
-                  name: 'علی احمدی',
-                  position: 'مدیر عامل',
-                  description: 'بیش از ۱۰ سال تجربه در حوزه تجارت الکترونیک',
+                  name: context.tr('ali_ahmadi'),
+                  position: context.tr('ceo'),
+                  description: context.tr('ceo_description'),
                   avatar: Icons.person,
                 ),
               ),
               const SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildTeamMember(
-                  name: 'سارا رضایی',
-                  position: 'مدیر فناوری',
-                  description: 'متخصص توسعه نرم‌افزار و مهندسی کامپیوتر',
+                  name: context.tr('sara_rezaei'),
+                  position: context.tr('cto'),
+                  description: context.tr('cto_description'),
                   avatar: Icons.person,
                 ),
               ),
@@ -559,18 +557,18 @@ class _AboutPageState extends State<AboutPage>
             children: [
               Expanded(
                 child: _buildTeamMember(
-                  name: 'محمد حسینی',
-                  position: 'مدیر فروش',
-                  description: 'کارشناس بازاریابی و فروش آنلاین',
+                  name: context.tr('mohammad_hosseini'),
+                  position: context.tr('sales_manager'),
+                  description: context.tr('sales_manager_description'),
                   avatar: Icons.person,
                 ),
               ),
               const SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildTeamMember(
-                  name: 'فاطمه کریمی',
-                  position: 'مدیر پشتیبانی',
-                  description: 'متخصص خدمات مشتریان و CRM',
+                  name: context.tr('fateme_karimi'),
+                  position: context.tr('support_manager'),
+                  description: context.tr('support_manager_description'),
                   avatar: Icons.person,
                 ),
               ),
@@ -649,7 +647,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'تاریخچه شرکت',
+            context.tr('company_history'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -658,27 +656,27 @@ class _AboutPageState extends State<AboutPage>
 
           _buildTimelineItem(
             year: '۱۴۰۰',
-            title: 'تأسیس شرکت',
-            description: 'آغاز فعالیت با تیم ۵ نفره و ۱۰۰ محصول',
+            title: context.tr('company_founded'),
+            description: context.tr('company_founded_description'),
             isFirst: true,
           ),
 
           _buildTimelineItem(
             year: '۱۴۰۱',
-            title: 'گسترش محصولات',
-            description: 'افزایش به ۵۰۰۰ محصول و ۵۰ هزار مشتری',
+            title: context.tr('product_expansion'),
+            description: context.tr('product_expansion_description'),
           ),
 
           _buildTimelineItem(
             year: '۱۴۰۲',
-            title: 'افتتاح انبار جدید',
-            description: 'راه‌اندازی انبار مرکزی و کاهش زمان ارسال',
+            title: context.tr('new_warehouse'),
+            description: context.tr('new_warehouse_description'),
           ),
 
           _buildTimelineItem(
             year: '۱۴۰۳',
-            title: 'توسعه اپلیکیشن',
-            description: 'عرضه اپلیکیشن موبایل و خدمات جدید',
+            title: context.tr('app_development'),
+            description: context.tr('app_development_description'),
             isLast: true,
           ),
         ],
@@ -776,7 +774,7 @@ class _AboutPageState extends State<AboutPage>
       child: Column(
         children: [
           Text(
-            'با ما در تماس باشید',
+            context.tr('contact_us'),
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -785,28 +783,28 @@ class _AboutPageState extends State<AboutPage>
 
           _buildContactItem(
             icon: Icons.location_on,
-            title: 'آدرس',
+            title: context.tr('address'),
             value: 'تهران، خیابان ولیعصر، پلاک ۱۲۳',
             onTap: () => _copyToClipboard('تهران، خیابان ولیعصر، پلاک ۱۲۳'),
           ),
 
           _buildContactItem(
             icon: Icons.phone,
-            title: 'تلفن',
+            title: context.tr('phone'),
             value: '۰۲۱-۱۲۳۴۵۶۷۸',
             onTap: () => _copyToClipboard('02112345678'),
           ),
 
           _buildContactItem(
             icon: Icons.email,
-            title: 'ایمیل',
+            title: context.tr('email'),
             value: 'info@sinashop.com',
             onTap: () => _copyToClipboard('info@sinashop.com'),
           ),
 
           _buildContactItem(
             icon: Icons.web,
-            title: 'وب‌سایت',
+            title: context.tr('website'),
             value: 'www.sinashop.com',
             onTap: () => _copyToClipboard('www.sinashop.com'),
           ),
@@ -818,19 +816,19 @@ class _AboutPageState extends State<AboutPage>
             children: [
               _buildSocialButton(
                 icon: Icons.telegram,
-                label: 'تلگرام',
+                label: context.tr('telegram'),
                 color: AppColors.info,
                 onTap: () => _copyToClipboard('@SinaShop'),
               ),
               _buildSocialButton(
                 icon: Icons.phone_android,
-                label: 'اینستاگرام',
+                label: context.tr('instagram'),
                 color: AppColors.purple,
                 onTap: () => _copyToClipboard('@SinaShop'),
               ),
               _buildSocialButton(
                 icon: Icons.facebook,
-                label: 'لینکدین',
+                label: context.tr('linkedin'),
                 color: AppColors.primary,
                 onTap: () => _copyToClipboard('SinaShop'),
               ),
@@ -929,7 +927,7 @@ class _AboutPageState extends State<AboutPage>
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('$text کپی شد'),
+        content: Text('$text ${context.tr('copied_to_clipboard')}'),
         backgroundColor: AppColors.success,
       ),
     );

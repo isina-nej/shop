@@ -508,15 +508,15 @@ class _SettingsPageState extends State<SettingsPage>
         ),
 
         _buildActionSetting(
-          title: 'تماس با پشتیبانی',
+          title: context.tr('contact_support'),
           subtitle: 'ارتباط با تیم پشتیبانی',
           icon: Icons.support_agent,
           onTap: () => Navigator.pushNamed(context, '/support'),
         ),
 
         _buildActionSetting(
-          title: 'درباره اپلیکیشن',
-          subtitle: 'اطلاعات نسخه و شرکت',
+          title: context.tr('about_app'),
+          subtitle: context.tr('app_version_info'),
           icon: Icons.info,
           onTap: () => Navigator.pushNamed(context, '/about'),
         ),

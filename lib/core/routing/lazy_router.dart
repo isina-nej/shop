@@ -294,7 +294,7 @@ class LazyRouter {
         );
 
       default:
-        return _errorRoute('صفحه مورد نظر یافت نشد');
+        return _errorRoute('page_not_found');
     }
   }
 
@@ -333,10 +333,12 @@ class LazyRouter {
     return module.ProductsPage(searchQuery: query);
   }
 
-  static Route<dynamic> _errorRoute(String message) {
+  static Route<dynamic> _errorRoute(String messageKey) {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text('خطا')),
+      builder: (context) => Scaffold(
+        appBar: AppBar(
+          title: Text(TranslationManager.instance.translate('error_title')),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -344,7 +346,7 @@ class LazyRouter {
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
               const SizedBox(height: 16),
               Text(
-                message,
+                TranslationManager.instance.translate(messageKey),
                 style: const TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),

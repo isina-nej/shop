@@ -274,7 +274,7 @@ class _ProductsPageState extends State<ProductsPage> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loadProducts,
-            child: const Text('تلاش مجدد'),
+            child: Text(context.tr('retry')),
           ),
         ],
       ),
@@ -681,16 +681,31 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget _buildSortDropdown(BuildContext context) {
     return DropdownButton<String>(
       value: '$_sortBy-$_sortOrder',
-      items: const [
-        DropdownMenuItem(value: 'name-asc', child: Text('نام (الف-ی)')),
-        DropdownMenuItem(value: 'name-desc', child: Text('نام (ی-الف)')),
-        DropdownMenuItem(value: 'price-asc', child: Text('قیمت (کم به زیاد)')),
-        DropdownMenuItem(value: 'price-desc', child: Text('قیمت (زیاد به کم)')),
+      items: [
+        DropdownMenuItem(
+          value: 'name-asc',
+          child: Text(context.tr('name_asc')),
+        ),
+        DropdownMenuItem(
+          value: 'name-desc',
+          child: Text(context.tr('name_desc')),
+        ),
+        DropdownMenuItem(
+          value: 'price-asc',
+          child: Text(context.tr('price_asc')),
+        ),
+        DropdownMenuItem(
+          value: 'price-desc',
+          child: Text(context.tr('price_desc')),
+        ),
         DropdownMenuItem(
           value: 'rating-desc',
-          child: Text('امتیاز (بالا به پایین)'),
+          child: Text(context.tr('rating_desc')),
         ),
-        DropdownMenuItem(value: 'popularity-desc', child: Text('پرفروش‌ترین')),
+        DropdownMenuItem(
+          value: 'popularity-desc',
+          child: Text(context.tr('best_sellers')),
+        ),
       ],
       onChanged: (value) {
         if (value != null) {
@@ -757,7 +772,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
         // Stock filter
         CheckboxListTile(
-          title: const Text('فقط کالاهای موجود'),
+          title: Text(context.tr('in_stock_only')),
           value: _inStockOnly,
           onChanged: (value) {
             setState(() {
@@ -773,7 +788,7 @@ class _ProductsPageState extends State<ProductsPage> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: _applyFilters,
-            child: const Text('اعمال فیلتر'),
+            child: Text(context.tr('apply_filters')),
           ),
         ),
 
@@ -795,7 +810,7 @@ class _ProductsPageState extends State<ProductsPage> {
               });
               _applyFilters();
             },
-            child: const Text('پاک کردن فیلترها'),
+            child: Text(context.tr('clear_filters')),
           ),
         ),
       ],
@@ -819,7 +834,7 @@ class _ProductsPageState extends State<ProductsPage> {
               ),
               const SizedBox(height: 16),
               ListTile(
-                title: const Text('نام (الف-ی)'),
+                title: Text(context.tr('name_asc')),
                 trailing: _sortBy == 'name' && _sortOrder == 'asc'
                     ? Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -833,7 +848,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 },
               ),
               ListTile(
-                title: const Text('قیمت (کم به زیاد)'),
+                title: Text(context.tr('price_asc')),
                 trailing: _sortBy == 'price' && _sortOrder == 'asc'
                     ? Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -847,7 +862,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 },
               ),
               ListTile(
-                title: const Text('قیمت (زیاد به کم)'),
+                title: Text(context.tr('price_desc')),
                 trailing: _sortBy == 'price' && _sortOrder == 'desc'
                     ? Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -861,7 +876,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 },
               ),
               ListTile(
-                title: const Text('امتیاز (بالا به پایین)'),
+                title: Text(context.tr('rating_desc')),
                 trailing: _sortBy == 'rating' && _sortOrder == 'desc'
                     ? Icon(Icons.check, color: AppColors.primary)
                     : null,
@@ -906,7 +921,7 @@ class _ProductsPageState extends State<ProductsPage> {
   void _toggleFavorite(ProductModel product) {
     // TODO: Implement favorite functionality with DataManager
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('محصول به علاقه‌مندی‌ها اضافه شد')),
+      SnackBar(content: Text(context.tr('product_added_to_wishlist'))),
     );
   }
 

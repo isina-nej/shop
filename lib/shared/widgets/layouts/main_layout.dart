@@ -5,6 +5,7 @@ import '../../../features/products/presentation/pages/products_page.dart';
 import '../../../features/cart/presentation/pages/cart_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/localization/localization_extension.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -42,26 +43,26 @@ class _MainLayoutState extends State<MainLayout> {
         unselectedItemColor: Theme.of(context).brightness == Brightness.dark
             ? AppColors.textSecondaryDark
             : AppColors.textSecondaryLight,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'خانه', // TODO: Use translation
+            icon: const Icon(Icons.home_outlined),
+            activeIcon: const Icon(Icons.home),
+            label: context.tr('home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            activeIcon: Icon(Icons.shopping_bag),
-            label: 'محصولات', // TODO: Use translation
+            icon: const Icon(Icons.shopping_bag_outlined),
+            activeIcon: const Icon(Icons.shopping_bag),
+            label: context.tr('products'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
-            label: 'سبد خرید', // TODO: Use translation
+            icon: const Icon(Icons.shopping_cart_outlined),
+            activeIcon: const Icon(Icons.shopping_cart),
+            label: context.tr('cart'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'پروفایل', // TODO: Use translation
+            icon: const Icon(Icons.person_outline),
+            activeIcon: const Icon(Icons.person),
+            label: context.tr('profile'),
           ),
         ],
       ),

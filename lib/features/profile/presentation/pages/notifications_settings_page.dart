@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class NotificationsSettingsPage extends StatefulWidget {
   const NotificationsSettingsPage({super.key});
@@ -80,11 +81,11 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('تنظیمات اعلان‌ها'),
+        title: Text(context.tr('notifications_settings')),
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.white,
         elevation: 0,
         actions: [
-          TextButton(onPressed: _saveSettings, child: const Text('ذخیره')),
+          TextButton(onPressed: _saveSettings, child: Text(context.tr('save'))),
         ],
       ),
       body: FadeTransition(
@@ -161,7 +162,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'وضعیت اعلان‌ها',
+                      context.tr('notifications_status'),
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.bold,
@@ -169,7 +170,9 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                     ),
                     const SizedBox(height: AppDimensions.paddingXS),
                     Text(
-                      '$activeNotifications نوع اعلان فعال',
+                      context
+                          .tr('active_notifications_count')
+                          .replaceFirst('{}', activeNotifications.toString()),
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.white.withValues(alpha: 0.9),
                       ),
@@ -185,21 +188,21 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Expanded(
                 child: _buildOverviewItem(
                   icon: Icons.phone_android,
-                  title: 'پوش',
+                  title: context.tr('push_notifications'),
                   isEnabled: _pushNotifications,
                 ),
               ),
               Expanded(
                 child: _buildOverviewItem(
                   icon: Icons.email,
-                  title: 'ایمیل',
+                  title: context.tr('email_notifications'),
                   isEnabled: _emailNotifications,
                 ),
               ),
               Expanded(
                 child: _buildOverviewItem(
                   icon: Icons.sms,
-                  title: 'پیامک',
+                  title: context.tr('sms_notifications'),
                   isEnabled: _smsNotifications,
                 ),
               ),
@@ -239,7 +242,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           ),
         ),
         Text(
-          isEnabled ? 'فعال' : 'غیرفعال',
+          isEnabled ? context.tr('active') : context.tr('inactive'),
           style: AppTextStyles.labelSmall.copyWith(
             color: AppColors.white.withValues(alpha: 0.7),
           ),
@@ -272,7 +275,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.settings_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'تنظیمات عمومی',
+                context.tr('general_settings'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -283,8 +286,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.phone_android,
-            title: 'اعلان‌های پوش',
-            subtitle: 'دریافت اعلان‌ها در گوشی',
+            title: context.tr('push_notifications_title'),
+            subtitle: context.tr('receive_notifications_on_phone'),
             value: _pushNotifications,
             onChanged: (value) => setState(() => _pushNotifications = value),
             iconColor: AppColors.success,
@@ -292,8 +295,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.email_outlined,
-            title: 'اعلان‌های ایمیل',
-            subtitle: 'دریافت ایمیل‌های اطلاع‌رسانی',
+            title: context.tr('email_notifications_title'),
+            subtitle: context.tr('receive_informational_emails'),
             value: _emailNotifications,
             onChanged: (value) => setState(() => _emailNotifications = value),
             iconColor: AppColors.info,
@@ -301,8 +304,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.sms_outlined,
-            title: 'اعلان‌های پیامکی',
-            subtitle: 'دریافت پیامک‌های مهم',
+            title: context.tr('sms_notifications_title'),
+            subtitle: context.tr('receive_important_sms'),
             value: _smsNotifications,
             onChanged: (value) => setState(() => _smsNotifications = value),
             iconColor: AppColors.warning,
@@ -336,7 +339,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.shopping_bag_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'اعلان‌های سفارش',
+                context.tr('order_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -347,8 +350,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.check_circle_outline,
-            title: 'تأیید سفارش',
-            subtitle: 'اطلاع از تأیید سفارش جدید',
+            title: context.tr('order_confirmation'),
+            subtitle: context.tr('new_order_confirmation_notification'),
             value: _orderConfirmation,
             onChanged: (value) => setState(() => _orderConfirmation = value),
             iconColor: AppColors.success,
@@ -356,8 +359,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.update,
-            title: 'وضعیت سفارش',
-            subtitle: 'تغییرات وضعیت آماده‌سازی و ارسال',
+            title: context.tr('order_status'),
+            subtitle: context.tr('preparation_shipping_status_changes'),
             value: _orderStatusUpdates,
             onChanged: (value) => setState(() => _orderStatusUpdates = value),
             iconColor: AppColors.info,
@@ -365,8 +368,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.local_shipping_outlined,
-            title: 'اطلاع‌رسانی تحویل',
-            subtitle: 'زمان تحویل و رسیدن سفارش',
+            title: context.tr('delivery_notification'),
+            subtitle: context.tr('delivery_time_order_arrival'),
             value: _deliveryUpdates,
             onChanged: (value) => setState(() => _deliveryUpdates = value),
             iconColor: AppColors.warning,
@@ -374,8 +377,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.keyboard_return,
-            title: 'مرجوعی و بازگشت',
-            subtitle: 'وضعیت درخواست‌های مرجوعی',
+            title: context.tr('returns_refunds'),
+            subtitle: context.tr('return_requests_status'),
             value: _orderReturns,
             onChanged: (value) => setState(() => _orderReturns = value),
             iconColor: AppColors.error,
@@ -409,7 +412,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.campaign_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'اعلان‌های بازاریابی',
+                context.tr('marketing_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -420,8 +423,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.local_offer,
-            title: 'تخفیف‌ها و پیشنهادها',
-            subtitle: 'اطلاع از تخفیف‌های ویژه',
+            title: context.tr('discounts_offers'),
+            subtitle: context.tr('special_discounts_notification'),
             value: _promotionalOffers,
             onChanged: (value) => setState(() => _promotionalOffers = value),
             iconColor: AppColors.success,
@@ -429,8 +432,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.new_releases,
-            title: 'محصولات جدید',
-            subtitle: 'معرفی محصولات تازه وارد',
+            title: context.tr('new_products'),
+            subtitle: context.tr('new_arrivals_introduction'),
             value: _newProducts,
             onChanged: (value) => setState(() => _newProducts = value),
             iconColor: AppColors.info,
@@ -438,8 +441,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.trending_down,
-            title: 'کاهش قیمت',
-            subtitle: 'اطلاع از کاهش قیمت محصولات',
+            title: context.tr('price_reduction'),
+            subtitle: context.tr('product_price_reductions_notification'),
             value: _priceDrops,
             onChanged: (value) => setState(() => _priceDrops = value),
             iconColor: AppColors.warning,
@@ -447,8 +450,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.recommend,
-            title: 'پیشنهادات شخصی',
-            subtitle: 'محصولات پیشنهادی بر اساس علاقه‌مندی',
+            title: context.tr('personal_recommendations'),
+            subtitle: context.tr('recommended_products_based_interests'),
             value: _personalizedRecommendations,
             onChanged: (value) =>
                 setState(() => _personalizedRecommendations = value),
@@ -483,7 +486,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.security_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'اعلان‌های امنیتی',
+                context.tr('security_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -494,8 +497,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.warning_outlined,
-            title: 'هشدارهای امنیتی',
-            subtitle: 'اطلاع از فعالیت‌های مشکوک',
+            title: context.tr('security_alerts'),
+            subtitle: context.tr('suspicious_activity_notification'),
             value: _securityAlerts,
             onChanged: (value) => setState(() => _securityAlerts = value),
             iconColor: AppColors.error,
@@ -503,8 +506,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.login,
-            title: 'ورود به حساب',
-            subtitle: 'اطلاع از ورود از دستگاه جدید',
+            title: context.tr('account_login'),
+            subtitle: context.tr('new_device_login_notification'),
             value: _loginAlerts,
             onChanged: (value) => setState(() => _loginAlerts = value),
             iconColor: AppColors.warning,
@@ -512,8 +515,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.account_circle_outlined,
-            title: 'تغییرات حساب',
-            subtitle: 'اطلاع از تغییر اطلاعات شخصی',
+            title: context.tr('account_changes'),
+            subtitle: context.tr('personal_information_changes_notification'),
             value: _accountChanges,
             onChanged: (value) => setState(() => _accountChanges = value),
             iconColor: AppColors.info,
@@ -521,8 +524,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.key,
-            title: 'تغییر رمز عبور',
-            subtitle: 'تأیید تغییر رمز عبور',
+            title: context.tr('password_changes'),
+            subtitle: context.tr('password_change_confirmation'),
             value: _passwordChanges,
             onChanged: (value) => setState(() => _passwordChanges = value),
             iconColor: AppColors.success,
@@ -556,7 +559,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.smartphone, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'تنظیمات اپلیکیشن',
+                context.tr('app_settings'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -567,8 +570,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.notifications_active,
-            title: 'اعلان‌های درون برنامه',
-            subtitle: 'نمایش اعلان‌ها در برنامه',
+            title: context.tr('in_app_notifications'),
+            subtitle: context.tr('notifications_display_in_app'),
             value: _inAppNotifications,
             onChanged: (value) => setState(() => _inAppNotifications = value),
             iconColor: AppColors.primary,
@@ -576,8 +579,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.circle_outlined,
-            title: 'نشان تعداد',
-            subtitle: 'نمایش تعداد اعلان‌ها روی آیکون',
+            title: context.tr('badge_count'),
+            subtitle: context.tr('notification_count_on_icon'),
             value: _badgeCount,
             onChanged: (value) => setState(() => _badgeCount = value),
             iconColor: AppColors.error,
@@ -585,8 +588,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.volume_up_outlined,
-            title: 'صدای اعلان',
-            subtitle: 'پخش صدا هنگام دریافت اعلان',
+            title: context.tr('notification_sound'),
+            subtitle: context.tr('sound_on_notification'),
             value: _soundEnabled,
             onChanged: (value) => setState(() => _soundEnabled = value),
             iconColor: AppColors.warning,
@@ -594,8 +597,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
 
           _buildNotificationToggle(
             icon: Icons.vibration,
-            title: 'ارتعاش',
-            subtitle: 'ارتعاش گوشی هنگام دریافت اعلان',
+            title: context.tr('vibration'),
+            subtitle: context.tr('phone_vibration_on_notification'),
             value: _vibrationEnabled,
             onChanged: (value) => setState(() => _vibrationEnabled = value),
             iconColor: AppColors.info,
@@ -629,7 +632,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.bedtime_outlined, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'ساعات سکوت',
+                context.tr('quiet_hours'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -638,7 +641,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           ),
           const SizedBox(height: AppDimensions.paddingS),
           Text(
-            'در این بازه زمانی اعلان‌ها بی‌صدا ارسال می‌شوند',
+            context.tr('silent_notification_period'),
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
           ),
           const SizedBox(height: AppDimensions.paddingL),
@@ -662,12 +665,12 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                 size: 20,
               ),
             ),
-            title: const Text('فعال‌سازی ساعات سکوت'),
+            title: Text(context.tr('quiet_hours_activation')),
             subtitle: _quietHoursEnabled
                 ? Text(
-                    '${_quietHoursStart.format(context)} تا ${_quietHoursEnd.format(context)}',
+                    '${_quietHoursStart.format(context)} ${context.tr('to')} ${_quietHoursEnd.format(context)}',
                   )
-                : const Text('غیرفعال'),
+                : Text(context.tr('inactive')),
             value: _quietHoursEnabled,
             onChanged: (value) => setState(() => _quietHoursEnabled = value),
           ),
@@ -690,7 +693,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'شروع',
+                          context.tr('start'),
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.primary,
                           ),
@@ -713,7 +716,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'پایان',
+                          context.tr('end'),
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.primary,
                           ),
@@ -763,7 +766,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               Icon(Icons.history, color: AppColors.primary),
               const SizedBox(width: AppDimensions.paddingS),
               Text(
-                'مدیریت اعلان‌ها',
+                context.tr('notification_management'),
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -783,8 +786,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
               child: Icon(Icons.history, color: AppColors.info, size: 20),
             ),
-            title: const Text('تاریخچه اعلان‌ها'),
-            subtitle: const Text('مشاهده اعلان‌های دریافتی'),
+            title: Text(context.tr('notification_history')),
+            subtitle: Text(context.tr('view_received_notifications')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _viewNotificationHistory,
           ),
@@ -802,8 +805,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
               child: Icon(Icons.clear_all, color: AppColors.warning, size: 20),
             ),
-            title: const Text('پاک کردن همه اعلان‌ها'),
-            subtitle: const Text('حذف تمام اعلان‌های دریافتی'),
+            title: Text(context.tr('clear_all_notifications')),
+            subtitle: Text(context.tr('delete_all_received_notifications')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _clearAllNotifications,
           ),
@@ -821,8 +824,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
               child: Icon(Icons.restore, color: AppColors.success, size: 20),
             ),
-            title: const Text('بازنشانی تنظیمات'),
-            subtitle: const Text('بازگشت به تنظیمات پیش‌فرض'),
+            title: Text(context.tr('reset_settings')),
+            subtitle: Text(context.tr('return_to_default_settings')),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: _resetSettings,
           ),
@@ -907,8 +910,8 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
   void _saveSettings() {
     // Save settings to storage
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('تنظیمات با موفقیت ذخیره شد'),
+      SnackBar(
+        content: Text(context.tr('settings_saved_successfully')),
         backgroundColor: AppColors.success,
       ),
     );
@@ -934,34 +937,32 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
   void _viewNotificationHistory() {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('تاریخچه اعلان‌ها')));
+    ).showSnackBar(SnackBar(content: Text(context.tr('notification_history'))));
   }
 
   void _clearAllNotifications() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('پاک کردن اعلان‌ها'),
-        content: const Text(
-          'آیا مطمئن هستید که می‌خواهید همه اعلان‌ها را پاک کنید؟',
-        ),
+        title: Text(context.tr('clear_notifications')),
+        content: Text(context.tr('confirm_clear_all_notifications')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('همه اعلان‌ها پاک شد'),
+                SnackBar(
+                  content: Text(context.tr('all_notifications_cleared')),
                   backgroundColor: AppColors.success,
                 ),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('پاک کن'),
+            child: Text(context.tr('clear')),
           ),
         ],
       ),
@@ -972,14 +973,12 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('بازنشانی تنظیمات'),
-        content: const Text(
-          'آیا مطمئن هستید که می‌خواهید تمام تنظیمات اعلان‌ها را به حالت پیش‌فرض بازگردانید؟',
-        ),
+        title: Text(context.tr('reset_settings_title')),
+        content: Text(context.tr('confirm_reset_all_notification_settings')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('انصراف'),
+            child: Text(context.tr('cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -1008,13 +1007,13 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                 _quietHoursEnabled = false;
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('تنظیمات به حالت پیش‌فرض بازگشت'),
+                SnackBar(
+                  content: Text(context.tr('settings_reset_to_default')),
                   backgroundColor: AppColors.success,
                 ),
               );
             },
-            child: const Text('بازنشانی'),
+            child: Text(context.tr('reset')),
           ),
         ],
       ),

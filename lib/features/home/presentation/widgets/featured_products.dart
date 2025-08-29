@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/routing/app_router.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class FeaturedProducts extends StatelessWidget {
   const FeaturedProducts({super.key});
@@ -176,7 +177,7 @@ class _ProductCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'تخفیف',
+                        context.tr('discount'),
                         style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.white,
                           fontWeight: FontWeight.bold,

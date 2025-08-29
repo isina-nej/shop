@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 class SpecialOffers extends StatelessWidget {
   const SpecialOffers({super.key});
@@ -11,8 +12,8 @@ class SpecialOffers extends StatelessWidget {
   static const List<OfferModel> _offers = [
     OfferModel(
       id: '1',
-      title: 'تخفیف 50% محصولات الکترونیکی',
-      description: 'تا پایان هفته فرصت استفاده از این تخفیف را دارید',
+      title: 'electronic_discount',
+      description: 'electronic_discount_desc',
       discount: '50%',
       backgroundColor: AppColors.error,
       textColor: AppColors.white,
@@ -21,9 +22,9 @@ class SpecialOffers extends StatelessWidget {
     ),
     OfferModel(
       id: '2',
-      title: 'ارسال رایگان برای خرید بالای ۵ میلیون',
-      description: 'بدون هزینه اضافی محصولات خود را دریافت کنید',
-      discount: 'رایگان',
+      title: 'free_shipping_offer',
+      description: 'free_shipping_desc',
+      discount: 'free',
       backgroundColor: AppColors.success,
       textColor: AppColors.white,
       imageUrl: 'assets/images/banners/free_shipping.png',
@@ -31,8 +32,8 @@ class SpecialOffers extends StatelessWidget {
     ),
     OfferModel(
       id: '3',
-      title: 'کد تخفیف ویژه کاربران جدید',
-      description: 'با کد WELCOME30 از 30% تخفیف بهره‌مند شوید',
+      title: 'new_user_discount',
+      description: 'new_user_discount_desc',
       discount: '30%',
       backgroundColor: AppColors.primary,
       textColor: AppColors.white,
@@ -147,7 +148,9 @@ class _OfferCard extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      offer.discount,
+                      context.tr(offer.discount) != offer.discount
+                          ? context.tr(offer.discount)
+                          : offer.discount,
                       style: AppTextStyles.headlineSmall.copyWith(
                         color: offer.textColor,
                         fontWeight: FontWeight.bold,
@@ -159,7 +162,7 @@ class _OfferCard extends StatelessWidget {
 
                   // Title
                   Text(
-                    offer.title,
+                    context.tr(offer.title),
                     style: AppTextStyles.bodyLarge.copyWith(
                       color: offer.textColor,
                       fontWeight: FontWeight.bold,
@@ -173,7 +176,7 @@ class _OfferCard extends StatelessWidget {
                   // Description
                   Expanded(
                     child: Text(
-                      offer.description,
+                      context.tr(offer.description),
                       style: AppTextStyles.bodySmall.copyWith(
                         color: offer.textColor.withValues(alpha: 0.9),
                       ),
@@ -192,7 +195,7 @@ class _OfferCard extends StatelessWidget {
                       ),
                       const SizedBox(width: AppDimensions.paddingXS),
                       Text(
-                        'معتبر تا: ${offer.validUntil}',
+                        '${context.tr('valid_until')} ${offer.validUntil}',
                         style: AppTextStyles.labelMedium.copyWith(
                           color: offer.textColor.withValues(alpha: 0.8),
                         ),

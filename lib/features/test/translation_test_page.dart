@@ -46,14 +46,14 @@ class _TranslationTestPageState extends State<TranslationTestPage> {
                   translatedText = translated;
                 });
               },
-              child: const Text('Test Async Translation'),
+              child: Text(context.tr('test_async_translation')),
             ),
 
             if (translatedText.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  'Async Result: $translatedText',
+                  '${context.tr('async_result').replaceAll('{text}', translatedText)}',
                   style: const TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
