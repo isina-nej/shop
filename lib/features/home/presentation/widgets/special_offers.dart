@@ -126,83 +126,89 @@ class _OfferCard extends StatelessWidget {
             ),
 
             // Content
-            Padding(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Discount Badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppDimensions.paddingM,
-                      vertical: AppDimensions.paddingS,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(
-                        AppDimensions.radiusXL,
+            ClipRect(
+              child: Padding(
+                padding: const EdgeInsets.all(AppDimensions.paddingL),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Discount Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingM,
+                        vertical: AppDimensions.paddingS,
                       ),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.3),
-                        width: 1,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusXL,
+                        ),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        context.tr(offer.discount) != offer.discount
+                            ? context.tr(offer.discount)
+                            : offer.discount,
+                        style: AppTextStyles.headlineSmall.copyWith(
+                          color: offer.textColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    child: Text(
-                      context.tr(offer.discount) != offer.discount
-                          ? context.tr(offer.discount)
-                          : offer.discount,
-                      style: AppTextStyles.headlineSmall.copyWith(
+
+                    const SizedBox(height: AppDimensions.paddingXS),
+
+                    // Title
+                    Text(
+                      context.tr(offer.title),
+                      style: AppTextStyles.bodyLarge.copyWith(
                         color: offer.textColor,
                         fontWeight: FontWeight.bold,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
 
-                  const SizedBox(height: AppDimensions.paddingM),
+                    const SizedBox(height: AppDimensions.paddingXS),
 
-                  // Title
-                  Text(
-                    context.tr(offer.title),
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      color: offer.textColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const SizedBox(height: AppDimensions.paddingS),
-
-                  // Description
-                  Expanded(
-                    child: Text(
+                    // Description
+                    Text(
                       context.tr(offer.description),
                       style: AppTextStyles.bodySmall.copyWith(
                         color: offer.textColor.withValues(alpha: 0.9),
                       ),
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
 
-                  // Valid Until
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.schedule,
-                        size: 16,
-                        color: offer.textColor.withValues(alpha: 0.8),
-                      ),
-                      const SizedBox(width: AppDimensions.paddingXS),
-                      Text(
-                        '${context.tr('valid_until')} ${offer.validUntil}',
-                        style: AppTextStyles.labelMedium.copyWith(
+                    const SizedBox(height: AppDimensions.paddingXS),
+
+                    // Valid Until
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.schedule,
+                          size: 14,
                           color: offer.textColor.withValues(alpha: 0.8),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: AppDimensions.paddingXS),
+                        Expanded(
+                          child: Text(
+                            '${context.tr('valid_until')} ${offer.validUntil}',
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: offer.textColor.withValues(alpha: 0.8),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
 

@@ -1,51 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'language_manager.dart';
+import 'package:get/get.dart';
+import 'language_controller.dart';
 import 'app_localizations.dart';
 
 /// Extension برای دسترسی آسان به ترجمه‌ها
 extension LocalizationExtension on BuildContext {
   /// دریافت متن ترجمه شده (سینک)
   String tr(String key) {
-    final languageManager = Provider.of<LanguageManager>(this, listen: false);
-    return AppLocalizations.translate(key, languageManager.locale.languageCode);
+    final languageController = Get.find<LanguageController>();
+    return AppLocalizations.translate(
+      key,
+      languageController.locale.value.languageCode,
+    );
   }
 
   /// دریافت متن ترجمه شده (async) - برای بارگذاری اولیه
   Future<String> trAsync(String key) async {
-    final languageManager = Provider.of<LanguageManager>(this, listen: false);
+    final languageController = Get.find<LanguageController>();
     return await AppLocalizations.translateAsync(
       key,
-      languageManager.locale.languageCode,
+      languageController.locale.value.languageCode,
     );
   }
 
   /// دریافت زبان فعلی
-  LanguageManager get languageManager =>
-      Provider.of<LanguageManager>(this, listen: false);
+  LanguageController get languageController => Get.find<LanguageController>();
 
   /// دریافت جهت متن
   TextDirection get textDirection =>
-      Provider.of<LanguageManager>(this, listen: false).textDirection;
+      Get.find<LanguageController>().textDirection;
 
   /// بررسی زبان فارسی
-  bool get isFarsi => Provider.of<LanguageManager>(this, listen: false).isFarsi;
+  bool get isFarsi => Get.find<LanguageController>().isFarsi;
 
   /// بررسی زبان انگلیسی
-  bool get isEnglish =>
-      Provider.of<LanguageManager>(this, listen: false).isEnglish;
+  bool get isEnglish => Get.find<LanguageController>().isEnglish;
 
   /// بررسی زبان عربی
-  bool get isArabic =>
-      Provider.of<LanguageManager>(this, listen: false).isArabic;
+  bool get isArabic => Get.find<LanguageController>().isArabic;
 
   /// بررسی زبان روسی
-  bool get isRussian =>
-      Provider.of<LanguageManager>(this, listen: false).isRussian;
+  bool get isRussian => Get.find<LanguageController>().isRussian;
 
   /// بررسی زبان چینی
-  bool get isChinese =>
-      Provider.of<LanguageManager>(this, listen: false).isChinese;
+  bool get isChinese => Get.find<LanguageController>().isChinese;
 
   /// ترجمه نوع حساب کاربری
   String translateAccountType(String accountType) {

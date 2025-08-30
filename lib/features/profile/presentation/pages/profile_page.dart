@@ -1,11 +1,11 @@
 // Modern Profile Page - Redesigned for Better UX
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/theme/advanced_theme_manager.dart';
-import '../../../../core/localization/language_manager.dart';
+import '../../../../core/theme/theme_controller.dart';
+import '../../../../core/localization/language_controller.dart';
 import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/routing/app_router.dart';
@@ -534,7 +534,7 @@ class _ProfilePageState extends State<ProfilePage>
             ModernMenuItem(
               icon: Icons.language_outlined,
               title: 'زبان برنامه',
-              subtitle: context.languageManager.languageName,
+              subtitle: Get.find<LanguageController>().languageName,
               onTap: () => _showLanguageSelection(),
             ),
           ],
@@ -732,11 +732,8 @@ class _ProfilePageState extends State<ProfilePage>
 
   // Theme Toggle
   void _toggleTheme(BuildContext context) {
-    final themeManager = Provider.of<AdvancedThemeManager>(
-      context,
-      listen: false,
-    );
-    themeManager.toggleTheme();
+    final themeController = Get.find<ThemeController>();
+    themeController.toggleTheme();
   }
 
   // Navigation Methods with proper routing
@@ -854,10 +851,6 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   void _showLanguageSelection() {
-    final languageManager = Provider.of<LanguageManager>(
-      context,
-      listen: false,
-    );
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     showModalBottomSheet(
@@ -892,20 +885,21 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
               ),
               const SizedBox(height: AppDimensions.paddingL),
-              ...LanguageManager.supportedLocales.map((locale) {
+              ...LanguageController.supportedLocales.map((locale) {
                 final languageData = _getLanguageData(locale.languageCode);
+                final languageController = Get.find<LanguageController>();
 
                 return Container(
                   margin: const EdgeInsets.only(bottom: AppDimensions.paddingS),
                   decoration: BoxDecoration(
                     color:
-                        languageManager.locale.languageCode ==
+                        languageController.locale.value.languageCode ==
                             locale.languageCode
                         ? AppColors.primary.withValues(alpha: 0.1)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border:
-                        languageManager.locale.languageCode ==
+                        languageController.locale.value.languageCode ==
                             locale.languageCode
                         ? Border.all(color: AppColors.primary)
                         : null,
@@ -919,7 +913,7 @@ class _ProfilePageState extends State<ProfilePage>
                       languageData['name']!,
                       style: AppTextStyles.bodyLarge.copyWith(
                         fontWeight:
-                            languageManager.locale.languageCode ==
+                            languageController.locale.value.languageCode ==
                                 locale.languageCode
                             ? FontWeight.bold
                             : FontWeight.normal,
@@ -927,7 +921,7 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                     subtitle: Text(languageData['nativeName']!),
                     trailing:
-                        languageManager.locale.languageCode ==
+                        languageController.locale.value.languageCode ==
                             locale.languageCode
                         ? Icon(Icons.check_circle, color: AppColors.primary)
                         : null,
@@ -935,19 +929,19 @@ class _ProfilePageState extends State<ProfilePage>
                       try {
                         switch (locale.languageCode) {
                           case 'fa':
-                            await languageManager.setFarsi();
+                            await languageController.setFarsi();
                             break;
                           case 'en':
-                            await languageManager.setEnglish();
+                            await languageController.setEnglish();
                             break;
                           case 'ar':
-                            await languageManager.setArabic();
+                            await languageController.setArabic();
                             break;
                           case 'ru':
-                            await languageManager.setRussian();
+                            await languageController.setRussian();
                             break;
                           case 'zh':
-                            await languageManager.setChinese();
+                            await languageController.setChinese();
                             break;
                         }
                       } catch (e) {

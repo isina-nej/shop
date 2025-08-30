@@ -1,6 +1,7 @@
 // App Router Configuration
 import 'package:flutter/material.dart';
 import '../../core/localization/localization_extension.dart';
+import '../../core/animations/page_transitions.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/categories/presentation/pages/categories_page.dart';
 import '../../features/products/presentation/pages/products_page.dart';
@@ -56,57 +57,65 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
-        return MaterialPageRoute(
-          builder: (context) =>
-              Scaffold(body: Center(child: Text(context.tr('splash_screen')))),
+        return PageTransitions.fadeTransition(
+          Builder(
+            builder: (context) => Scaffold(
+              body: Center(child: Text(context.tr('splash_screen'))),
+            ),
+          ),
         );
 
       case onboarding:
-        return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            body: Center(child: Text(context.tr('onboarding_screen'))),
+        return PageTransitions.slideBottomToTop(
+          Builder(
+            builder: (context) => Scaffold(
+              body: Center(child: Text(context.tr('onboarding_screen'))),
+            ),
           ),
         );
 
       case login:
-        return MaterialPageRoute(
-          builder: (context) =>
-              Scaffold(body: Center(child: Text(context.tr('login')))),
+        return PageTransitions.slideRightToLeft(
+          Builder(
+            builder: (context) =>
+                Scaffold(body: Center(child: Text(context.tr('login')))),
+          ),
         );
 
       case register:
-        return MaterialPageRoute(
-          builder: (context) =>
-              Scaffold(body: Center(child: Text(context.tr('register')))),
+        return PageTransitions.slideRightToLeft(
+          Builder(
+            builder: (context) =>
+                Scaffold(body: Center(child: Text(context.tr('register')))),
+          ),
         );
 
       case home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return PageTransitions.slideRightToLeft(const HomePage());
 
       case categories:
-        return MaterialPageRoute(builder: (_) => const CategoriesPage());
+        return PageTransitions.slideRightToLeft(const CategoriesPage());
 
       case categoryProducts:
         final args = settings.arguments as Map<String, dynamic>?;
         final categoryId = args?['categoryId'] as String?;
         final categoryName = args?['categoryName'] as String?;
-        return MaterialPageRoute(
-          builder: (_) =>
-              ProductsPage(categoryId: categoryId, categoryName: categoryName),
+        return PageTransitions.slideRightToLeft(
+          ProductsPage(categoryId: categoryId, categoryName: categoryName),
         );
 
       case specialOffers:
-        return MaterialPageRoute(
-          builder: (_) => const ProductsPage(searchQuery: 'special_offers'),
+        return PageTransitions.fadeTransition(
+          const ProductsPage(searchQuery: 'special_offers'),
         );
 
       case featuredProducts:
-        return MaterialPageRoute(
-          builder: (_) => const ProductsPage(searchQuery: 'featured_products'),
+        return PageTransitions.fadeTransition(
+          const ProductsPage(searchQuery: 'featured_products'),
         );
 
       case products:
-        return MaterialPageRoute(builder: (_) => const ProductsPage());
+        return PageTransitions.slideRightToLeft(const ProductsPage());
 
       case productDetails:
         final args = settings.arguments as Map<String, dynamic>?;
@@ -114,65 +123,65 @@ class AppRouter {
         if (productId == null) {
           return _errorRoute('Product ID is required');
         }
-        return MaterialPageRoute(
-          builder: (_) => ProductDetailsPage(productId: productId),
+        return PageTransitions.scaleTransition(
+          ProductDetailsPage(productId: productId),
         );
 
       case cart:
-        return MaterialPageRoute(builder: (_) => const CartPage());
+        return PageTransitions.slideRightToLeft(const CartPage());
 
       case profile:
-        return MaterialPageRoute(builder: (_) => const ProfilePage());
+        return PageTransitions.slideRightToLeft(const ProfilePage());
 
       case editProfile:
-        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+        return PageTransitions.scaleTransition(const EditProfilePage());
 
       case securitySettings:
-        return MaterialPageRoute(builder: (_) => const SecuritySettingsPage());
+        return PageTransitions.scaleTransition(const SecuritySettingsPage());
 
       case addresses:
-        return MaterialPageRoute(builder: (_) => const AddressesPage());
+        return PageTransitions.scaleTransition(const AddressesPage());
 
       case paymentMethods:
-        return MaterialPageRoute(builder: (_) => const PaymentMethodsPage());
+        return PageTransitions.scaleTransition(const PaymentMethodsPage());
 
       case reviews:
-        return MaterialPageRoute(builder: (_) => const ReviewsPage());
+        return PageTransitions.scaleTransition(const ReviewsPage());
 
       case notifications:
-        return MaterialPageRoute(
-          builder: (_) => const NotificationsSettingsPage(),
+        return PageTransitions.scaleTransition(
+          const NotificationsSettingsPage(),
         );
 
       case faq:
-        return MaterialPageRoute(builder: (_) => const FAQPage());
+        return PageTransitions.zoomTransition(const FAQPage());
 
       case support:
-        return MaterialPageRoute(builder: (_) => const SupportPage());
+        return PageTransitions.zoomTransition(const SupportPage());
 
       case about:
-        return MaterialPageRoute(builder: (_) => const AboutPage());
+        return PageTransitions.zoomTransition(const AboutPage());
 
       case privacy:
-        return MaterialPageRoute(builder: (_) => const PrivacyPolicyPage());
+        return PageTransitions.scaleTransition(const PrivacyPolicyPage());
 
       case search:
         final args = settings.arguments as Map<String, dynamic>?;
         final query = args?['query'] as String?;
-        return MaterialPageRoute(
-          builder: (_) => ProductsPage(searchQuery: query),
-        );
+        return PageTransitions.fadeTransition(ProductsPage(searchQuery: query));
 
       case wishlist:
-        return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            appBar: AppBar(title: Text(context.tr('wishlist_title'))),
-            body: Center(child: Text(context.tr('wishlist_page'))),
+        return PageTransitions.slideAndScaleTransition(
+          Builder(
+            builder: (context) => Scaffold(
+              appBar: AppBar(title: Text(context.tr('wishlist_title'))),
+              body: Center(child: Text(context.tr('wishlist_page'))),
+            ),
           ),
         );
 
       case AppRouter.settings:
-        return MaterialPageRoute(builder: (_) => const SettingsPage());
+        return PageTransitions.scaleTransition(const SettingsPage());
 
       default:
         return _errorRoute('page_not_found');
@@ -180,21 +189,23 @@ class AppRouter {
   }
 
   static Route<dynamic> _errorRoute(String messageKey) {
-    return MaterialPageRoute(
-      builder: (context) => Scaffold(
-        appBar: AppBar(title: Text(context.tr('error_title'))),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
-              Text(
-                context.tr(messageKey),
-                style: const TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ],
+    return PageTransitions.fadeTransition(
+      Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: Text(context.tr('error_title'))),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                Text(
+                  context.tr(messageKey),
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
         ),
       ),

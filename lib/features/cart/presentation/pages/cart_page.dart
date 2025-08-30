@@ -1,80 +1,41 @@
 // Cart Page - Shopping Cart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/localization/localization_extension.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/models/shop_models.dart';
-import '../../../../core/data/mock_data.dart';
+import '../cart_controller.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  List<CartItem> _cartItems = [];
-  bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCartItems();
-  }
-
-  void _loadCartItems() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Simulate API call delay
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        _cartItems = MockData.getCartItems();
-        _isLoading = false;
-      });
-    });
-  }
-
-  double get _subtotal {
-    return _cartItems.fold(
-      0,
-      (total, item) => total + (item.product.price * item.quantity),
-    );
-  }
-
-  double get _tax {
-    return _subtotal * 0.1; // 10% tax
-  }
-
-  double get _shipping {
-    return _subtotal > 100 ? 0 : 10; // Free shipping over $100
-  }
-
-  double get _total {
-    return _subtotal + _tax + _shipping;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.put(CartController());
+
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
           ? AppColors.backgroundDark
           : AppColors.backgroundLight,
-      appBar: _buildAppBar(context),
+      appBar: _buildAppBar(context, cartController),
       body: ResponsiveUtils.isMobile(context)
-          ? _buildMobileLayout(context)
-          : _buildDesktopLayout(context),
-      bottomNavigationBar: _cartItems.isNotEmpty
-          ? _buildBottomBar(context)
-          : null,
+          ? _buildMobileLayout(context, cartController)
+          : _buildDesktopLayout(context, cartController),
+      bottomNavigationBar: Obx(
+        () => cartController.cartItems.isNotEmpty
+            ? _buildBottomBar(context, cartController)
+            : const SizedBox.shrink(),
+      ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(
+    BuildContext context,
+    CartController cartController,
+  ) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -85,10 +46,10 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
       centerTitle: true,
-      actions: _cartItems.isNotEmpty
+      actions: cartController.cartItems.isNotEmpty
           ? [
               TextButton(
-                onPressed: _showClearCartDialog,
+                onPressed: () => _showClearCartDialog(context, cartController),
                 child: Text(
                   context.tr('clear_all'),
                   style: TextStyle(color: AppColors.error),
@@ -99,99 +60,40 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildMobileLayout(BuildContext context) {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
+  Widget _buildMobileLayout(
+    BuildContext context,
+    CartController cartController,
+  ) {
+    return Obx(() {
+      if (cartController.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-    if (_cartItems.isEmpty) {
-      return _buildEmptyCart(context);
-    }
+      if (cartController.cartItems.isEmpty) {
+        return _buildEmptyCart(context);
+      }
 
-    return Column(
-      children: [
-        // Cart Items List
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(AppDimensions.paddingM),
-            itemCount: _cartItems.length,
-            itemBuilder: (context, index) {
-              return _buildCartItem(context, _cartItems[index]);
-            },
-          ),
-        ),
-
-        // Order Summary
-        Container(
-          margin: const EdgeInsets.all(AppDimensions.paddingM),
-          padding: const EdgeInsets.all(AppDimensions.paddingM),
-          decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.surfaceDark
-                : AppColors.white,
-            borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.shadowDark
-                    : AppColors.shadowLight,
-                offset: const Offset(0, 2),
-                blurRadius: 8,
-              ),
-            ],
-          ),
-          child: _buildOrderSummary(context),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDesktopLayout(BuildContext context) {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    if (_cartItems.isEmpty) {
-      return _buildEmptyCart(context);
-    }
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Cart Items
-        Expanded(
-          flex: 2,
-          child: Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${context.tr('your_cart')} (${_cartItems.length} ${context.tr('items')})',
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.paddingL),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _cartItems.length,
-                    itemBuilder: (context, index) {
-                      return _buildCartItem(context, _cartItems[index]);
-                    },
-                  ),
-                ),
-              ],
+      return Column(
+        children: [
+          // Cart Items List
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(AppDimensions.paddingM),
+              itemCount: cartController.cartItems.length,
+              itemBuilder: (context, index) {
+                return _buildCartItem(
+                  context,
+                  cartController.cartItems[index],
+                  cartController,
+                );
+              },
             ),
           ),
-        ),
 
-        // Order Summary Sidebar
-        Container(
-          width: 400,
-          padding: const EdgeInsets.all(AppDimensions.paddingL),
-          child: Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+          // Order Summary
+          Container(
+            margin: const EdgeInsets.all(AppDimensions.paddingM),
+            padding: const EdgeInsets.all(AppDimensions.paddingM),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.surfaceDark
@@ -207,20 +109,101 @@ class _CartPageState extends State<CartPage> {
                 ),
               ],
             ),
-            child: Column(
-              children: [
-                _buildOrderSummary(context),
-                const SizedBox(height: AppDimensions.paddingL),
-                _buildCheckoutButton(context),
-              ],
-            ),
+            child: _buildOrderSummary(context, cartController),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 
-  Widget _buildCartItem(BuildContext context, CartItem item) {
+  Widget _buildDesktopLayout(
+    BuildContext context,
+    CartController cartController,
+  ) {
+    return Obx(() {
+      if (cartController.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
+
+      if (cartController.cartItems.isEmpty) {
+        return _buildEmptyCart(context);
+      }
+
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Cart Items
+          Expanded(
+            flex: 2,
+            child: Container(
+              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${context.tr('your_cart')} (${cartController.cartItems.length} ${context.tr('items')})',
+                    style: AppTextStyles.headlineSmall.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: AppDimensions.paddingL),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: cartController.cartItems.length,
+                      itemBuilder: (context, index) {
+                        return _buildCartItem(
+                          context,
+                          cartController.cartItems[index],
+                          cartController,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Order Summary Sidebar
+          Container(
+            width: 400,
+            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            child: Container(
+              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.surfaceDark
+                    : AppColors.white,
+                borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.shadowDark
+                        : AppColors.shadowLight,
+                    offset: const Offset(0, 2),
+                    blurRadius: 8,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildOrderSummary(context, cartController),
+                  const SizedBox(height: AppDimensions.paddingL),
+                  _buildCheckoutButton(context, cartController),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildCartItem(
+    BuildContext context,
+    CartItem item,
+    CartController cartController,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
@@ -290,8 +273,12 @@ class _CartPageState extends State<CartPage> {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () =>
-                                _updateQuantity(item, item.quantity - 1),
+                            onPressed: () => _updateQuantity(
+                              context,
+                              item,
+                              item.quantity - 1,
+                              cartController,
+                            ),
                             icon: const Icon(Icons.remove_circle_outline),
                             constraints: const BoxConstraints(
                               minWidth: 32,
@@ -317,8 +304,12 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () =>
-                                _updateQuantity(item, item.quantity + 1),
+                            onPressed: () => _updateQuantity(
+                              context,
+                              item,
+                              item.quantity + 1,
+                              cartController,
+                            ),
                             icon: const Icon(Icons.add_circle_outline),
                             constraints: const BoxConstraints(
                               minWidth: 32,
@@ -336,7 +327,7 @@ class _CartPageState extends State<CartPage> {
 
             // Remove Button
             IconButton(
-              onPressed: () => _removeItem(item),
+              onPressed: () => _removeItem(context, item, cartController),
               icon: Icon(Icons.delete_outline, color: AppColors.error),
             ),
           ],
@@ -345,59 +336,64 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildOrderSummary(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.tr('order_summary'),
-          style: AppTextStyles.headlineSmall.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: AppDimensions.paddingM),
-
-        // Subtotal
-        _buildSummaryRow(
-          context,
-          label: context.tr('subtotal'),
-          value: '\$${_subtotal.toStringAsFixed(2)}',
-        ),
-
-        // Tax
-        _buildSummaryRow(
-          context,
-          label: context.tr('tax'),
-          value: '\$${_tax.toStringAsFixed(2)}',
-        ),
-
-        // Shipping
-        _buildSummaryRow(
-          context,
-          label: context.tr('shipping'),
-          value: _shipping == 0
-              ? context.tr('free')
-              : '\$${_shipping.toStringAsFixed(2)}',
-        ),
-
-        if (_shipping == 0) ...[
-          const SizedBox(height: 4),
+  Widget _buildOrderSummary(
+    BuildContext context,
+    CartController cartController,
+  ) {
+    return Obx(
+      () => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Text(
-            context.tr('free_shipping_on_orders_over'),
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.success),
+            context.tr('order_summary'),
+            style: AppTextStyles.headlineSmall.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: AppDimensions.paddingM),
+
+          // Subtotal
+          _buildSummaryRow(
+            context,
+            label: context.tr('subtotal'),
+            value: '\$${cartController.subtotal.toStringAsFixed(2)}',
+          ),
+
+          // Tax
+          _buildSummaryRow(
+            context,
+            label: context.tr('tax'),
+            value: '\$${cartController.tax.toStringAsFixed(2)}',
+          ),
+
+          // Shipping
+          _buildSummaryRow(
+            context,
+            label: context.tr('shipping'),
+            value: cartController.shipping == 0
+                ? context.tr('free')
+                : '\$${cartController.shipping.toStringAsFixed(2)}',
+          ),
+
+          if (cartController.shipping == 0) ...[
+            const SizedBox(height: 4),
+            Text(
+              context.tr('free_shipping_on_orders_over'),
+              style: AppTextStyles.bodySmall.copyWith(color: AppColors.success),
+            ),
+          ],
+
+          const Divider(height: AppDimensions.paddingL),
+
+          // Total
+          _buildSummaryRow(
+            context,
+            label: context.tr('total'),
+            value: '\$${cartController.total.toStringAsFixed(2)}',
+            isTotal: true,
           ),
         ],
-
-        const Divider(height: AppDimensions.paddingL),
-
-        // Total
-        _buildSummaryRow(
-          context,
-          label: context.tr('total'),
-          value: '\$${_total.toStringAsFixed(2)}',
-          isTotal: true,
-        ),
-      ],
+      ),
     );
   }
 
@@ -469,7 +465,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildBottomBar(BuildContext context) {
+  Widget _buildBottomBar(BuildContext context, CartController cartController) {
     return Container(
       padding: const EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
@@ -500,27 +496,34 @@ class _CartPageState extends State<CartPage> {
                       color: Theme.of(context).textTheme.bodySmall?.color,
                     ),
                   ),
-                  Text(
-                    '\$${_total.toStringAsFixed(2)}',
-                    style: AppTextStyles.headlineSmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                  Obx(
+                    () => Text(
+                      '\$${cartController.total.toStringAsFixed(2)}',
+                      style: AppTextStyles.headlineSmall.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: AppDimensions.paddingM),
-            Expanded(child: _buildCheckoutButton(context)),
+            Expanded(child: _buildCheckoutButton(context, cartController)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCheckoutButton(BuildContext context) {
+  Widget _buildCheckoutButton(
+    BuildContext context,
+    CartController cartController,
+  ) {
     return ElevatedButton(
-      onPressed: _cartItems.isNotEmpty ? _proceedToCheckout : null,
+      onPressed: cartController.cartItems.isNotEmpty
+          ? () => _proceedToCheckout(context)
+          : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
@@ -536,20 +539,13 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void _updateQuantity(CartItem item, int newQuantity) {
-    if (newQuantity <= 0) {
-      _removeItem(item);
-      return;
-    }
-
-    setState(() {
-      final index = _cartItems.indexWhere(
-        (cartItem) => cartItem.product.id == item.product.id,
-      );
-      if (index != -1) {
-        _cartItems[index] = item.copyWith(quantity: newQuantity);
-      }
-    });
+  void _updateQuantity(
+    BuildContext context,
+    CartItem item,
+    int newQuantity,
+    CartController cartController,
+  ) {
+    cartController.updateQuantity(item, newQuantity);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -559,12 +555,12 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void _removeItem(CartItem item) {
-    setState(() {
-      _cartItems.removeWhere(
-        (cartItem) => cartItem.product.id == item.product.id,
-      );
-    });
+  void _removeItem(
+    BuildContext context,
+    CartItem item,
+    CartController cartController,
+  ) {
+    cartController.removeItem(item);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -572,16 +568,17 @@ class _CartPageState extends State<CartPage> {
         action: SnackBarAction(
           label: context.tr('undo'),
           onPressed: () {
-            setState(() {
-              _cartItems.add(item);
-            });
+            cartController.addItem(item.product, quantity: item.quantity);
           },
         ),
       ),
     );
   }
 
-  void _showClearCartDialog() {
+  void _showClearCartDialog(
+    BuildContext context,
+    CartController cartController,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -595,9 +592,7 @@ class _CartPageState extends State<CartPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              setState(() {
-                _cartItems.clear();
-              });
+              cartController.clearCart();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(context.tr('cart_cleared'))),
               );
@@ -612,7 +607,7 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void _proceedToCheckout() {
+  void _proceedToCheckout(BuildContext context) {
     // TODO: Implement checkout functionality
     ScaffoldMessenger.of(
       context,

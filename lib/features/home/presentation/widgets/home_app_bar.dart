@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../main.dart';
-import '../../../../shared/widgets/theme/theme_settings_sheet.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -92,12 +90,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   void _showThemeSettings(BuildContext context) {
-    final themeManager = ThemeProvider.of(context);
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => ThemeSettingsSheet(themeManager: themeManager),
+    // TODO: Implement theme settings with GetX
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Theme settings coming soon with GetX!')),
     );
   }
 }

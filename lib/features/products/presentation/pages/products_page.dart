@@ -477,78 +477,86 @@ class _ProductsPageState extends State<ProductsPage> {
               flex: 2,
               child: Padding(
                 padding: const EdgeInsets.all(AppDimensions.paddingS),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Product Name
-                    Text(
-                      product.name,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.w600,
+                child: ClipRect(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Product Name
+                      Text(
+                        product.name,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
 
-                    const SizedBox(height: 4),
+                      const SizedBox(height: 2),
 
-                    // Brand
-                    Text(
-                      product.brand,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      // Brand
+                      Text(
+                        product.brand,
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
 
-                    const Spacer(),
+                      const SizedBox(height: 4),
 
-                    // Rating and Price
-                    Row(
-                      children: [
-                        Icon(Icons.star, size: 16, color: Colors.amber[600]),
-                        const SizedBox(width: 2),
-                        Text(
-                          product.rating.average.toString(),
-                          style: AppTextStyles.bodySmall,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          '(${product.rating.totalReviews})',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: Theme.of(context).textTheme.bodySmall?.color,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 4),
-
-                    // Price
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            product.formattedPrice,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                        if (product.isOnSale) ...[
+                      // Rating and Price
+                      Row(
+                        children: [
+                          Icon(Icons.star, size: 14, color: Colors.amber[600]),
+                          const SizedBox(width: 2),
                           Text(
-                            product.formattedOriginalPrice,
+                            product.rating.average.toString(),
+                            style: AppTextStyles.bodySmall,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '(${product.rating.totalReviews})',
                             style: AppTextStyles.bodySmall.copyWith(
-                              decoration: TextDecoration.lineThrough,
                               color: Theme.of(
                                 context,
                               ).textTheme.bodySmall?.color,
                             ),
                           ),
                         ],
-                      ],
-                    ),
-                  ],
+                      ),
+
+                      const SizedBox(height: 2),
+
+                      // Price
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              product.formattedPrice,
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ),
+                          if (product.isOnSale) ...[
+                            const SizedBox(width: 4),
+                            Text(
+                              product.formattedOriginalPrice,
+                              style: AppTextStyles.bodySmall.copyWith(
+                                decoration: TextDecoration.lineThrough,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -592,48 +600,56 @@ class _ProductsPageState extends State<ProductsPage> {
 
               // Product Info
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name,
-                      style: AppTextStyles.bodyLarge.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    const SizedBox(height: 4),
-
-                    Text(
-                      product.brand,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: Theme.of(context).textTheme.bodySmall?.color,
-                      ),
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    Row(
-                      children: [
-                        Icon(Icons.star, size: 16, color: Colors.amber[600]),
-                        const SizedBox(width: 4),
-                        Text(
-                          '${product.rating.average} (${product.rating.totalReviews})',
-                          style: AppTextStyles.bodySmall,
+                child: ClipRect(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        product.name,
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
-                        const Spacer(),
-                        Text(
-                          product.formattedPrice,
-                          style: AppTextStyles.bodyLarge.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      const SizedBox(height: 2),
+
+                      Text(
+                        product.brand,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      const SizedBox(height: 4),
+
+                      Row(
+                        children: [
+                          Icon(Icons.star, size: 14, color: Colors.amber[600]),
+                          const SizedBox(width: 2),
+                          Expanded(
+                            child: Text(
+                              '${product.rating.average} (${product.rating.totalReviews})',
+                              style: AppTextStyles.bodySmall,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 8),
+                          Text(
+                            product.formattedPrice,
+                            style: AppTextStyles.bodyLarge.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
