@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
 import '../models/user_model.dart';
+import '../../../../core/localization/localization_extension.dart';
 
 /// Example of how to use the DataManager in your app
 class DataManagerExample extends StatefulWidget {
@@ -28,7 +29,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
   Future<void> _loadExampleData() async {
     setState(() {
       _isLoading = true;
-      _status = 'در حال بارگذاری داده‌ها...';
+      _status = context.tr('dm_loading_data');
     });
 
     try {
@@ -37,7 +38,9 @@ class _DataManagerExampleState extends State<DataManagerExample> {
       if (productsResponse.success) {
         _products = productsResponse.data;
         setState(() {
-          _status = 'محصولات بارگذاری شدند: ${_products.length} محصول';
+          _status = context
+              .tr('dm_products_loaded')
+              .replaceAll('{count}', '${_products.length}');
         });
       }
 
@@ -46,7 +49,11 @@ class _DataManagerExampleState extends State<DataManagerExample> {
       if (featuredResponse.success) {
         _featuredProducts = featuredResponse.data;
         setState(() {
-          _status += '\nمحصولات ویژه: ${_featuredProducts.length} محصول';
+          _status +=
+              '\n' +
+              context
+                  .tr('dm_featured_products')
+                  .replaceAll('{count}', '${_featuredProducts.length}');
         });
       }
 
@@ -56,14 +63,25 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         _currentUser = userResponse.data;
         setState(() {
           _status +=
-              '\nکاربر بارگذاری شد: ${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}';
+              '\n' +
+              context
+                  .tr('dm_user_loaded')
+                  .replaceAll(
+                    '{name}',
+                    '${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}',
+                  );
         });
       }
 
       // 4. Search for products
       final searchResponse = await _dataManager.searchProducts('آیفون');
       setState(() {
-        _status += '\nجستجوی آیفون: ${searchResponse.data.length} نتیجه';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_search_results')
+                .replaceAll('{query}', 'آیفون')
+                .replaceAll('{count}', '${searchResponse.data.length}');
       });
 
       // 5. Get product stats
@@ -72,25 +90,29 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         final stats = productStatsResponse.data;
         setState(() {
           _status +=
-              '\nآمار محصولات: ${stats['totalProducts']} محصول، ${stats['totalCategories']} دسته‌بندی';
+              '\n' +
+              context
+                  .tr('dm_product_stats')
+                  .replaceAll('{0}', '${stats['totalProducts']}')
+                  .replaceAll('{1}', '${stats['totalCategories']}');
         });
       }
 
       setState(() {
         _isLoading = false;
-        _status += '\n\n✅ همه داده‌ها با موفقیت بارگذاری شدند!';
+        _status += '\n\n' + context.tr('dm_all_data_loaded_success');
       });
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _status = 'خطا: ${e.toString()}';
+        _status = context.tr('dm_error').replaceAll('{0}', '${e.toString()}');
       });
     }
   }
 
   Future<void> _testSearchAndFilter() async {
     setState(() {
-      _status = 'تست جستجو و فیلترها...';
+      _status = context.tr('dm_testing_search_filters');
     });
 
     try {
@@ -100,7 +122,9 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         limit: 5,
       );
       setState(() {
-        _status = 'محصولات الکترونیک: ${electronicProducts.data.length}';
+        _status = context
+            .tr('dm_category_results')
+            .replaceAll('{count}', '${electronicProducts.data.length}');
       });
 
       // Search by price range
@@ -110,63 +134,90 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         limit: 5,
       );
       setState(() {
-        _status += '\nمحصولات گران: ${expensiveProducts.data.length}';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_expensive_products')
+                .replaceAll('{count}', '${expensiveProducts.data.length}');
       });
 
       // Get best sellers
       final bestSellers = await _dataManager.getBestSellers(limit: 3);
       setState(() {
-        _status += '\nپرفروش‌ترین: ${bestSellers.data.length}';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_best_sellers')
+                .replaceAll('{count}', '${bestSellers.data.length}');
       });
 
       // Get products on sale
       final saleProducts = await _dataManager.getProductsOnSale(limit: 3);
       setState(() {
-        _status += '\nحراجی: ${saleProducts.data.length}';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_on_sale')
+                .replaceAll('{count}', '${saleProducts.data.length}');
       });
 
       setState(() {
-        _status += '\n\n✅ تست‌ها با موفقیت اجرا شدند!';
+        _status += '\n\n' + context.tr('dm_tests_successful');
       });
     } catch (e) {
       setState(() {
-        _status = 'خطا در تست: ${e.toString()}';
+        _status = context
+            .tr('dm_test_error')
+            .replaceAll('{0}', '${e.toString()}');
       });
     }
   }
 
   Future<void> _testUserOperations() async {
     setState(() {
-      _status = 'تست عملیات کاربری...';
+      _status = context.tr('dm_testing_user_operations');
     });
 
     try {
       // Get all users
       final usersResponse = await _dataManager.getUsers();
       setState(() {
-        _status = 'تمام کاربران: ${usersResponse.data.length}';
+        _status = context
+            .tr('dm_all_users')
+            .replaceAll('{0}', '${usersResponse.data.length}');
       });
 
       // Search users
       final searchUsers = await _dataManager.searchUsers('علی');
       setState(() {
-        _status += '\nجستجوی علی: ${searchUsers.data.length} نتیجه';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_search_users')
+                .replaceAll('{0}', 'علی')
+                .replaceAll('{1}', '${searchUsers.data.length}');
       });
 
       // Get premium users
       final premiumUsers = await _dataManager.getPremiumUsers();
       setState(() {
-        _status += '\nکاربران ویژه: ${premiumUsers.data.length}';
+        _status +=
+            '\n' +
+            context
+                .tr('dm_premium_users')
+                .replaceAll('{0}', '${premiumUsers.data.length}');
       });
 
       // Remove getUserStatistics call as it doesn't exist
 
       setState(() {
-        _status += '\n\n✅ عملیات کاربری با موفقیت اجرا شدند!';
+        _status += '\n\n' + context.tr('dm_user_ops_successful');
       });
     } catch (e) {
       setState(() {
-        _status = 'خطا در عملیات کاربری: ${e.toString()}';
+        _status = context
+            .tr('dm_user_ops_error')
+            .replaceAll('{0}', '${e.toString()}');
       });
     }
   }
@@ -174,7 +225,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('نمونه استفاده از DataManager')),
+      appBar: AppBar(title: Text(context.tr('data_manager_example_title'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -189,7 +240,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                _status.isEmpty ? 'آماده برای شروع...' : _status,
+                _status.isEmpty ? context.tr('dm_ready_to_start') : _status,
                 style: const TextStyle(fontFamily: 'monospace'),
               ),
             ),
@@ -203,15 +254,15 @@ class _DataManagerExampleState extends State<DataManagerExample> {
               children: [
                 ElevatedButton(
                   onPressed: _isLoading ? null : _loadExampleData,
-                  child: const Text('بارگذاری داده‌ها'),
+                  child: Text(context.tr('dm_btn_load_data')),
                 ),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _testSearchAndFilter,
-                  child: const Text('تست جستجو و فیلتر'),
+                  child: Text(context.tr('dm_btn_test_search_filters')),
                 ),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _testUserOperations,
-                  child: const Text('تست عملیات کاربری'),
+                  child: Text(context.tr('dm_btn_test_user_ops')),
                 ),
               ],
             ),
@@ -227,7 +278,9 @@ class _DataManagerExampleState extends State<DataManagerExample> {
             // Products Preview
             if (_products.isNotEmpty) ...[
               Text(
-                'محصولات (${_products.length}):',
+                context
+                    .tr('dm_products_count')
+                    .replaceAll('{0}', '${_products.length}'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
@@ -280,7 +333,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
             // Current User Info
             if (_currentUser != null) ...[
               Text(
-                'کاربر جاری:',
+                context.tr('dm_current_user'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10),
@@ -297,12 +350,18 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                           fontSize: 16,
                         ),
                       ),
-                      Text('ایمیل: ${_currentUser!.email}'),
-                      Text('تلفن: ${_currentUser!.profile.phoneNumber}'),
-                      Text('نوع حساب: ${_currentUser!.account.accountType}'),
-                      Text('امتیاز: ${_currentUser!.loyalty.currentPoints}'),
+                      Text('${context.tr('email')}: ${_currentUser!.email}'),
                       Text(
-                        'آخرین ورود: ${_currentUser!.activity.lastLoginAt.toString().substring(0, 10)}',
+                        '${context.tr('phone')}: ${_currentUser!.profile.phoneNumber}',
+                      ),
+                      Text(
+                        '${context.tr('account_type')}: ${_currentUser!.account.accountType}',
+                      ),
+                      Text(
+                        '${context.tr('loyalty_points')}: ${_currentUser!.loyalty.currentPoints}',
+                      ),
+                      Text(
+                        '${context.tr('dm_last_login')}: ${_currentUser!.activity.lastLoginAt.toString().substring(0, 10)}',
                       ),
                     ],
                   ),
