@@ -1,5 +1,6 @@
 // Cart Page - Shopping Cart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
@@ -78,7 +79,7 @@ class CartPage extends StatelessWidget {
           // Cart Items List
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(AppDimensions.paddingM),
+              padding: EdgeInsets.all(AppDimensions.paddingM),
               itemCount: cartController.cartItems.length,
               itemBuilder: (context, index) {
                 return _buildCartItem(
@@ -92,8 +93,8 @@ class CartPage extends StatelessWidget {
 
           // Order Summary
           Container(
-            margin: const EdgeInsets.all(AppDimensions.paddingM),
-            padding: const EdgeInsets.all(AppDimensions.paddingM),
+            margin: EdgeInsets.all(AppDimensions.paddingM),
+            padding: EdgeInsets.all(AppDimensions.paddingM),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
                   ? AppColors.surfaceDark
@@ -136,7 +137,7 @@ class CartPage extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.all(AppDimensions.paddingL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -146,7 +147,7 @@ class CartPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: AppDimensions.paddingL),
+                  SizedBox(height: AppDimensions.paddingL),
                   Expanded(
                     child: ListView.builder(
                       itemCount: cartController.cartItems.length,
@@ -167,9 +168,9 @@ class CartPage extends StatelessWidget {
           // Order Summary Sidebar
           Container(
             width: 400,
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Container(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.all(AppDimensions.paddingL),
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? AppColors.surfaceDark
@@ -188,7 +189,7 @@ class CartPage extends StatelessWidget {
               child: Column(
                 children: [
                   _buildOrderSummary(context, cartController),
-                  const SizedBox(height: AppDimensions.paddingL),
+                  SizedBox(height: AppDimensions.paddingL),
                   _buildCheckoutButton(context, cartController),
                 ],
               ),
@@ -207,14 +208,14 @@ class CartPage extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
       elevation: 2,
       shadowColor: isDark ? AppColors.shadowDark : AppColors.shadowLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingM),
+        padding: EdgeInsets.all(AppDimensions.paddingM),
         child: Row(
           children: [
             // Product Image
@@ -230,7 +231,7 @@ class CartPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: AppDimensions.paddingM),
+            SizedBox(width: AppDimensions.paddingM),
 
             // Product Info
             Expanded(
@@ -246,7 +247,7 @@ class CartPage extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
 
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.0.h),
 
                   Text(
                     item.product.brand,
@@ -255,7 +256,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.0.h),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,7 +351,7 @@ class CartPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // Subtotal
           _buildSummaryRow(
@@ -376,14 +377,14 @@ class CartPage extends StatelessWidget {
           ),
 
           if (cartController.shipping == 0) ...[
-            const SizedBox(height: 4),
+            SizedBox(height: 4.0.h),
             Text(
               context.tr('free_shipping_on_orders_over'),
               style: AppTextStyles.bodySmall.copyWith(color: AppColors.success),
             ),
           ],
 
-          const Divider(height: AppDimensions.paddingL),
+          Divider(height: AppDimensions.paddingL),
 
           // Total
           _buildSummaryRow(
@@ -404,7 +405,7 @@ class CartPage extends StatelessWidget {
     bool isTotal = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -440,14 +441,14 @@ class CartPage extends StatelessWidget {
             size: 64,
             color: Theme.of(context).textTheme.bodySmall?.color,
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             context.tr('your_cart_is_empty'),
             style: AppTextStyles.headlineSmall.copyWith(
               color: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             context.tr('add_items_to_get_started'),
             style: AppTextStyles.bodyMedium.copyWith(
@@ -455,7 +456,7 @@ class CartPage extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(context.tr('start_shopping')),
@@ -467,7 +468,7 @@ class CartPage extends StatelessWidget {
 
   Widget _buildBottomBar(BuildContext context, CartController cartController) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.dark
             ? AppColors.surfaceDark
@@ -508,7 +509,7 @@ class CartPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: AppDimensions.paddingM),
+            SizedBox(width: AppDimensions.paddingM),
             Expanded(child: _buildCheckoutButton(context, cartController)),
           ],
         ),
@@ -527,7 +528,7 @@ class CartPage extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
+        padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         ),

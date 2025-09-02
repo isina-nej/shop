@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/theme_controller.dart';
 import '../../../core/localization/localization_extension.dart';
@@ -21,7 +22,7 @@ class ThemeInfoCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withOpacity(0.1),
+              color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -40,7 +41,7 @@ class ThemeInfoCard extends StatelessWidget {
                       : Icons.brightness_auto,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.0.w),
                 Expanded(
                   child: Text(
                     '${context.tr('current_theme')} ${themeController.currentTheme.value.name}',
@@ -51,12 +52,12 @@ class ThemeInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Text(
               '${context.tr('theme_mode')}: ${themeController.currentTheme.value.name}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             ElevatedButton.icon(
               onPressed: () => themeController.toggleTheme(),
               icon: const Icon(Icons.swap_horiz),

@@ -1,5 +1,6 @@
 // Enhanced Main Layout with Deferred Loading Integration
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/routing/deferred_page_loader.dart';
 import '../../../core/localization/localization_extension.dart';
@@ -85,7 +86,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
         setState(() {
           _pageCache[index] = _ErrorPage(
             message:
-                '${context.tr('loading_error').replaceAll('{error}', error.toString())}',
+                context.tr('loading_error').replaceAll('{error}', error.toString()),
             onRetry: () => _retryLoadPage(index),
           );
           _loadingStates[index] = false;
@@ -168,7 +169,7 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
                 color: Theme.of(context).primaryColor,
                 shape: BoxShape.circle,
               ),
-              child: const SizedBox(
+              child: SizedBox(
                 width: 6,
                 height: 6,
                 child: CircularProgressIndicator(
@@ -225,8 +226,6 @@ class _EnhancedMainLayoutState extends State<EnhancedMainLayout>
           unselectedItemColor: Theme.of(context).brightness == Brightness.dark
               ? AppColors.textSecondaryDark
               : AppColors.textSecondaryLight,
-          selectedFontSize: 12,
-          unselectedFontSize: 11,
           elevation: 0,
           items: [
             BottomNavigationBarItem(
@@ -283,14 +282,14 @@ class _LoadingPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.0.h),
             Text(
-              '${context.tr('loading_page_name').replaceAll('{pageName}', pageName)}',
+              context.tr('loading_page_name').replaceAll('{pageName}', pageName),
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             SizedBox(
               width: 200,
               child: LinearProgressIndicator(
@@ -301,7 +300,7 @@ class _LoadingPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Text(
               context.tr('loading_components'),
               style: Theme.of(
@@ -332,20 +331,20 @@ class _ErrorPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               Text(
                 context.tr('error_loading_page'),
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.0.h),
               Text(
                 message,
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
               if (onRetry != null) ...[
-                const SizedBox(height: 24),
+                SizedBox(height: 24.0.h),
                 ElevatedButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh),

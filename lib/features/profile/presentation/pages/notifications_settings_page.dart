@@ -92,25 +92,25 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
         opacity: _fadeAnimation,
         child: ResponsiveContainer(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Column(
               children: [
                 _buildNotificationOverview(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildGeneralSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildOrderNotifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildMarketingNotifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildAccountNotifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildAppNotifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildQuietHoursSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildNotificationHistory(context),
-                const SizedBox(height: AppDimensions.paddingXL),
+                SizedBox(height: AppDimensions.paddingXL),
               ],
             ),
           ),
@@ -123,7 +123,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final activeNotifications = _getActiveNotificationsCount();
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -156,7 +156,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                   size: 30,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +168,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: AppDimensions.paddingXS),
+                    SizedBox(height: AppDimensions.paddingXS),
                     Text(
                       context
                           .tr('active_notifications_count')
@@ -182,7 +182,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Row(
             children: [
               Expanded(
@@ -233,7 +233,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
             size: 20,
           ),
         ),
-        const SizedBox(height: AppDimensions.paddingS),
+        SizedBox(height: AppDimensions.paddingS),
         Text(
           title,
           style: AppTextStyles.bodySmall.copyWith(
@@ -255,7 +255,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -273,7 +273,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.settings_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('general_settings'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -282,7 +282,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildNotificationToggle(
             icon: Icons.phone_android,
@@ -319,7 +319,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -337,7 +337,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.shopping_bag_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('order_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -346,7 +346,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildNotificationToggle(
             icon: Icons.check_circle_outline,
@@ -392,7 +392,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -410,7 +410,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.campaign_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('marketing_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -419,7 +419,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildNotificationToggle(
             icon: Icons.local_offer,
@@ -466,7 +466,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -484,7 +484,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.security_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('security_notifications'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -493,7 +493,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildNotificationToggle(
             icon: Icons.warning_outlined,
@@ -539,7 +539,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -557,7 +557,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.smartphone, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('app_settings'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -566,7 +566,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildNotificationToggle(
             icon: Icons.notifications_active,
@@ -612,7 +612,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -630,7 +630,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.bedtime_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('quiet_hours'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -639,12 +639,12 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             context.tr('silent_notification_period'),
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -676,9 +676,9 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           ),
 
           if (_quietHoursEnabled) ...[
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Container(
-              padding: const EdgeInsets.all(AppDimensions.paddingM),
+              padding: EdgeInsets.all(AppDimensions.paddingM),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -746,7 +746,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -764,7 +764,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
           Row(
             children: [
               Icon(Icons.history, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('notification_management'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -773,7 +773,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -843,7 +843,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
     required Color iconColor,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      padding: EdgeInsets.only(bottom: AppDimensions.paddingM),
       child: SwitchListTile(
         contentPadding: EdgeInsets.zero,
         secondary: Container(
@@ -865,7 +865,7 @@ class _NotificationsSettingsPageState extends State<NotificationsSettingsPage>
         subtitle: Text(subtitle),
         value: value,
         onChanged: onChanged,
-        activeColor: iconColor,
+        activeThumbColor: iconColor,
       ),
     );
   }

@@ -1,0 +1,17 @@
+# Flutter Web Debug Service Configuration
+# This file contains compile-time flags to disable DebugService
+
+# Disable DebugService completely
+dart-define=DEBUG_SERVICE_ENABLED=false
+
+# Disable VM service in debug mode
+dart-define=VM_SERVICE_ENABLED=false
+
+# Disable observatory
+dart-define=OBSERVATORY_ENABLED=false
+
+# Disable debug extensions
+dart-define=DEBUG_EXTENSIONS_ENABLED=false
+
+# Custom debug configuration
+dart-define=WEB_DEBUG_CONFIG=disabled

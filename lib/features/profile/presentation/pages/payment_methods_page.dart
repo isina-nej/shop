@@ -136,7 +136,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(context.tr('loading')),
         ],
       ),
@@ -146,7 +146,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
   Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingXL),
+        padding: EdgeInsets.all(AppDimensions.paddingXL),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -159,7 +159,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               ),
               child: Icon(Icons.payment, size: 60, color: AppColors.primary),
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             Text(
               'هیچ روش پرداختی اضافه نشده',
               style: AppTextStyles.headlineSmall.copyWith(
@@ -167,7 +167,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Text(
               'برای پرداخت راحت‌تر در خریدهای آتی، کارت بانکی یا کیف پول خود را اضافه کنید',
               style: AppTextStyles.bodyMedium.copyWith(
@@ -175,7 +175,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -185,7 +185,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     vertical: AppDimensions.paddingL,
                   ),
                 ),
@@ -199,15 +199,15 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
 
   Widget _buildPaymentMethodsList(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Column(
         children: [
           _buildQuickActions(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildDefaultPaymentSection(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildPaymentMethodsSection(context),
-          const SizedBox(height: AppDimensions.paddingXL + 60), // For FAB
+          SizedBox(height: AppDimensions.paddingXL + 60), // For FAB
         ],
       ),
     );
@@ -217,7 +217,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -238,7 +238,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Row(
             children: [
               Expanded(
@@ -249,7 +249,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                   onTap: _chargeWallet,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildQuickActionButton(
                   icon: Icons.credit_card_outlined,
@@ -258,7 +258,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                   onTap: _addCard,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildQuickActionButton(
                   icon: Icons.history,
@@ -284,7 +284,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       child: Container(
-        padding: const EdgeInsets.all(AppDimensions.paddingM),
+        padding: EdgeInsets.all(AppDimensions.paddingM),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -292,7 +292,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         child: Column(
           children: [
             Icon(icon, color: color, size: 32),
-            const SizedBox(height: AppDimensions.paddingS),
+            SizedBox(height: AppDimensions.paddingS),
             Text(
               title,
               style: AppTextStyles.bodySmall.copyWith(
@@ -315,7 +315,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
     );
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -333,7 +333,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           Row(
             children: [
               Icon(Icons.star, color: AppColors.warning),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'روش پرداخت پیش‌فرض',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -342,7 +342,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildPaymentMethodCard(defaultMethod, isDefault: true),
         ],
       ),
@@ -356,7 +356,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
         .toList();
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -377,11 +377,11 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           if (otherMethods.isEmpty)
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(AppDimensions.paddingL),
+                padding: EdgeInsets.all(AppDimensions.paddingL),
                 child: Text(
                   'هیچ روش پرداخت دیگری اضافه نشده',
                   style: AppTextStyles.bodyMedium.copyWith(
@@ -393,7 +393,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           else
             ...otherMethods.map(
               (method) => Padding(
-                padding: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+                padding: EdgeInsets.only(bottom: AppDimensions.paddingM),
                 child: _buildPaymentMethodCard(method),
               ),
             ),
@@ -424,7 +424,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
           onTap: () => _showPaymentMethodDetails(method),
           borderRadius: BorderRadius.circular(AppDimensions.radiusL),
           child: Padding(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Column(
               children: [
                 Row(
@@ -442,7 +442,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                         size: 28,
                       ),
                     ),
-                    const SizedBox(width: AppDimensions.paddingM),
+                    SizedBox(width: AppDimensions.paddingM),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,7 +460,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                               ),
                               if (isDefault)
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: EdgeInsets.symmetric(
                                     horizontal: 8,
                                     vertical: 4,
                                   ),
@@ -480,7 +480,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                                 ),
                             ],
                           ),
-                          const SizedBox(height: AppDimensions.paddingXS),
+                          SizedBox(height: AppDimensions.paddingXS),
                           Text(
                             method.subtitle,
                             style: AppTextStyles.bodyMedium.copyWith(
@@ -536,7 +536,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage>
                   ],
                 ),
                 if (method.type == PaymentMethodType.card) ...[
-                  const SizedBox(height: AppDimensions.paddingL),
+                  SizedBox(height: AppDimensions.paddingL),
                   Row(
                     children: [
                       Expanded(
@@ -759,9 +759,9 @@ class AddPaymentMethodSheet extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -774,14 +774,14 @@ class AddPaymentMethodSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
             Text(
               'افزودن روش پرداخت',
               style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
 
             ListTile(
               leading: Container(
@@ -888,9 +888,9 @@ class _AddCardSheetState extends State<AddCardSheet> {
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: SafeArea(
         child: Form(
           key: _formKey,
@@ -905,14 +905,14 @@ class _AddCardSheetState extends State<AddCardSheet> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingL),
+              SizedBox(height: AppDimensions.paddingL),
               Text(
                 'افزودن کارت بانکی',
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingL),
+              SizedBox(height: AppDimensions.paddingL),
 
               TextFormField(
                 controller: _cardNumberController,
@@ -933,7 +933,7 @@ class _AddCardSheetState extends State<AddCardSheet> {
                   return null;
                 },
               ),
-              const SizedBox(height: AppDimensions.paddingM),
+              SizedBox(height: AppDimensions.paddingM),
 
               Row(
                 children: [
@@ -973,7 +973,7 @@ class _AddCardSheetState extends State<AddCardSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: AppDimensions.paddingM),
+              SizedBox(height: AppDimensions.paddingM),
 
               TextFormField(
                 controller: _holderNameController,
@@ -988,7 +988,7 @@ class _AddCardSheetState extends State<AddCardSheet> {
                   return null;
                 },
               ),
-              const SizedBox(height: AppDimensions.paddingXL),
+              SizedBox(height: AppDimensions.paddingXL),
 
               SizedBox(
                 width: double.infinity,
@@ -1060,9 +1060,9 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
               prefixIcon: Icon(Icons.money),
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(context.tr('suggested_amounts')),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Wrap(
             spacing: 8,
             children: _predefinedAmounts
@@ -1070,7 +1070,7 @@ class _ChargeWalletDialogState extends State<ChargeWalletDialog> {
                   (amount) => InkWell(
                     onTap: () => _amountController.text = amount,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 6,
                       ),
@@ -1156,15 +1156,12 @@ class PaymentMethodDetailsDialog extends StatelessWidget {
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: EdgeInsets.only(bottom: 8.0),
       child: Row(
         children: [
           SizedBox(
             width: 80,
-            child: Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           Expanded(child: Text(value)),
         ],

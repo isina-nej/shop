@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 // Responsive Breakpoints
 class AppBreakpoints {
   static const double mobile = 480;
@@ -14,61 +16,61 @@ class AppBreakpoints {
 // App Dimensions
 class AppDimensions {
   // Padding
-  static const double paddingXS = 4.0;
-  static const double paddingS = 8.0;
-  static const double paddingM = 16.0;
-  static const double paddingL = 24.0;
-  static const double paddingXL = 32.0;
-  static const double paddingXXL = 48.0;
+  static double get paddingXS => 4.0.w;
+  static double get paddingS => 8.0.w;
+  static double get paddingM => 16.0.w;
+  static double get paddingL => 24.0.w;
+  static double get paddingXL => 32.0.w;
+  static double get paddingXXL => 48.0.w;
 
   // Margin
-  static const double marginXS = 4.0;
-  static const double marginS = 8.0;
-  static const double marginM = 16.0;
-  static const double marginL = 24.0;
-  static const double marginXL = 32.0;
-  static const double marginXXL = 48.0;
+  static double get marginXS => 4.0.w;
+  static double get marginS => 8.0.w;
+  static double get marginM => 16.0.w;
+  static double get marginL => 24.0.w;
+  static double get marginXL => 32.0.w;
+  static double get marginXXL => 48.0.w;
 
   // Border Radius
-  static const double radiusXS = 4.0;
-  static const double radiusS = 8.0;
-  static const double radiusM = 12.0;
-  static const double radiusL = 16.0;
-  static const double radiusXL = 24.0;
-  static const double radiusXXL = 32.0;
+  static double get radiusXS => 4.0.r;
+  static double get radiusS => 8.0.r;
+  static double get radiusM => 12.0.r;
+  static double get radiusL => 16.0.r;
+  static double get radiusXL => 24.0.r;
+  static double get radiusXXL => 32.0.r;
 
   // Icon Sizes
-  static const double iconXS = 16.0;
-  static const double iconS = 20.0;
-  static const double iconM = 24.0;
-  static const double iconL = 32.0;
-  static const double iconXL = 48.0;
+  static double get iconXS => 16.0.sp;
+  static double get iconS => 20.0.sp;
+  static double get iconM => 24.0.sp;
+  static double get iconL => 32.0.sp;
+  static double get iconXL => 48.0.sp;
 
   // Button Heights
-  static const double buttonHeightS = 32.0;
-  static const double buttonHeightM = 44.0;
-  static const double buttonHeightL = 56.0;
+  static double get buttonHeightS => 32.0.h;
+  static double get buttonHeightM => 44.0.h;
+  static double get buttonHeightL => 56.0.h;
 
   // Card Heights
-  static const double cardHeightS = 120.0;
-  static const double cardHeightM = 180.0;
-  static const double cardHeightL = 240.0;
+  static double get cardHeightS => 120.0.h;
+  static double get cardHeightM => 180.0.h;
+  static double get cardHeightL => 240.0.h;
 
   // App Bar Height
-  static const double appBarHeight = 56.0;
-  static const double tabBarHeight = 48.0;
+  static double get appBarHeight => 56.0.h;
+  static double get tabBarHeight => 48.0.h;
 
   // Bottom Navigation Height
-  static const double bottomNavHeight = 60.0;
+  static double get bottomNavHeight => 60.0.h;
 
   // Grid Spacing
-  static const double gridSpacingS = 8.0;
-  static const double gridSpacingM = 16.0;
-  static const double gridSpacingL = 24.0;
+  static double get gridSpacingS => 8.0.w;
+  static double get gridSpacingM => 16.0.w;
+  static double get gridSpacingL => 24.0.w;
 
   // Elevation
-  static const double elevationS = 2.0;
-  static const double elevationM = 4.0;
-  static const double elevationL = 8.0;
-  static const double elevationXL = 16.0;
+  static double get elevationS => 2.0;
+  static double get elevationM => 4.0;
+  static double get elevationL => 8.0;
+  static double get elevationXL => 16.0;
 }

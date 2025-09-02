@@ -174,8 +174,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      margin: EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -202,7 +202,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             ),
             child: Icon(Icons.privacy_tip, color: AppColors.white, size: 40),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             'سیاست حریم خصوصی',
             style: AppTextStyles.displaySmall.copyWith(
@@ -210,7 +210,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             'ما به حفاظت از حریم خصوصی و اطلاعات شخصی شما متعهد هستیم',
             style: AppTextStyles.bodyLarge.copyWith(
@@ -226,8 +226,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
 
   Widget _buildLastUpdated(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -236,7 +236,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
       child: Row(
         children: [
           Icon(Icons.update, color: AppColors.info, size: 20),
-          const SizedBox(width: AppDimensions.paddingM),
+          SizedBox(width: AppDimensions.paddingM),
           Expanded(
             child: Text(
               'آخرین به‌روزرسانی: ۱۵ آذر ۱۴۰۳',
@@ -259,8 +259,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -281,7 +281,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Wrap(
             spacing: AppDimensions.paddingS,
             runSpacing: AppDimensions.paddingS,
@@ -314,7 +314,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
 
   Widget _buildPrivacySections(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
+      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
       child: Column(
         children: _privacySections
             .map((section) => _buildPrivacySection(section))
@@ -328,7 +328,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
 
     return Container(
       key: ValueKey(section.title),
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -361,7 +361,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
           ),
           children: [
             Padding(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.all(AppDimensions.paddingL),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -369,7 +369,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
                     section.content,
                     style: AppTextStyles.bodyMedium.copyWith(height: 1.6),
                   ),
-                  const SizedBox(height: AppDimensions.paddingL),
+                  SizedBox(height: AppDimensions.paddingL),
                   Row(
                     children: [
                       OutlinedButton.icon(
@@ -381,7 +381,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
                           side: BorderSide(color: section.color),
                         ),
                       ),
-                      const SizedBox(width: AppDimensions.paddingM),
+                      SizedBox(width: AppDimensions.paddingM),
                       TextButton.icon(
                         onPressed: () => _shareSection(section),
                         icon: const Icon(Icons.share, size: 16),
@@ -403,8 +403,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
 
   Widget _buildContactSupport(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      margin: EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -432,7 +432,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
               size: 30,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             'سوالی درباره حریم خصوصی دارید؟',
             style: AppTextStyles.headlineSmall.copyWith(
@@ -440,13 +440,13 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             'تیم پشتیبانی ما آماده پاسخگویی به سوالات شما درباره حریم خصوصی و امنیت داده‌ها است.',
             style: AppTextStyles.bodyMedium.copyWith(color: AppColors.grey600),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Row(
             children: [
               Expanded(
@@ -460,7 +460,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
                   ),
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: _callPrivacySupport,
@@ -483,8 +483,8 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -505,10 +505,10 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
               color: AppColors.warning.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -519,7 +519,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             child: Row(
               children: [
                 Icon(Icons.info_outline, color: AppColors.warning, size: 20),
-                const SizedBox(width: AppDimensions.paddingM),
+                SizedBox(width: AppDimensions.paddingM),
                 Expanded(
                   child: Text(
                     'با استفاده از خدمات ما، شما با این سیاست حریم خصوصی موافقت می‌کنید.',
@@ -532,7 +532,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             ),
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           CheckboxListTile(
             value: _isAccepted,
@@ -564,7 +564,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
             contentPadding: EdgeInsets.zero,
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             children: [
@@ -574,7 +574,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage>
                   child: const Text('دانلود PDF'),
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: ElevatedButton(
                   onPressed: _isAccepted ? _confirmAcceptance : null,

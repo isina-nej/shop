@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/localization/localization_extension.dart';
 
 /// نمونه صفحه که از سیستم ترجمه JSON استفاده می‌کند
@@ -23,7 +24,7 @@ class JsonTranslationDemo extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineLarge,
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // منوی اصلی
             _buildMenuCard(
@@ -72,7 +73,7 @@ class JsonTranslationDemo extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
           ],
         ),
       ),
@@ -86,7 +87,7 @@ class JsonTranslationDemo extends StatelessWidget {
     VoidCallback onTap,
   ) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         leading: Icon(icon),
         title: Text(title),
@@ -119,7 +120,7 @@ class JsonTranslationDemo extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -160,7 +161,7 @@ class JsonTranslationDemo extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -168,7 +169,7 @@ class JsonTranslationDemo extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             TextField(
               obscureText: true,
               decoration: InputDecoration(

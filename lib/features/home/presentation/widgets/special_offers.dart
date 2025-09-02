@@ -1,5 +1,6 @@
 // Special Offers Widget
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -44,31 +45,55 @@ class SpecialOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Offers List
-        SizedBox(
-          height: 160,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingM,
-            ),
-            itemCount: _offers.length,
-            itemBuilder: (context, index) {
-              final offer = _offers[index];
-              return Container(
-                width: 320,
-                margin: EdgeInsets.only(
-                  left: index < _offers.length - 1 ? AppDimensions.paddingM : 0,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = MediaQuery.of(context).size.width;
+        final isMobile = screenWidth < 600;
+        final isTablet = screenWidth >= 600 && screenWidth < 1024;
+
+        // Responsive card dimensions
+        final cardWidth = isMobile
+            ? screenWidth *
+                  0.85 // 85% of screen width on mobile
+            : isTablet
+            ? 320
+                  .w // Fixed width on tablet
+            : 400.w; // Larger on desktop
+
+        final cardHeight = isMobile
+            ? AppDimensions.cardHeightM *
+                  0.9 // Slightly smaller on mobile
+            : AppDimensions.cardHeightM;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Offers List
+            SizedBox(
+              height: cardHeight,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppDimensions.paddingM,
                 ),
-                child: _OfferCard(offer: offer),
-              );
-            },
-          ),
-        ),
-      ],
+                itemCount: _offers.length,
+                itemBuilder: (context, index) {
+                  final offer = _offers[index];
+                  return Container(
+                    width: cardWidth,
+                    margin: EdgeInsets.only(
+                      left: index < _offers.length - 1
+                          ? AppDimensions.paddingM
+                          : 0,
+                    ),
+                    child: _OfferCard(offer: offer),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -99,8 +124,8 @@ class _OfferCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: offer.backgroundColor.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.h),
             ),
           ],
         ),
@@ -128,86 +153,88 @@ class _OfferCard extends StatelessWidget {
             // Content
             ClipRect(
               child: Padding(
-                padding: const EdgeInsets.all(AppDimensions.paddingL),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Discount Badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppDimensions.paddingM,
-                        vertical: AppDimensions.paddingS,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(
-                          AppDimensions.radiusXL,
+                padding: EdgeInsets.all(AppDimensions.paddingS),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Discount Badge
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppDimensions.paddingS,
+                          vertical: AppDimensions.paddingXS,
                         ),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.3),
-                          width: 1,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.radiusM,
+                          ),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          context.tr(offer.discount) != offer.discount
+                              ? context.tr(offer.discount)
+                              : offer.discount,
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: offer.textColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      child: Text(
-                        context.tr(offer.discount) != offer.discount
-                            ? context.tr(offer.discount)
-                            : offer.discount,
-                        style: AppTextStyles.headlineSmall.copyWith(
+
+                      SizedBox(height: AppDimensions.paddingXS),
+
+                      // Title
+                      Text(
+                        context.tr(offer.title),
+                        style: AppTextStyles.bodySmall.copyWith(
                           color: offer.textColor,
                           fontWeight: FontWeight.bold,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
 
-                    const SizedBox(height: AppDimensions.paddingXS),
+                      SizedBox(height: AppDimensions.paddingXS),
 
-                    // Title
-                    Text(
-                      context.tr(offer.title),
-                      style: AppTextStyles.bodyLarge.copyWith(
-                        color: offer.textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    const SizedBox(height: AppDimensions.paddingXS),
-
-                    // Description
-                    Text(
-                      context.tr(offer.description),
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: offer.textColor.withValues(alpha: 0.9),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    const SizedBox(height: AppDimensions.paddingXS),
-
-                    // Valid Until
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.schedule,
-                          size: 14,
-                          color: offer.textColor.withValues(alpha: 0.8),
+                      // Description
+                      Text(
+                        context.tr(offer.description),
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: offer.textColor.withValues(alpha: 0.9),
                         ),
-                        const SizedBox(width: AppDimensions.paddingXS),
-                        Expanded(
-                          child: Text(
-                            '${context.tr('valid_until')} ${offer.validUntil}',
-                            style: AppTextStyles.labelSmall.copyWith(
-                              color: offer.textColor.withValues(alpha: 0.8),
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      SizedBox(height: AppDimensions.paddingXS),
+
+                      // Valid Until
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.schedule,
+                            size: AppDimensions.iconXS,
+                            color: offer.textColor.withValues(alpha: 0.8),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          SizedBox(width: AppDimensions.paddingXS),
+                          Expanded(
+                            child: Text(
+                              '${context.tr('valid_until')} ${offer.validUntil}',
+                              style: AppTextStyles.labelSmall.copyWith(
+                                color: offer.textColor.withValues(alpha: 0.8),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -217,20 +244,20 @@ class _OfferCard extends StatelessWidget {
               bottom: AppDimensions.paddingM,
               left: AppDimensions.paddingM,
               child: Container(
-                width: 32,
-                height: 32,
+                width: 32.w,
+                height: 32.h,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(
                     color: Colors.white.withValues(alpha: 0.3),
-                    width: 1,
+                    width: 1.w,
                   ),
                 ),
                 child: Icon(
                   Icons.arrow_back_ios_new,
                   color: offer.textColor,
-                  size: 16,
+                  size: AppDimensions.iconXS,
                 ),
               ),
             ),

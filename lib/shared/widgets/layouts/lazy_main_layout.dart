@@ -1,5 +1,6 @@
 // Lazy Main Layout Widget with Dynamic Page Loading
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/localization/localization_extension.dart';
 
@@ -214,7 +215,7 @@ class _LoadingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircularProgressIndicator(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text(
               context.tr('loading_page'),
               style: Theme.of(context).textTheme.titleMedium,
@@ -240,12 +241,12 @@ class _ErrorPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.error_outline, size: 64, color: Colors.red),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text(
               context.tr('error_loading'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Text(
               error,
               style: Theme.of(context).textTheme.bodyMedium,
@@ -303,7 +304,7 @@ class _MockPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 120, color: color),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.0.h),
             Text(
               '${context.tr(titleKey)} ${context.tr('lazy_loaded')}',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -311,9 +312,9 @@ class _MockPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
@@ -321,8 +322,8 @@ class _MockPage extends StatelessWidget {
               ),
               child: Text(
                 context.tr('page_lazy_loaded_success'),
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: 14.0.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),

@@ -1,5 +1,6 @@
 // Reviews Page - Complete Reviews Management
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -155,7 +156,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.rate_review_outlined),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.0.w),
                   Text('${context.tr('my_reviews')} (${_myReviews.length})'),
                 ],
               ),
@@ -165,7 +166,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.pending_outlined),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.0.w),
                   Text(
                     '${context.tr('pending_reviews')} (${_pendingReviews.length})',
                   ),
@@ -198,7 +199,7 @@ class _ReviewsPageState extends State<ReviewsPage>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(context.tr('loading_reviews')),
         ],
       ),
@@ -215,11 +216,11 @@ class _ReviewsPageState extends State<ReviewsPage>
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Column(
         children: [
           _buildReviewsStats(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           ..._myReviews.map((review) => _buildReviewCard(review)),
         ],
       ),
@@ -236,11 +237,11 @@ class _ReviewsPageState extends State<ReviewsPage>
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Column(
         children: [
           _buildPendingHeader(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           ..._pendingReviews.map((review) => _buildPendingReviewCard(review)),
         ],
       ),
@@ -254,7 +255,7 @@ class _ReviewsPageState extends State<ReviewsPage>
   }) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingXL),
+        padding: EdgeInsets.all(AppDimensions.paddingXL),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -267,7 +268,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               ),
               child: Icon(icon, size: 60, color: AppColors.grey400),
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             Text(
               title,
               style: AppTextStyles.headlineSmall.copyWith(
@@ -275,7 +276,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Text(
               subtitle,
               style: AppTextStyles.bodyMedium.copyWith(
@@ -303,7 +304,7 @@ class _ReviewsPageState extends State<ReviewsPage>
     final verifiedReviews = _myReviews.where((r) => r.isVerified).length;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -323,7 +324,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Row(
             children: [
               Expanded(
@@ -374,7 +375,7 @@ class _ReviewsPageState extends State<ReviewsPage>
           ),
           child: Icon(icon, color: color, size: 24),
         ),
-        const SizedBox(height: AppDimensions.paddingS),
+        SizedBox(height: AppDimensions.paddingS),
         Text(
           value,
           style: AppTextStyles.headlineSmall.copyWith(
@@ -393,7 +394,7 @@ class _ReviewsPageState extends State<ReviewsPage>
 
   Widget _buildPendingHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -402,7 +403,7 @@ class _ReviewsPageState extends State<ReviewsPage>
       child: Row(
         children: [
           Icon(Icons.info_outline, color: AppColors.info),
-          const SizedBox(width: AppDimensions.paddingM),
+          SizedBox(width: AppDimensions.paddingM),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,7 +415,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                     color: AppColors.info,
                   ),
                 ),
-                const SizedBox(height: AppDimensions.paddingXS),
+                SizedBox(height: AppDimensions.paddingXS),
                 Text(
                   'با ثبت نظر، به سایر خریداران کمک کنید و امتیاز کسب کنید',
                   style: AppTextStyles.bodySmall.copyWith(
@@ -433,8 +434,8 @@ class _ReviewsPageState extends State<ReviewsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -461,7 +462,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 ),
                 child: Icon(Icons.image, color: AppColors.grey400, size: 30),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -474,7 +475,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: AppDimensions.paddingXS),
+                    SizedBox(height: AppDimensions.paddingXS),
                     Text(
                       _formatDate(review.date),
                       style: AppTextStyles.bodySmall.copyWith(
@@ -519,7 +520,7 @@ class _ReviewsPageState extends State<ReviewsPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           // Rating
           Row(
@@ -534,13 +535,10 @@ class _ReviewsPageState extends State<ReviewsPage>
                   ),
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               if (review.isVerified)
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.success,
                     borderRadius: BorderRadius.circular(4),
@@ -549,7 +547,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                     'تأیید شده',
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.white,
-                      fontSize: 10,
+                      fontSize: 10.0.sp,
                     ),
                   ),
                 ),
@@ -557,13 +555,13 @@ class _ReviewsPageState extends State<ReviewsPage>
           ),
 
           if (review.comment.isNotEmpty) ...[
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Text(review.comment, style: AppTextStyles.bodyMedium),
           ],
 
           // Review Images
           if (review.images != null && review.images!.isNotEmpty) ...[
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             SizedBox(
               height: 80,
               child: ListView.builder(
@@ -572,7 +570,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 itemBuilder: (context, index) => Container(
                   width: 80,
                   height: 80,
-                  margin: const EdgeInsets.only(right: AppDimensions.paddingS),
+                  margin: EdgeInsets.only(right: AppDimensions.paddingS),
                   decoration: BoxDecoration(
                     color: AppColors.grey200,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -583,7 +581,7 @@ class _ReviewsPageState extends State<ReviewsPage>
             ),
           ],
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           // Actions
           Row(
@@ -593,7 +591,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 label: review.likes.toString(),
                 onTap: () => _likeReview(review),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               _buildActionButton(
                 icon: Icons.thumb_down_outlined,
                 label: review.dislikes.toString(),
@@ -616,8 +614,8 @@ class _ReviewsPageState extends State<ReviewsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -644,7 +642,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                 ),
                 child: Icon(Icons.image, color: AppColors.grey400, size: 30),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -657,7 +655,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: AppDimensions.paddingXS),
+                    SizedBox(height: AppDimensions.paddingXS),
                     Row(
                       children: [
                         Icon(
@@ -665,7 +663,7 @@ class _ReviewsPageState extends State<ReviewsPage>
                           color: AppColors.warning,
                           size: 16,
                         ),
-                        const SizedBox(width: AppDimensions.paddingXS),
+                        SizedBox(width: AppDimensions.paddingXS),
                         Text(
                           'خریداری شده ${_formatDate(review.date)}',
                           style: AppTextStyles.bodySmall.copyWith(
@@ -680,7 +678,7 @@ class _ReviewsPageState extends State<ReviewsPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           SizedBox(
             width: double.infinity,
@@ -691,9 +689,7 @@ class _ReviewsPageState extends State<ReviewsPage>
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppDimensions.paddingM,
-                ),
+                padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
               ),
             ),
           ),
@@ -711,12 +707,12 @@ class _ReviewsPageState extends State<ReviewsPage>
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusS),
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingS),
+        padding: EdgeInsets.all(AppDimensions.paddingS),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 18, color: AppColors.grey600),
-            const SizedBox(width: AppDimensions.paddingXS),
+            SizedBox(width: AppDimensions.paddingXS),
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
@@ -921,7 +917,7 @@ class _WriteReviewDialogState extends State<WriteReviewDialog> {
                   ),
                   child: Icon(Icons.image, color: AppColors.grey400),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.0.w),
                 Expanded(
                   child: Text(
                     widget.review.productName,
@@ -933,14 +929,14 @@ class _WriteReviewDialogState extends State<WriteReviewDialog> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Rating
             const Text(
               'امتیاز شما:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Row(
               children: List.generate(
                 5,
@@ -955,14 +951,14 @@ class _WriteReviewDialogState extends State<WriteReviewDialog> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Comment
             const Text(
               'نظر شما:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             TextField(
               controller: _commentController,
               maxLines: 4,
@@ -982,7 +978,7 @@ class _WriteReviewDialogState extends State<WriteReviewDialog> {
         ElevatedButton(
           onPressed: _rating > 0 && !_isLoading ? _submitReview : null,
           child: _isLoading
-              ? const SizedBox(
+              ? SizedBox(
                   width: 20,
                   height: 20,
                   child: CircularProgressIndicator(strokeWidth: 2),

@@ -89,7 +89,7 @@ class SearchTextField extends StatelessWidget {
             ? IconButton(icon: const Icon(Icons.clear), onPressed: onClear)
             : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }

@@ -1,5 +1,6 @@
 // Banner Slider Widget
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/localization/localization_extension.dart';
@@ -63,8 +64,8 @@ class _BannerSliderState extends State<BannerSlider> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
-      margin: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
+      height: 180.h,
+      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
       child: Stack(
         children: [
           // Banner PageView
@@ -110,7 +111,7 @@ class _BannerSliderState extends State<BannerSlider> {
                     // Content
                     Positioned.fill(
                       child: Padding(
-                        padding: const EdgeInsets.all(AppDimensions.paddingL),
+                        padding: EdgeInsets.all(AppDimensions.paddingL),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -119,8 +120,8 @@ class _BannerSliderState extends State<BannerSlider> {
                             Flexible(
                               child: Text(
                                 context.tr(banner.title),
-                                style: const TextStyle(
-                                  fontSize: 22,
+                                style: TextStyle(
+                                  fontSize: 22.0.sp,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.white,
                                 ),
@@ -128,19 +129,19 @@ class _BannerSliderState extends State<BannerSlider> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const SizedBox(height: AppDimensions.paddingS),
+                            SizedBox(height: AppDimensions.paddingS),
                             Flexible(
                               child: Text(
                                 context.tr(banner.subtitle),
-                                style: const TextStyle(
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  fontSize: 14.0.sp,
                                   color: AppColors.white,
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const SizedBox(height: AppDimensions.paddingS),
+                            SizedBox(height: AppDimensions.paddingS),
                             ElevatedButton(
                               onPressed: () {
                                 // TODO: Handle banner action
@@ -156,7 +157,7 @@ class _BannerSliderState extends State<BannerSlider> {
                                     AppDimensions.radiusS,
                                   ),
                                 ),
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: AppDimensions.paddingM,
                                   vertical: AppDimensions.paddingS,
                                 ),
@@ -175,8 +176,8 @@ class _BannerSliderState extends State<BannerSlider> {
 
           // Page Indicators
           Positioned(
-            bottom: 16,
-            right: 16,
+            bottom: AppDimensions.paddingM,
+            right: AppDimensions.paddingM,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: _banners.asMap().entries.map((entry) {
@@ -187,9 +188,9 @@ class _BannerSliderState extends State<BannerSlider> {
                     curve: Curves.easeInOut,
                   ),
                   child: Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                    width: 8.0.w,
+                    height: 8.0.h,
+                    margin: EdgeInsets.symmetric(horizontal: 2.0.w),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _currentPage == entry.key

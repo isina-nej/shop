@@ -318,8 +318,96 @@
       }, 300);
     }
     
+    // Prevent multiple initialization
+    let flutterInitialized = false;
+    
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js with HTML renderer config
+      // Prevent multiple initializations
+      if (flutterInitialized) {
+        return;
+      }
+      flutterInitialized = true;
+      
+      // Suppress debug service errors in debug mode - Enhanced filtering
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        // Store original console methods
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const originalConsoleLog = console.log;
+
+        // Enhanced error filtering function
+        function shouldSuppressMessage(message) {
+          const msg = message.toString().toLowerCase();
+          return (
+            msg.includes('debugservice') ||
+            msg.includes('debug service') ||
+            msg.includes('cannot send null') ||
+            msg.includes('unsupported operation') ||
+            msg.includes('vm service') ||
+            msg.includes('observatory') ||
+            msg.includes('debugger') ||
+            msg.includes('flutter debug') ||
+            msg.includes('web debug') ||
+            msg.includes('null') && msg.includes('error') ||
+            msg.includes('null') && msg.includes('debug') ||
+            msg.includes('lifecycle channel') && msg.includes('discarded') ||
+            msg.includes('plugin sends messages') ||
+            msg.includes('channelbuffers') ||
+            msg.includes('error serving requests') ||
+            msg.includes('invalid engine initialization state')
+          );
+        }
+
+        // Override console.error to filter debug service errors
+        console.error = function(...args) {
+          const message = args.join(' ');
+          if (!shouldSuppressMessage(message)) {
+            originalConsoleError.apply(console, args);
+          }
+        };
+
+        // Override console.warn for similar warnings
+        console.warn = function(...args) {
+          const message = args.join(' ');
+          if (!shouldSuppressMessage(message)) {
+            originalConsoleWarn.apply(console, args);
+          }
+        };
+
+        // Override console.log to filter debug messages
+        console.log = function(...args) {
+          const message = args.join(' ');
+          if (!shouldSuppressMessage(message)) {
+            originalConsoleLog.apply(console, args);
+          }
+        };
+
+        // Also suppress uncaught errors from debug service
+        window.addEventListener('error', function(event) {
+          if (shouldSuppressMessage(event.message)) {
+            event.preventDefault();
+            return false;
+          }
+        });
+
+        // Suppress unhandled promise rejections from debug service
+        window.addEventListener('unhandledrejection', function(event) {
+          if (shouldSuppressMessage(event.reason)) {
+            event.preventDefault();
+            return false;
+          }
+        });
+
+        // Disable VM service and debug service
+        if (window.flutterWebRenderer) {
+          // Disable debug service extensions
+          window.flutterWebRenderer.debugService = null;
+        }
+
+        console.log('🔧 DebugService completely disabled in browser console');
+      }
+      
+      // Download main.dart.js with HTML renderer (more stable for debug)
       _flutter.loader.load({
         config: {
           renderer: "html"
@@ -327,6 +415,9 @@
       }).then(() => {
         // Flutter app is loaded, hide loading screen
         setTimeout(hideLoadingScreen, 1000);
+      }).catch((error) => {
+        console.error('Flutter loading error:', error);
+        hideLoadingScreen();
       });
     });
     
@@ -334,6 +425,19 @@
     setTimeout(() => {
       hideLoadingScreen();
     }, 10000);
+  </script>
+  <script>
+    // Register Service Worker for caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

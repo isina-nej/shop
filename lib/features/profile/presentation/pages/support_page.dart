@@ -165,15 +165,15 @@ class _SupportPageState extends State<SupportPage>
 
   Widget _buildContactTab(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Column(
         children: [
           _buildSupportHeader(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildContactMethods(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildWorkingHours(context),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           _buildQuickActions(context),
         ],
       ),
@@ -182,7 +182,7 @@ class _SupportPageState extends State<SupportPage>
 
   Widget _buildSupportHeader(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -209,7 +209,7 @@ class _SupportPageState extends State<SupportPage>
             ),
             child: Icon(Icons.support_agent, color: AppColors.white, size: 40),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             context.tr('sina_shop_support'),
             style: AppTextStyles.headlineMedium.copyWith(
@@ -217,7 +217,7 @@ class _SupportPageState extends State<SupportPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             context.tr('support_message'),
             style: AppTextStyles.bodyMedium.copyWith(
@@ -234,7 +234,7 @@ class _SupportPageState extends State<SupportPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -255,7 +255,7 @@ class _SupportPageState extends State<SupportPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildContactMethod(
             icon: Icons.phone,
@@ -306,7 +306,7 @@ class _SupportPageState extends State<SupportPage>
     required Color color,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
       child: ListTile(
         leading: Container(
           width: 50,
@@ -339,7 +339,7 @@ class _SupportPageState extends State<SupportPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -357,7 +357,7 @@ class _SupportPageState extends State<SupportPage>
           Row(
             children: [
               Icon(Icons.access_time, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('support_working_hours'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -366,15 +366,15 @@ class _SupportPageState extends State<SupportPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildWorkingDay('شنبه تا چهارشنبه', '۹:۰۰ - ۱۸:۰۰', true),
           _buildWorkingDay('پنج‌شنبه', '۹:۰۰ - ۱۴:۰۰', true),
           _buildWorkingDay('جمعه', 'تعطیل', false),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingM),
+            padding: EdgeInsets.all(AppDimensions.paddingM),
             decoration: BoxDecoration(
               color: AppColors.info.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -382,7 +382,7 @@ class _SupportPageState extends State<SupportPage>
             child: Row(
               children: [
                 Icon(Icons.info_outline, color: AppColors.info, size: 20),
-                const SizedBox(width: AppDimensions.paddingS),
+                SizedBox(width: AppDimensions.paddingS),
                 Expanded(
                   child: Text(
                     context.tr('online_support_active'),
@@ -401,7 +401,7 @@ class _SupportPageState extends State<SupportPage>
 
   Widget _buildWorkingDay(String day, String hours, bool isWorking) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppDimensions.paddingS),
+      padding: EdgeInsets.only(bottom: AppDimensions.paddingS),
       child: Row(
         children: [
           Container(
@@ -412,7 +412,7 @@ class _SupportPageState extends State<SupportPage>
               borderRadius: BorderRadius.circular(4),
             ),
           ),
-          const SizedBox(width: AppDimensions.paddingM),
+          SizedBox(width: AppDimensions.paddingM),
           Expanded(
             child: Text(
               day,
@@ -437,7 +437,7 @@ class _SupportPageState extends State<SupportPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -458,7 +458,7 @@ class _SupportPageState extends State<SupportPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             children: [
@@ -471,7 +471,7 @@ class _SupportPageState extends State<SupportPage>
                   color: AppColors.info,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildQuickActionButton(
                   icon: Icons.bug_report,
@@ -484,7 +484,7 @@ class _SupportPageState extends State<SupportPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           Row(
             children: [
@@ -497,7 +497,7 @@ class _SupportPageState extends State<SupportPage>
                   color: AppColors.success,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildQuickActionButton(
                   icon: Icons.school,
@@ -525,7 +525,7 @@ class _SupportPageState extends State<SupportPage>
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       child: Container(
-        padding: const EdgeInsets.all(AppDimensions.paddingM),
+        padding: EdgeInsets.all(AppDimensions.paddingM),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -533,7 +533,7 @@ class _SupportPageState extends State<SupportPage>
         child: Column(
           children: [
             Icon(icon, color: color, size: 32),
-            const SizedBox(height: AppDimensions.paddingS),
+            SizedBox(height: AppDimensions.paddingS),
             Text(
               title,
               style: AppTextStyles.bodySmall.copyWith(
@@ -557,7 +557,7 @@ class _SupportPageState extends State<SupportPage>
 
   Widget _buildTicketTab(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Form(
         key: _formKey,
         child: Column(children: [_buildTicketForm(context)]),
@@ -569,7 +569,7 @@ class _SupportPageState extends State<SupportPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -590,7 +590,7 @@ class _SupportPageState extends State<SupportPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           TextFormField(
             controller: _nameController,
@@ -606,7 +606,7 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           TextFormField(
             controller: _emailController,
@@ -622,10 +622,10 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           DropdownButtonFormField<String>(
-            value: _selectedDepartment,
+            initialValue: _selectedDepartment,
             decoration: const InputDecoration(
               labelText: 'بخش مربوطه',
               prefixIcon: Icon(Icons.category),
@@ -663,10 +663,10 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           DropdownButtonFormField<String>(
-            value: _selectedPriority,
+            initialValue: _selectedPriority,
             decoration: const InputDecoration(
               labelText: 'اولویت',
               prefixIcon: Icon(Icons.priority_high),
@@ -690,7 +690,7 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           TextFormField(
             controller: _subjectController,
@@ -706,7 +706,7 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           TextFormField(
             controller: _messageController,
@@ -724,7 +724,7 @@ class _SupportPageState extends State<SupportPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
 
           SizedBox(
             width: double.infinity,
@@ -733,9 +733,7 @@ class _SupportPageState extends State<SupportPage>
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(
-                  vertical: AppDimensions.paddingL,
-                ),
+                padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingL),
               ),
               child: _isLoading
                   ? const CircularProgressIndicator(color: AppColors.white)
@@ -753,7 +751,7 @@ class _SupportPageState extends State<SupportPage>
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       itemCount: _myTickets.length,
       itemBuilder: (context, index) {
         final ticket = _myTickets[index];
@@ -765,7 +763,7 @@ class _SupportPageState extends State<SupportPage>
   Widget _buildEmptyTicketsState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingXL),
+        padding: EdgeInsets.all(AppDimensions.paddingXL),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -782,7 +780,7 @@ class _SupportPageState extends State<SupportPage>
                 color: AppColors.grey400,
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             Text(
               context.tr('no_tickets'),
               style: AppTextStyles.headlineSmall.copyWith(
@@ -790,7 +788,7 @@ class _SupportPageState extends State<SupportPage>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Text(
               context.tr('no_tickets_message'),
               style: AppTextStyles.bodyMedium.copyWith(
@@ -798,7 +796,7 @@ class _SupportPageState extends State<SupportPage>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             ElevatedButton(
               onPressed: () => _tabController.index = 1,
               child: Text(context.tr('new_ticket')),
@@ -813,8 +811,8 @@ class _SupportPageState extends State<SupportPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -835,7 +833,7 @@ class _SupportPageState extends State<SupportPage>
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: _getStatusColor(ticket.status).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
@@ -848,9 +846,9 @@ class _SupportPageState extends State<SupportPage>
                   ),
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: _getPriorityColor(
                     ticket.priority,
@@ -867,7 +865,7 @@ class _SupportPageState extends State<SupportPage>
               ),
               const Spacer(),
               Text(
-                '${context.tr('ticket_code').replaceAll('{id}', ticket.id)}',
+                context.tr('ticket_code').replaceAll('{id}', ticket.id),
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
@@ -875,7 +873,7 @@ class _SupportPageState extends State<SupportPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           Text(
             ticket.subject,
@@ -884,30 +882,39 @@ class _SupportPageState extends State<SupportPage>
             ),
           ),
 
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
 
           Text(
-            '${context.tr('department').replaceAll('{department}', _getDepartmentText(ticket.department))}',
+            context
+                .tr('department')
+                .replaceAll(
+                  '{department}',
+                  _getDepartmentText(ticket.department),
+                ),
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
           ),
 
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
 
           Row(
             children: [
               Icon(Icons.access_time, size: 16, color: AppColors.grey600),
-              const SizedBox(width: AppDimensions.paddingXS),
+              SizedBox(width: AppDimensions.paddingXS),
               Text(
-                '${context.tr('created_at').replaceAll('{date}', _formatDate(ticket.createdAt))}',
+                context
+                    .tr('created_at')
+                    .replaceAll('{date}', _formatDate(ticket.createdAt)),
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Icon(Icons.reply, size: 16, color: AppColors.grey600),
-              const SizedBox(width: AppDimensions.paddingXS),
+              SizedBox(width: AppDimensions.paddingXS),
               Text(
-                '${context.tr('last_reply').replaceAll('{date}', _formatDate(ticket.lastReply))}',
+                context
+                    .tr('last_reply')
+                    .replaceAll('{date}', _formatDate(ticket.lastReply)),
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.grey600,
                 ),
@@ -915,7 +922,7 @@ class _SupportPageState extends State<SupportPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           Row(
             children: [
@@ -928,7 +935,7 @@ class _SupportPageState extends State<SupportPage>
                 ),
               ),
               if (ticket.status == 'open') ...[
-                const SizedBox(width: AppDimensions.paddingS),
+                SizedBox(width: AppDimensions.paddingS),
                 OutlinedButton.icon(
                   onPressed: () => _replyTicket(ticket),
                   icon: const Icon(Icons.reply, size: 16),
@@ -1147,27 +1154,27 @@ class TicketDetailsDialog extends StatelessWidget {
     return Dialog(
       child: Container(
         width: double.maxFinite,
-        padding: const EdgeInsets.all(AppDimensions.paddingL),
+        padding: EdgeInsets.all(AppDimensions.paddingL),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${context.tr('ticket_details').replaceAll('{id}', ticket.id)}',
+              context.tr('ticket_details').replaceAll('{id}', ticket.id),
               style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
 
             Text(
-              '${context.tr('subject').replaceAll('{subject}', ticket.subject)}',
+              context.tr('subject').replaceAll('{subject}', ticket.subject),
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
 
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
 
             Flexible(
               child: ListView.builder(
@@ -1176,10 +1183,8 @@ class TicketDetailsDialog extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final message = ticket.messages[index];
                   return Container(
-                    margin: const EdgeInsets.only(
-                      bottom: AppDimensions.paddingM,
-                    ),
-                    padding: const EdgeInsets.all(AppDimensions.paddingM),
+                    margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
+                    padding: EdgeInsets.all(AppDimensions.paddingM),
                     decoration: BoxDecoration(
                       color: message.isFromUser
                           ? AppColors.primary.withValues(alpha: 0.1)
@@ -1202,9 +1207,9 @@ class TicketDetailsDialog extends StatelessWidget {
                                 : AppColors.success,
                           ),
                         ),
-                        const SizedBox(height: AppDimensions.paddingXS),
+                        SizedBox(height: AppDimensions.paddingXS),
                         Text(message.message, style: AppTextStyles.bodyMedium),
-                        const SizedBox(height: AppDimensions.paddingXS),
+                        SizedBox(height: AppDimensions.paddingXS),
                         Text(
                           _formatMessageDate(message.timestamp),
                           style: AppTextStyles.bodySmall.copyWith(
@@ -1218,7 +1223,7 @@ class TicketDetailsDialog extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

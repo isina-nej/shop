@@ -74,18 +74,16 @@ class _CategoriesPageState extends State<CategoriesPage> {
         // Search Bar
         SliverToBoxAdapter(
           child: Container(
-            margin: const EdgeInsets.all(AppDimensions.paddingM),
+            margin: EdgeInsets.all(AppDimensions.paddingM),
             child: _buildSearchBar(context),
           ),
         ),
 
         // Categories Grid
         SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingM,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
           sliver: SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 0.85,
               crossAxisSpacing: AppDimensions.paddingM,
@@ -98,9 +96,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
 
         // Bottom Padding
-        const SliverToBoxAdapter(
-          child: SizedBox(height: AppDimensions.paddingXL),
-        ),
+        SliverToBoxAdapter(child: SizedBox(height: AppDimensions.paddingXL)),
       ],
     );
   }
@@ -108,14 +104,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget _buildDesktopLayout(BuildContext context, List<Category> categories) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 1200),
-      margin: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
+      margin: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
           // Search Bar
           SliverToBoxAdapter(
             child: Container(
-              margin: const EdgeInsets.all(AppDimensions.paddingL),
+              margin: EdgeInsets.all(AppDimensions.paddingL),
               constraints: const BoxConstraints(maxWidth: 600),
               child: _buildSearchBar(context),
             ),
@@ -123,11 +119,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
           // Categories Grid
           SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingL,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
             sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1.1,
                 crossAxisSpacing: AppDimensions.paddingL,
@@ -140,9 +134,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
 
           // Bottom Padding
-          const SliverToBoxAdapter(
-            child: SizedBox(height: AppDimensions.paddingXL),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: AppDimensions.paddingXL)),
         ],
       ),
     );
@@ -188,7 +180,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
           filled: true,
           fillColor: Colors.transparent,
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingM,
             vertical: AppDimensions.paddingM,
           ),
@@ -235,11 +227,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 child: Icon(category.icon, size: 40, color: category.color),
               ),
 
-              const SizedBox(height: AppDimensions.paddingM),
+              SizedBox(height: AppDimensions.paddingM),
 
               // Category Name
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingS,
                 ),
                 child: Text(
@@ -253,11 +245,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
               ),
 
-              const SizedBox(height: AppDimensions.paddingXS),
+              SizedBox(height: AppDimensions.paddingXS),
 
               // Product Count
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingS,
                   vertical: AppDimensions.paddingXS,
                 ),
@@ -274,11 +266,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
               ),
 
-              const SizedBox(height: AppDimensions.paddingXS),
+              SizedBox(height: AppDimensions.paddingXS),
 
               // Category Description
               Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingS,
                 ),
                 child: Text(

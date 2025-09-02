@@ -1,5 +1,6 @@
 // Lazy Loading Router Implementation
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../localization/translation_manager.dart';
 
 // Mock modules for simulating dynamic imports
@@ -344,10 +345,10 @@ class LazyRouter {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               Text(
                 TranslationManager.instance.translate(messageKey),
-                style: const TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18.0.sp),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -442,7 +443,7 @@ class LazyLoadingPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.0.h),
               Text(
                 TranslationManager.instance.translate('loading') != 'loading'
                     ? TranslationManager.instance.translate('loading')
@@ -475,18 +476,18 @@ class LazyErrorPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.error_outline, size: 64, color: Colors.red),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text(
               'خطا در بارگیری صفحه',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Text(
               error,
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(),
               child: const Text('بازگشت'),

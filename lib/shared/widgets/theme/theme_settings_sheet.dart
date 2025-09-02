@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/advanced_theme_manager.dart';
 import '../../../core/localization/localization_extension.dart';
 
@@ -43,7 +44,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -65,7 +66,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Theme Mode Section
             Text(
@@ -74,9 +75,9 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.0.h),
             _buildThemeModeSelector(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.0.h),
 
             // Color Scheme Section
             Text(
@@ -85,9 +86,9 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.0.h),
             _buildColorSchemeSelector(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.0.h),
 
             // Custom Color Section
             Text(
@@ -96,9 +97,9 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.0.h),
             _buildCustomColorPicker(),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
           ],
         ),
       ),
@@ -112,7 +113,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
         final isSelected = widget.themeManager.currentMode == mode;
         return Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: EdgeInsets.symmetric(horizontal: 4),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               child: OutlinedButton.icon(
@@ -152,7 +153,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
               widget.themeManager.currentColorScheme == colorScheme;
 
           return Padding(
-            padding: const EdgeInsets.only(right: 12),
+            padding: EdgeInsets.only(right: 12),
             child: GestureDetector(
               onTap: () => widget.themeManager.changeColorScheme(colorScheme),
               child: AnimatedContainer(
@@ -176,7 +177,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                           color: colorScheme.isDynamic
                               ? _getDynamicColor()
                               : colorScheme.seedColor,
-                          borderRadius: const BorderRadius.vertical(
+                          borderRadius: BorderRadius.vertical(
                             top: Radius.circular(8),
                           ),
                         ),
@@ -196,7 +197,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                         color: Theme.of(
                           context,
                         ).colorScheme.surfaceContainerHighest,
-                        borderRadius: const BorderRadius.vertical(
+                        borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(8),
                         ),
                       ),
@@ -247,7 +248,7 @@ class _ThemeSettingsSheetState extends State<ThemeSettingsSheet>
                 ]
                 .map(
                   (color) => Padding(
-                    padding: const EdgeInsets.only(right: 8),
+                    padding: EdgeInsets.only(right: 8),
                     child: GestureDetector(
                       onTap: () => widget.themeManager.setCustomColor(color),
                       child: AnimatedContainer(

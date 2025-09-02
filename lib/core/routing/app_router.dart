@@ -1,5 +1,6 @@
 // App Router Configuration
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/localization/localization_extension.dart';
 import '../../core/animations/page_transitions.dart';
 import '../../features/home/presentation/pages/home_page.dart';
@@ -198,10 +199,10 @@ class AppRouter {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(Icons.error_outline, size: 64, color: Colors.red),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.0.h),
                 Text(
                   context.tr(messageKey),
-                  style: const TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18.0.sp),
                   textAlign: TextAlign.center,
                 ),
               ],

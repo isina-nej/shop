@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FAQPage extends StatefulWidget {
   const FAQPage({super.key});
@@ -262,7 +263,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
   }
 
   Widget _buildLoadingState() {
-    return const Center(
+    return  Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -278,7 +279,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.all(AppDimensions.paddingL),
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
@@ -307,17 +308,17 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
   Widget _buildCategoryTabs(BuildContext context) {
     return Container(
       height: 60,
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
+        padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
         itemCount: _categories.length,
         itemBuilder: (context, index) {
           final category = _categories[index];
           final isSelected = _selectedCategoryIndex == index;
 
           return Container(
-            margin: const EdgeInsets.only(right: AppDimensions.paddingM),
+            margin: EdgeInsets.only(right: AppDimensions.paddingM),
             child: FilterChip(
               selected: isSelected,
               label: Row(
@@ -328,7 +329,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                     size: 18,
                     color: isSelected ? AppColors.white : AppColors.primary,
                   ),
-                  const SizedBox(width: AppDimensions.paddingXS),
+                  SizedBox(width: AppDimensions.paddingXS),
                   Text(category.name),
                 ],
               ),
@@ -357,7 +358,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
+      padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingL),
       itemCount: _filteredFAQs.length,
       itemBuilder: (context, index) {
         final faq = _filteredFAQs[index];
@@ -369,7 +370,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
   Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingXL),
+        padding: EdgeInsets.all(AppDimensions.paddingXL),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -382,7 +383,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
               ),
               child: Icon(Icons.search_off, size: 60, color: AppColors.grey400),
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             Text(
               'نتیجه‌ای یافت نشد',
               style: AppTextStyles.headlineSmall.copyWith(
@@ -390,7 +391,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Text(
               'متأسفانه سوالی با این مشخصات پیدا نشد\nلطفاً کلمات کلیدی دیگری امتحان کنید',
               style: AppTextStyles.bodyMedium.copyWith(
@@ -398,7 +399,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: AppDimensions.paddingXL),
+            SizedBox(height: AppDimensions.paddingXL),
             ElevatedButton.icon(
               onPressed: _showContactSupport,
               icon: const Icon(Icons.support_agent),
@@ -418,7 +419,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
       child: ExpansionTile(
         leading: Container(
           width: 40,
@@ -441,12 +442,9 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
         ),
         subtitle: faq.isPopular
             ? Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: EdgeInsets.only(top: 4),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 2,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.warning,
                     borderRadius: BorderRadius.circular(4),
@@ -455,7 +453,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                     'پرطرفدار',
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.white,
-                      fontSize: 10,
+                      fontSize: 10.0.sp,
                     ),
                   ),
                 ),
@@ -464,12 +462,12 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
               color: isDark
                   ? AppColors.surfaceDark.withValues(alpha: 0.5)
                   : AppColors.grey50,
-              borderRadius: const BorderRadius.vertical(
+              borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(AppDimensions.radiusM),
               ),
             ),
@@ -481,14 +479,14 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                   style: AppTextStyles.bodyMedium.copyWith(height: 1.6),
                 ),
                 if (faq.tags.isNotEmpty) ...[
-                  const SizedBox(height: AppDimensions.paddingM),
+                  SizedBox(height: AppDimensions.paddingM),
                   Wrap(
                     spacing: 8,
                     runSpacing: 4,
                     children: faq.tags
                         .map(
                           (tag) => Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
@@ -500,7 +498,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                               tag,
                               style: AppTextStyles.bodySmall.copyWith(
                                 color: AppColors.primary,
-                                fontSize: 11,
+                                fontSize: 11.0.sp,
                               ),
                             ),
                           ),
@@ -508,7 +506,7 @@ class _FAQPageState extends State<FAQPage> with TickerProviderStateMixin {
                         .toList(),
                   ),
                 ],
-                const SizedBox(height: AppDimensions.paddingM),
+                SizedBox(height: AppDimensions.paddingM),
                 Row(
                   children: [
                     TextButton.icon(

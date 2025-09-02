@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shimmer/shimmer.dart';
 import 'dart:math' as math;
@@ -179,7 +180,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildLoadingAnimation(isDark),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.0.h),
                     _buildLoadingText(theme),
                   ],
                 ),
@@ -258,7 +259,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
           size: 40.0,
           duration: const Duration(milliseconds: 1200),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: 24.0.h),
 
         // Progress Bar
         Container(
@@ -301,7 +302,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
                 : Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.0.h),
         Text(
           TranslationManager.instance.translate('please_wait') != 'please_wait'
               ? TranslationManager.instance.translate('please_wait')
@@ -332,7 +333,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
                 double opacity = (1 + math.cos(animValue * 2 * math.pi)) / 2;
 
                 return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  margin: EdgeInsets.symmetric(horizontal: 4),
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
@@ -348,7 +349,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
             );
           }),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: 24.0.h),
 
         // Version info
         Text(
@@ -357,7 +358,7 @@ class _ModernLoadingScreenState extends State<ModernLoadingScreen>
             color: isDark ? Colors.grey[500] : Colors.grey[400],
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.0.h),
       ],
     );
   }

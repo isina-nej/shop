@@ -1,11 +1,15 @@
 // Network Configuration and HTTP Client
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../constants/app_constants.dart';
 
 class NetworkService {
   static late Dio _dio;
+  static bool _initialized = false;
 
   static void initialize() {
+    if (_initialized) return;
+
     _dio = Dio(
       BaseOptions(
         baseUrl: '${AppConstants.baseUrl}/${AppConstants.apiVersion}',
@@ -20,24 +24,42 @@ class NetworkService {
     );
 
     // Add interceptors
-    _dio.interceptors.add(
-      LogInterceptor(requestBody: true, responseBody: true),
-    );
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          logPrint: (obj) {
+            // Filter out debug service related logs
+            final message = obj.toString();
+            if (!message.contains('DebugService') &&
+                !message.contains('Cannot send Null')) {
+              debugPrint(message);
+            }
+          },
+        ),
+      );
+    }
 
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
           // Add auth token if available
-          // TODO: Implement token management
+          // Ensure no null values are sent in headers
+          options.headers.removeWhere((key, value) => value == null);
           handler.next(options);
         },
         onError: (error, handler) {
-          // Handle global errors
-          // TODO: Implement error handling
+          // Handle global errors - avoid sending null error data
+          if (kDebugMode && error.error != null) {
+            debugPrint('Network Error: ${error.error}');
+          }
           handler.next(error);
         },
       ),
     );
+
+    _initialized = true;
   }
 
   static Dio get client => _dio;

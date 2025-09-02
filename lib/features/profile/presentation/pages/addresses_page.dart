@@ -6,6 +6,7 @@ import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/localization/localization_extension.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddressesPage extends StatefulWidget {
   const AddressesPage({super.key});
@@ -93,7 +94,7 @@ class _AddressesPageState extends State<AddressesPage>
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        padding: const EdgeInsets.all(AppDimensions.paddingM),
+                        padding: EdgeInsets.all(AppDimensions.paddingM),
                         itemCount: _addresses.length,
                         itemBuilder: (context, index) {
                           return _buildAddressCard(
@@ -130,20 +131,20 @@ class _AddressesPageState extends State<AddressesPage>
               color: AppColors.primary,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             'هیچ آدرسی ثبت نشده',
             style: AppTextStyles.headlineSmall.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             'برای راحتی خرید، آدرس خود را ثبت کنید',
             style: AppTextStyles.bodyMedium.copyWith(color: AppColors.grey600),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
           ElevatedButton.icon(
             onPressed: () => _showAddAddressDialog(context),
             icon: const Icon(Icons.add),
@@ -151,7 +152,7 @@ class _AddressesPageState extends State<AddressesPage>
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: AppDimensions.paddingL,
                 vertical: AppDimensions.paddingM,
               ),
@@ -171,7 +172,7 @@ class _AddressesPageState extends State<AddressesPage>
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 300 + (index * 100)),
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
       child: Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : AppColors.white,
@@ -188,14 +189,14 @@ class _AddressesPageState extends State<AddressesPage>
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(AppDimensions.paddingL),
+          padding: EdgeInsets.all(AppDimensions.paddingL),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: AppDimensions.paddingS,
                       vertical: AppDimensions.paddingXS,
                     ),
@@ -215,7 +216,7 @@ class _AddressesPageState extends State<AddressesPage>
                           size: 16,
                           color: _getAddressTypeColor(address.title),
                         ),
-                        const SizedBox(width: AppDimensions.paddingXS),
+                        SizedBox(width: AppDimensions.paddingXS),
                         Text(
                           address.title,
                           style: AppTextStyles.labelMedium.copyWith(
@@ -229,7 +230,7 @@ class _AddressesPageState extends State<AddressesPage>
                   const Spacer(),
                   if (address.isDefault)
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: AppDimensions.paddingS,
                         vertical: AppDimensions.paddingXS,
                       ),
@@ -247,7 +248,7 @@ class _AddressesPageState extends State<AddressesPage>
                             size: 16,
                             color: AppColors.success,
                           ),
-                          const SizedBox(width: AppDimensions.paddingXS),
+                          SizedBox(width: AppDimensions.paddingXS),
                           Text(
                             'پیش‌فرض',
                             style: AppTextStyles.labelSmall.copyWith(
@@ -266,7 +267,7 @@ class _AddressesPageState extends State<AddressesPage>
                         child: Row(
                           children: [
                             const Icon(Icons.edit_outlined),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8.0.w),
                             Text(context.tr('edit')),
                           ],
                         ),
@@ -277,7 +278,7 @@ class _AddressesPageState extends State<AddressesPage>
                           child: Row(
                             children: [
                               const Icon(Icons.star_outline),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8.0.w),
                               Text(context.tr('set_as_default')),
                             ],
                           ),
@@ -287,10 +288,10 @@ class _AddressesPageState extends State<AddressesPage>
                         child: Row(
                           children: [
                             const Icon(Icons.delete_outline, color: Colors.red),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8.0.w),
                             Text(
                               context.tr('delete'),
-                              style: const TextStyle(color: Colors.red),
+                              style: TextStyle(color: Colors.red),
                             ),
                           ],
                         ),
@@ -299,7 +300,7 @@ class _AddressesPageState extends State<AddressesPage>
                   ),
                 ],
               ),
-              const SizedBox(height: AppDimensions.paddingM),
+              SizedBox(height: AppDimensions.paddingM),
 
               // Full Name & Phone
               Row(
@@ -309,7 +310,7 @@ class _AddressesPageState extends State<AddressesPage>
                     size: 18,
                     color: AppColors.grey600,
                   ),
-                  const SizedBox(width: AppDimensions.paddingS),
+                  SizedBox(width: AppDimensions.paddingS),
                   Expanded(
                     child: Text(
                       address.fullName,
@@ -323,7 +324,7 @@ class _AddressesPageState extends State<AddressesPage>
                     size: 18,
                     color: AppColors.grey600,
                   ),
-                  const SizedBox(width: AppDimensions.paddingXS),
+                  SizedBox(width: AppDimensions.paddingXS),
                   Text(
                     address.phoneNumber,
                     style: AppTextStyles.bodyMedium.copyWith(
@@ -333,7 +334,7 @@ class _AddressesPageState extends State<AddressesPage>
                 ],
               ),
 
-              const SizedBox(height: AppDimensions.paddingS),
+              SizedBox(height: AppDimensions.paddingS),
 
               // Address
               Row(
@@ -344,7 +345,7 @@ class _AddressesPageState extends State<AddressesPage>
                     size: 18,
                     color: AppColors.grey600,
                   ),
-                  const SizedBox(width: AppDimensions.paddingS),
+                  SizedBox(width: AppDimensions.paddingS),
                   Expanded(
                     child: Text(
                       '${address.city}، ${address.address}',
@@ -357,7 +358,7 @@ class _AddressesPageState extends State<AddressesPage>
                 ],
               ),
 
-              const SizedBox(height: AppDimensions.paddingS),
+              SizedBox(height: AppDimensions.paddingS),
 
               // Postal Code
               Row(
@@ -367,7 +368,7 @@ class _AddressesPageState extends State<AddressesPage>
                     size: 18,
                     color: AppColors.grey600,
                   ),
-                  const SizedBox(width: AppDimensions.paddingS),
+                  SizedBox(width: AppDimensions.paddingS),
                   Text(
                     'کد پستی: ${address.postalCode}',
                     style: AppTextStyles.bodySmall.copyWith(
@@ -377,7 +378,7 @@ class _AddressesPageState extends State<AddressesPage>
                 ],
               ),
 
-              const SizedBox(height: AppDimensions.paddingM),
+              SizedBox(height: AppDimensions.paddingM),
 
               // Action Buttons
               Row(
@@ -393,7 +394,7 @@ class _AddressesPageState extends State<AddressesPage>
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppDimensions.paddingS),
+                  SizedBox(width: AppDimensions.paddingS),
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () => _editAddress(address),
@@ -416,7 +417,7 @@ class _AddressesPageState extends State<AddressesPage>
 
   Widget _buildAddNewAddressButton(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton.icon(
@@ -426,9 +427,7 @@ class _AddressesPageState extends State<AddressesPage>
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             foregroundColor: AppColors.white,
-            padding: const EdgeInsets.symmetric(
-              vertical: AppDimensions.paddingM,
-            ),
+            padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
             ),
@@ -566,7 +565,7 @@ class _AddressesPageState extends State<AddressesPage>
             },
             child: Text(
               context.tr('delete'),
-              style: const TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.red),
             ),
           ),
         ],
@@ -649,7 +648,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
       height: MediaQuery.of(context).size.height * 0.9,
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
-        borderRadius: const BorderRadius.vertical(
+        borderRadius: BorderRadius.vertical(
           top: Radius.circular(AppDimensions.radiusL),
         ),
       ),
@@ -657,7 +656,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
         children: [
           // Header
           Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Column(
               children: [
                 Container(
@@ -668,7 +667,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                const SizedBox(height: AppDimensions.paddingM),
+                SizedBox(height: AppDimensions.paddingM),
                 Text(
                   widget.address != null ? 'ویرایش آدرس' : 'افزودن آدرس جدید',
                   style: AppTextStyles.headlineSmall.copyWith(
@@ -684,14 +683,14 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
           // Form
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.all(AppDimensions.paddingL),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildAddressTypeSelection(),
-                    const SizedBox(height: AppDimensions.paddingL),
+                    SizedBox(height: AppDimensions.paddingL),
                     _buildTextFormField(
                       controller: _fullNameController,
                       label: 'نام و نام خانوادگی',
@@ -703,7 +702,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: AppDimensions.paddingM),
+                    SizedBox(height: AppDimensions.paddingM),
                     _buildTextFormField(
                       controller: _phoneController,
                       label: 'شماره تلفن',
@@ -716,9 +715,9 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: AppDimensions.paddingM),
+                    SizedBox(height: AppDimensions.paddingM),
                     _buildLocationSelection(),
-                    const SizedBox(height: AppDimensions.paddingM),
+                    SizedBox(height: AppDimensions.paddingM),
                     _buildTextFormField(
                       controller: _addressController,
                       label: 'آدرس کامل',
@@ -731,7 +730,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: AppDimensions.paddingM),
+                    SizedBox(height: AppDimensions.paddingM),
                     _buildTextFormField(
                       controller: _postalCodeController,
                       label: 'کد پستی',
@@ -751,7 +750,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: AppDimensions.paddingL),
+                    SizedBox(height: AppDimensions.paddingL),
                     CheckboxListTile(
                       title: Text(context.tr('set_as_default')),
                       value: _isDefault,
@@ -770,7 +769,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
 
           // Action Buttons
           Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Row(
               children: [
                 Expanded(
@@ -779,7 +778,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                     child: Text(context.tr('cancel')),
                   ),
                 ),
-                const SizedBox(width: AppDimensions.paddingM),
+                SizedBox(width: AppDimensions.paddingM),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _saveAddress,
@@ -812,7 +811,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
           'نوع آدرس',
           style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: AppDimensions.paddingS),
+        SizedBox(height: AppDimensions.paddingS),
         Row(
           children: types.map((type) {
             final isSelected = _titleController.text == type;
@@ -824,10 +823,10 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
                   });
                 },
                 child: Container(
-                  margin: const EdgeInsets.symmetric(
+                  margin: EdgeInsets.symmetric(
                     horizontal: AppDimensions.paddingXS,
                   ),
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     vertical: AppDimensions.paddingM,
                   ),
                   decoration: BoxDecoration(
@@ -869,7 +868,7 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
     return Column(
       children: [
         DropdownButtonFormField<String>(
-          value: _selectedState,
+          initialValue: _selectedState,
           decoration: InputDecoration(
             labelText: 'استان',
             prefixIcon: const Icon(Icons.map_outlined),
@@ -887,9 +886,9 @@ class _AddAddressBottomSheetState extends State<AddAddressBottomSheet> {
             });
           },
         ),
-        const SizedBox(height: AppDimensions.paddingM),
+        SizedBox(height: AppDimensions.paddingM),
         DropdownButtonFormField<String>(
-          value: _selectedCity,
+          initialValue: _selectedCity,
           decoration: InputDecoration(
             labelText: 'شهر',
             prefixIcon: const Icon(Icons.location_city_outlined),

@@ -87,23 +87,23 @@ class _SettingsPageState extends State<SettingsPage>
         opacity: _fadeAnimation,
         child: ResponsiveContainer(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Column(
               children: [
                 _buildUserProfileCard(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildAppearanceSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildNotificationSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildPrivacySecuritySettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildLanguageRegionSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildDataStorageSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildAdvancedSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildHelpAboutSettings(context),
               ],
             ),
@@ -115,7 +115,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   Widget _buildUserProfileCard(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -142,7 +142,7 @@ class _SettingsPageState extends State<SettingsPage>
             ),
             child: Icon(Icons.person, color: AppColors.white, size: 40),
           ),
-          const SizedBox(width: AppDimensions.paddingL),
+          SizedBox(width: AppDimensions.paddingL),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,14 +154,14 @@ class _SettingsPageState extends State<SettingsPage>
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: AppDimensions.paddingS),
+                SizedBox(height: AppDimensions.paddingS),
                 Text(
                   'ali.ahmadi@email.com',
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.white.withValues(alpha: 0.9),
                   ),
                 ),
-                const SizedBox(height: AppDimensions.paddingS),
+                SizedBox(height: AppDimensions.paddingS),
                 Text(
                   'عضو از: آذر ۱۴۰۲',
                   style: AppTextStyles.bodySmall.copyWith(
@@ -540,7 +540,7 @@ class _SettingsPageState extends State<SettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -566,7 +566,7 @@ class _SettingsPageState extends State<SettingsPage>
                 ),
                 child: Icon(icon, color: color, size: 20),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Text(
                 title,
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -575,7 +575,7 @@ class _SettingsPageState extends State<SettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           ...children,
         ],
       ),
@@ -599,7 +599,7 @@ class _SettingsPageState extends State<SettingsPage>
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.primary,
+        activeThumbColor: AppColors.primary,
       ),
       contentPadding: EdgeInsets.zero,
     );
@@ -624,7 +624,7 @@ class _SettingsPageState extends State<SettingsPage>
         value: value,
         items: items,
         onChanged: onChanged,
-        underline: const SizedBox(),
+        underline: SizedBox(),
       ),
       contentPadding: EdgeInsets.zero,
     );

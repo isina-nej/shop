@@ -63,21 +63,21 @@ class _AboutPageState extends State<AboutPage>
           position: _slideAnimation,
           child: ResponsiveContainer(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.all(AppDimensions.paddingL),
               child: Column(
                 children: [
                   _buildHeroSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildMissionSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildStatsSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildFeaturesSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildTeamSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildTimelineSection(context),
-                  const SizedBox(height: AppDimensions.paddingXL),
+                  SizedBox(height: AppDimensions.paddingXL),
                   _buildContactSection(context),
                 ],
               ),
@@ -90,7 +90,7 @@ class _AboutPageState extends State<AboutPage>
 
   Widget _buildHeroSection(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -111,14 +111,14 @@ class _AboutPageState extends State<AboutPage>
           Container(
             width: 100,
             height: 100,
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             decoration: BoxDecoration(
               color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(50),
             ),
             child: Icon(Icons.shopping_bag, color: AppColors.white, size: 50),
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
           Text(
             context.tr('sina_shop'),
             style: AppTextStyles.displayMedium.copyWith(
@@ -126,14 +126,14 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             context.tr('best_online_shopping_experience'),
             style: AppTextStyles.headlineSmall.copyWith(
               color: AppColors.white.withValues(alpha: 0.9),
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Text(
             context.tr('sina_shop_description'),
             style: AppTextStyles.bodyLarge.copyWith(
@@ -151,7 +151,7 @@ class _AboutPageState extends State<AboutPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -171,7 +171,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildMissionItem(
             icon: Icons.visibility,
@@ -180,7 +180,7 @@ class _AboutPageState extends State<AboutPage>
             color: AppColors.primary,
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildMissionItem(
             icon: Icons.track_changes,
@@ -189,7 +189,7 @@ class _AboutPageState extends State<AboutPage>
             color: AppColors.success,
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildMissionItem(
             icon: Icons.favorite,
@@ -220,7 +220,7 @@ class _AboutPageState extends State<AboutPage>
           ),
           child: Icon(icon, color: color, size: 30),
         ),
-        const SizedBox(width: AppDimensions.paddingL),
+        SizedBox(width: AppDimensions.paddingL),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +232,7 @@ class _AboutPageState extends State<AboutPage>
                   color: color,
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingS),
+              SizedBox(height: AppDimensions.paddingS),
               Text(
                 description,
                 style: AppTextStyles.bodyMedium.copyWith(height: 1.5),
@@ -248,7 +248,7 @@ class _AboutPageState extends State<AboutPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -268,7 +268,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
 
           Row(
             children: [
@@ -291,7 +291,7 @@ class _AboutPageState extends State<AboutPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             children: [
@@ -314,7 +314,7 @@ class _AboutPageState extends State<AboutPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             children: [
@@ -348,8 +348,8 @@ class _AboutPageState extends State<AboutPage>
     required Color color,
   }) {
     return Container(
-      margin: const EdgeInsets.all(AppDimensions.paddingS),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.all(AppDimensions.paddingS),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -365,7 +365,7 @@ class _AboutPageState extends State<AboutPage>
             ),
             child: Icon(icon, color: color, size: 24),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             number,
             style: AppTextStyles.headlineSmall.copyWith(
@@ -373,7 +373,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
@@ -391,7 +391,7 @@ class _AboutPageState extends State<AboutPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -411,7 +411,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
 
           _buildFeatureItem(
             icon: Icons.verified,
@@ -459,8 +459,8 @@ class _AboutPageState extends State<AboutPage>
     required Color color,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingL),
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -477,7 +477,7 @@ class _AboutPageState extends State<AboutPage>
             ),
             child: Icon(icon, color: color, size: 24),
           ),
-          const SizedBox(width: AppDimensions.paddingL),
+          SizedBox(width: AppDimensions.paddingL),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,7 +488,7 @@ class _AboutPageState extends State<AboutPage>
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: AppDimensions.paddingS),
+                SizedBox(height: AppDimensions.paddingS),
                 Text(
                   description,
                   style: AppTextStyles.bodyMedium.copyWith(
@@ -507,7 +507,7 @@ class _AboutPageState extends State<AboutPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -527,7 +527,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
 
           Row(
             children: [
@@ -539,7 +539,7 @@ class _AboutPageState extends State<AboutPage>
                   avatar: Icons.person,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildTeamMember(
                   name: context.tr('sara_rezaei'),
@@ -551,7 +551,7 @@ class _AboutPageState extends State<AboutPage>
             ],
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             children: [
@@ -563,7 +563,7 @@ class _AboutPageState extends State<AboutPage>
                   avatar: Icons.person,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: _buildTeamMember(
                   name: context.tr('fateme_karimi'),
@@ -586,7 +586,7 @@ class _AboutPageState extends State<AboutPage>
     required IconData avatar,
   }) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: AppColors.primary.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -602,14 +602,14 @@ class _AboutPageState extends State<AboutPage>
             ),
             child: Icon(avatar, color: AppColors.primary, size: 30),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             name,
             style: AppTextStyles.bodyLarge.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             position,
             style: AppTextStyles.bodyMedium.copyWith(
@@ -617,7 +617,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             description,
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
@@ -632,7 +632,7 @@ class _AboutPageState extends State<AboutPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -652,7 +652,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingXL),
+          SizedBox(height: AppDimensions.paddingXL),
 
           _buildTimelineItem(
             year: '۱۴۰۰',
@@ -712,13 +712,13 @@ class _AboutPageState extends State<AboutPage>
               ),
           ],
         ),
-        const SizedBox(width: AppDimensions.paddingL),
+        SizedBox(width: AppDimensions.paddingL),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingM,
                   vertical: AppDimensions.paddingS,
                 ),
@@ -734,21 +734,21 @@ class _AboutPageState extends State<AboutPage>
                   ),
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingS),
+              SizedBox(height: AppDimensions.paddingS),
               Text(
                 title,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingS),
+              SizedBox(height: AppDimensions.paddingS),
               Text(
                 description,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.grey600,
                 ),
               ),
-              if (!isLast) const SizedBox(height: AppDimensions.paddingL),
+              if (!isLast) SizedBox(height: AppDimensions.paddingL),
             ],
           ),
         ),
@@ -758,7 +758,7 @@ class _AboutPageState extends State<AboutPage>
 
   Widget _buildContactSection(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingXL),
+      padding: EdgeInsets.all(AppDimensions.paddingXL),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -779,7 +779,7 @@ class _AboutPageState extends State<AboutPage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           _buildContactItem(
             icon: Icons.location_on,
@@ -809,7 +809,7 @@ class _AboutPageState extends State<AboutPage>
             onTap: () => _copyToClipboard('www.sinashop.com'),
           ),
 
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -849,7 +849,7 @@ class _AboutPageState extends State<AboutPage>
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       child: Padding(
-        padding: const EdgeInsets.all(AppDimensions.paddingM),
+        padding: EdgeInsets.all(AppDimensions.paddingM),
         child: Row(
           children: [
             Container(
@@ -861,7 +861,7 @@ class _AboutPageState extends State<AboutPage>
               ),
               child: Icon(icon, color: AppColors.primary, size: 20),
             ),
-            const SizedBox(width: AppDimensions.paddingL),
+            SizedBox(width: AppDimensions.paddingL),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -898,7 +898,7 @@ class _AboutPageState extends State<AboutPage>
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       child: Container(
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: AppDimensions.paddingL,
           vertical: AppDimensions.paddingM,
         ),
@@ -909,7 +909,7 @@ class _AboutPageState extends State<AboutPage>
         child: Column(
           children: [
             Icon(icon, color: color, size: 24),
-            const SizedBox(height: AppDimensions.paddingS),
+            SizedBox(height: AppDimensions.paddingS),
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(

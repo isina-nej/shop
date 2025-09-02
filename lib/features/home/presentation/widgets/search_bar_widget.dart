@@ -70,7 +70,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       : AppColors.textSecondaryLight,
                 ),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingM,
             vertical: AppDimensions.paddingM,
           ),

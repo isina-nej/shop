@@ -1,5 +1,6 @@
 // Category Grid Widget
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -61,7 +62,7 @@ class CategoryGrid extends StatelessWidget {
     );
 
     return Container(
-      height: isDesktop ? 120 : 200,
+      height: isDesktop ? 120.h : 200.h,
       padding: ResponsiveUtils.getResponsivePadding(context),
       child: isDesktop
           ? _buildDesktopGrid(context, crossAxisCount)
@@ -73,11 +74,11 @@ class CategoryGrid extends StatelessWidget {
     final categories = _getCategories(context);
 
     return SizedBox(
-      height: 200,
+      height: 200.h,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1.0,
           crossAxisSpacing: AppDimensions.paddingS,
@@ -122,8 +123,8 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final iconSize = isCompact ? 32.0 : 48.0;
-    final containerSize = isCompact ? 40.0 : 48.0;
+    final iconSize = isCompact ? 32.0.sp : 48.0.sp;
+    final containerSize = isCompact ? 40.0.w : 48.0.w;
 
     return GestureDetector(
       onTap: () {
@@ -142,8 +143,8 @@ class _CategoryCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+              blurRadius: 8.r,
+              offset: Offset(0, 2.h),
             ),
           ],
         ),
@@ -166,23 +167,25 @@ class _CategoryCard extends StatelessWidget {
                   : AppDimensions.paddingS,
             ),
             // Category Name
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Text(
-                category.name,
-                textAlign: TextAlign.center,
-                style:
-                    (isCompact
-                            ? AppTextStyles.labelSmall
-                            : AppTextStyles.labelMedium)
-                        .copyWith(
-                          color: isDark
-                              ? AppColors.textPrimaryDark
-                              : AppColors.textPrimaryLight,
-                          fontWeight: FontWeight.w600,
-                        ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                child: Text(
+                  category.name,
+                  textAlign: TextAlign.center,
+                  style:
+                      (isCompact
+                              ? AppTextStyles.labelSmall
+                              : AppTextStyles.labelMedium)
+                          .copyWith(
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimaryLight,
+                            fontWeight: FontWeight.w600,
+                          ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ],

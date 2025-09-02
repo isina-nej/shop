@@ -1,5 +1,6 @@
 // Product Details Page - Updated for DataManager
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -142,13 +143,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           Text(
             _errorMessage!,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           ElevatedButton(
             onPressed: _loadProductDetails,
             child: Text(context.tr('retry')),
@@ -164,12 +165,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           Text(
             'محصول یافت نشد',
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.0.h),
           Text(
             'محصول مورد نظر حذف شده یا وجود ندارد',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -187,26 +188,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildImageGallery(context),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingM,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildProductInfo(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildQuantitySelector(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildDescription(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildSpecifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildReviews(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildRelatedProducts(context),
-                const SizedBox(height: 80), // Space for bottom bar
+                SizedBox(height: 80.0.h), // Space for bottom bar
               ],
             ),
           ),
@@ -217,14 +216,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   Widget _buildDesktopLayout(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Left side - Images
           Expanded(flex: 1, child: _buildImageGallery(context)),
 
-          const SizedBox(width: AppDimensions.paddingXL),
+          SizedBox(width: AppDimensions.paddingXL),
 
           // Right side - Info
           Expanded(
@@ -233,17 +232,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildProductInfo(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildQuantitySelector(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildActionButtons(context),
-                const SizedBox(height: AppDimensions.paddingXL),
+                SizedBox(height: AppDimensions.paddingXL),
                 _buildDescription(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildSpecifications(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildReviews(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildRelatedProducts(context),
               ],
             ),
@@ -274,7 +273,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.vertical(
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(AppDimensions.radiusL),
                 ),
                 image: DecorationImage(
@@ -291,7 +290,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       top: 16,
                       right: 16,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 4,
                         ),
@@ -319,7 +318,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           if (_product!.images.length > 1)
             Container(
               height: 80,
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: _product!.images.length,
@@ -333,7 +332,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     },
                     child: Container(
                       width: 64,
-                      margin: const EdgeInsets.only(left: 8),
+                      margin: EdgeInsets.only(left: 8),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: isSelected
@@ -372,7 +371,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
         ),
 
-        const SizedBox(height: 8),
+        SizedBox(height: 8.0.h),
 
         // Name
         Text(
@@ -382,7 +381,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
 
         // Rating
         Row(
@@ -398,7 +397,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 );
               }),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.0.w),
             Text(
               '${_product!.rating.average} (${_product!.rating.totalReviews} نظر)',
               style: AppTextStyles.bodyMedium,
@@ -406,7 +405,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ],
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.0.h),
 
         // Price
         Row(
@@ -419,7 +418,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
             ),
             if (_product!.isOnSale) ...[
-              const SizedBox(width: 12),
+              SizedBox(width: 12.0.w),
               Text(
                 _product!.formattedOriginalPrice,
                 style: AppTextStyles.bodyLarge.copyWith(
@@ -431,7 +430,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ],
         ),
 
-        const SizedBox(height: 8),
+        SizedBox(height: 8.0.h),
 
         // Stock status
         Row(
@@ -441,7 +440,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               size: 16,
               color: _product!.isInStock ? Colors.green : Colors.red,
             ),
-            const SizedBox(width: 4),
+            SizedBox(width: 4.0.w),
             Text(
               _product!.isInStock
                   ? 'موجود در انبار (${_product!.stockQuantity} عدد)'
@@ -464,7 +463,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           'تعداد:',
           style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16.0.w),
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[300]!),
@@ -528,7 +527,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
         SizedBox(
           width: double.infinity,
           height: 48,
@@ -586,7 +585,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.0.w),
           Expanded(
             child: SizedBox(
               height: 48,
@@ -619,7 +618,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
         Text(
           _product!.description,
           style: AppTextStyles.bodyLarge.copyWith(height: 1.6),
@@ -638,10 +637,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
         ...(_product!.specifications.entries.entries.map((spec) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.only(bottom: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -687,7 +686,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
         Text(
           '${_product!.rating.totalReviews} نظر با میانگین ${_product!.rating.average} ستاره',
           style: AppTextStyles.bodyMedium,
@@ -708,7 +707,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.0.h),
         SizedBox(
           height: 200,
           child: ListView.builder(
@@ -727,7 +726,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 },
                 child: Container(
                   width: 150,
-                  margin: const EdgeInsets.only(left: 12),
+                  margin: EdgeInsets.only(left: 12),
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -746,7 +745,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.vertical(
+                            borderRadius: BorderRadius.vertical(
                               top: Radius.circular(AppDimensions.radiusM),
                             ),
                             image: DecorationImage(
@@ -757,7 +756,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -769,7 +768,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4.0.h),
                             Text(
                               product.formattedPrice,
                               style: AppTextStyles.bodySmall.copyWith(

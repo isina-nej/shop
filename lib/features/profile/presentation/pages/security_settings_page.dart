@@ -1,5 +1,6 @@
 // Security Settings Page - Complete Security Management
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -93,23 +94,23 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
         opacity: _fadeAnimation,
         child: ResponsiveContainer(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Column(
               children: [
                 _buildSecurityOverview(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildPasswordSection(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildTwoFactorSection(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildBiometricSection(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildNotificationSettings(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildActiveSessionsSection(context),
-                const SizedBox(height: AppDimensions.paddingL),
+                SizedBox(height: AppDimensions.paddingL),
                 _buildPrivacyActions(context),
-                const SizedBox(height: AppDimensions.paddingXL),
+                SizedBox(height: AppDimensions.paddingXL),
               ],
             ),
           ),
@@ -123,7 +124,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final securityLevel = _calculateSecurityLevel();
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -154,7 +155,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                   size: 30,
                 ),
               ),
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +166,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: AppDimensions.paddingXS),
+                    SizedBox(height: AppDimensions.paddingXS),
                     Text(
                       _getSecurityLevelText(securityLevel),
                       style: AppTextStyles.bodyMedium.copyWith(
@@ -178,7 +179,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           LinearProgressIndicator(
             value: securityLevel / 100,
             backgroundColor: AppColors.grey200,
@@ -186,7 +187,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               _getSecurityLevelColor(securityLevel),
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             '$securityLevel% امن',
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
@@ -200,7 +201,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -218,7 +219,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.lock_outline, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'رمز عبور',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -227,7 +228,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -279,7 +280,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -297,7 +298,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.security_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'تأیید دو مرحله‌ای',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -306,12 +307,12 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             'امنیت بیشتر با کد تأیید پیامکی یا برنامه‌های احراز هویت',
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey600),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -343,9 +344,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           ),
 
           if (_twoFactorEnabled) ...[
-            const SizedBox(height: AppDimensions.paddingM),
+            SizedBox(height: AppDimensions.paddingM),
             Container(
-              padding: const EdgeInsets.all(AppDimensions.paddingM),
+              padding: EdgeInsets.all(AppDimensions.paddingM),
               decoration: BoxDecoration(
                 color: AppColors.success.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -362,7 +363,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                         color: AppColors.success,
                         size: 20,
                       ),
-                      const SizedBox(width: AppDimensions.paddingS),
+                      SizedBox(width: AppDimensions.paddingS),
                       Expanded(
                         child: Text(
                           'تأیید دو مرحله‌ای فعال است',
@@ -374,7 +375,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppDimensions.paddingS),
+                  SizedBox(height: AppDimensions.paddingS),
                   Row(
                     children: [
                       Expanded(
@@ -388,7 +389,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                           ),
                         ),
                       ),
-                      const SizedBox(width: AppDimensions.paddingS),
+                      SizedBox(width: AppDimensions.paddingS),
                       Expanded(
                         child: OutlinedButton.icon(
                           onPressed: _showBackupCodes,
@@ -415,7 +416,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -433,7 +434,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.fingerprint_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'احراز هویت بیومتریک',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -442,7 +443,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -485,7 +486,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -503,7 +504,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.notifications_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'هشدارهای امنیتی',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -512,7 +513,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -545,7 +546,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -586,7 +587,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -604,7 +605,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.devices_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Expanded(
                 child: Text(
                   'دستگاه‌های فعال',
@@ -620,7 +621,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           ..._activeSessions.map((session) => _buildSessionItem(session)),
         ],
@@ -630,8 +631,8 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
 
   Widget _buildSessionItem(LoginSession session) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
+      padding: EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
         color: session.isCurrent
             ? AppColors.primary.withValues(alpha: 0.1)
@@ -652,7 +653,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                     : AppColors.grey600,
                 size: 20,
               ),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -666,9 +667,9 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                           ),
                         ),
                         if (session.isCurrent) ...[
-                          const SizedBox(width: AppDimensions.paddingS),
+                          SizedBox(width: AppDimensions.paddingS),
                           Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 6,
                               vertical: 2,
                             ),
@@ -680,14 +681,14 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
                               'فعلی',
                               style: AppTextStyles.labelSmall.copyWith(
                                 color: AppColors.white,
-                                fontSize: 10,
+                                fontSize: 10.0.sp,
                               ),
                             ),
                           ),
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppDimensions.paddingXS),
+                    SizedBox(height: AppDimensions.paddingXS),
                     Text(
                       '${session.location} • ${session.lastActive}',
                       style: AppTextStyles.bodySmall.copyWith(
@@ -713,7 +714,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -731,7 +732,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
           Row(
             children: [
               Icon(Icons.privacy_tip_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'حریم خصوصی و داده‌ها',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -740,7 +741,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -1001,7 +1002,7 @@ class _SecuritySettingsPageState extends State<SecuritySettingsPage>
         title: Row(
           children: [
             Icon(Icons.warning, color: AppColors.error),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.0.w),
             Text(context.tr('delete_account_title')),
           ],
         ),
@@ -1086,7 +1087,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               TextFormField(
                 controller: _newPasswordController,
                 obscureText: _obscureNewPassword,
@@ -1114,7 +1115,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               TextFormField(
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,

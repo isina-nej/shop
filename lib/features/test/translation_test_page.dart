@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/localization/localization_extension.dart';
 
 /// صفحه تست ترجمه‌ها
@@ -25,7 +26,7 @@ class _TranslationTestPageState extends State<TranslationTestPage> {
               'Translation Test',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // تست ترجمه‌های مختلف
             _buildTestRow('app_name', context.tr('app_name')),
@@ -36,7 +37,7 @@ class _TranslationTestPageState extends State<TranslationTestPage> {
             _buildTestRow('cart', context.tr('cart')),
             _buildTestRow('profile', context.tr('profile')),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // تست ترجمه async
             ElevatedButton(
@@ -51,10 +52,12 @@ class _TranslationTestPageState extends State<TranslationTestPage> {
 
             if (translatedText.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: 10),
                 child: Text(
-                  '${context.tr('async_result').replaceAll('{text}', translatedText)}',
-                  style: const TextStyle(
+                  context
+                      .tr('async_result')
+                      .replaceAll('{text}', translatedText),
+                  style: TextStyle(
                     color: Colors.green,
                     fontWeight: FontWeight.bold,
                   ),
@@ -68,15 +71,12 @@ class _TranslationTestPageState extends State<TranslationTestPage> {
 
   Widget _buildTestRow(String key, String translation) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           SizedBox(
             width: 120,
-            child: Text(
-              '$key:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            child: Text('$key:', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
           Expanded(
             child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
 import '../models/user_model.dart';
@@ -192,11 +193,11 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
               ),
               child: Text(
                 _status.isEmpty ? 'آماده برای شروع...' : _status,
-                style: const TextStyle(fontFamily: 'monospace'),
+                style: TextStyle(fontFamily: 'monospace'),
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Action Buttons
             Wrap(
@@ -224,7 +225,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                 child: Center(child: CircularProgressIndicator()),
               ),
 
-            const SizedBox(height: 30),
+            SizedBox(height: 30.0.h),
 
             // Products Preview
             if (_products.isNotEmpty) ...[
@@ -234,7 +235,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                     .replaceAll('{count}', _products.length.toString()),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.0.h),
               SizedBox(
                 height: 120,
                 child: ListView.builder(
@@ -244,7 +245,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                     final product = _products[index];
                     return Container(
                       width: 100,
-                      margin: const EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.only(left: 10),
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(8),
@@ -255,19 +256,19 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                                 product.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 12.0.sp),
                               ),
                               const Spacer(),
                               Text(
                                 product.formattedPrice,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 10,
+                                  fontSize: 10.0.sp,
                                 ),
                               ),
                               Text(
                                 '⭐ ${product.rating.average}',
-                                style: const TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 10.0.sp),
                               ),
                             ],
                           ),
@@ -279,7 +280,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
               ),
             ],
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Current User Info
             if (_currentUser != null) ...[
@@ -287,7 +288,7 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                 context.tr('current_user'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.0.h),
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -296,9 +297,9 @@ class _DataManagerExampleFixedState extends State<DataManagerExampleFixed> {
                     children: [
                       Text(
                         '${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.0.sp,
                         ),
                       ),
                       Text(

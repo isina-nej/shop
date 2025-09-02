@@ -1,5 +1,6 @@
 // Loading Widgets
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoadingIndicator extends StatelessWidget {
   final Color? color;
@@ -54,8 +55,8 @@ class LoadingOverlay extends StatelessWidget {
                 children: [
                   const LoadingIndicator(color: Colors.white),
                   if (message != null) ...[
-                    const SizedBox(height: 16),
-                    Text(message!, style: const TextStyle(color: Colors.white)),
+                    SizedBox(height: 16.0.h),
+                    Text(message!, style: TextStyle(color: Colors.white)),
                   ],
                 ],
               ),

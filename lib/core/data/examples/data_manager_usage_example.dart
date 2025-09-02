@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
 import '../models/user_model.dart';
@@ -50,10 +51,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         _featuredProducts = featuredResponse.data;
         setState(() {
           _status +=
-              '\n' +
-              context
-                  .tr('dm_featured_products')
-                  .replaceAll('{count}', '${_featuredProducts.length}');
+              '\n${context.tr('dm_featured_products').replaceAll('{count}', '${_featuredProducts.length}')}';
         });
       }
 
@@ -63,13 +61,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         _currentUser = userResponse.data;
         setState(() {
           _status +=
-              '\n' +
-              context
-                  .tr('dm_user_loaded')
-                  .replaceAll(
-                    '{name}',
-                    '${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}',
-                  );
+              '\n${context.tr('dm_user_loaded').replaceAll('{name}', '${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}')}';
         });
       }
 
@@ -77,11 +69,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
       final searchResponse = await _dataManager.searchProducts('آیفون');
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_search_results')
-                .replaceAll('{query}', 'آیفون')
-                .replaceAll('{count}', '${searchResponse.data.length}');
+            '\n${context.tr('dm_search_results').replaceAll('{query}', 'آیفون').replaceAll('{count}', '${searchResponse.data.length}')}';
       });
 
       // 5. Get product stats
@@ -90,22 +78,18 @@ class _DataManagerExampleState extends State<DataManagerExample> {
         final stats = productStatsResponse.data;
         setState(() {
           _status +=
-              '\n' +
-              context
-                  .tr('dm_product_stats')
-                  .replaceAll('{0}', '${stats['totalProducts']}')
-                  .replaceAll('{1}', '${stats['totalCategories']}');
+              '\n${context.tr('dm_product_stats').replaceAll('{0}', '${stats['totalProducts']}').replaceAll('{1}', '${stats['totalCategories']}')}';
         });
       }
 
       setState(() {
         _isLoading = false;
-        _status += '\n\n' + context.tr('dm_all_data_loaded_success');
+        _status += '\n\n${context.tr('dm_all_data_loaded_success')}';
       });
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _status = context.tr('dm_error').replaceAll('{0}', '${e.toString()}');
+        _status = context.tr('dm_error').replaceAll('{0}', e.toString());
       });
     }
   }
@@ -135,40 +119,29 @@ class _DataManagerExampleState extends State<DataManagerExample> {
       );
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_expensive_products')
-                .replaceAll('{count}', '${expensiveProducts.data.length}');
+            '\n${context.tr('dm_expensive_products').replaceAll('{count}', '${expensiveProducts.data.length}')}';
       });
 
       // Get best sellers
       final bestSellers = await _dataManager.getBestSellers(limit: 3);
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_best_sellers')
-                .replaceAll('{count}', '${bestSellers.data.length}');
+            '\n${context.tr('dm_best_sellers').replaceAll('{count}', '${bestSellers.data.length}')}';
       });
 
       // Get products on sale
       final saleProducts = await _dataManager.getProductsOnSale(limit: 3);
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_on_sale')
-                .replaceAll('{count}', '${saleProducts.data.length}');
+            '\n${context.tr('dm_on_sale').replaceAll('{count}', '${saleProducts.data.length}')}';
       });
 
       setState(() {
-        _status += '\n\n' + context.tr('dm_tests_successful');
+        _status += '\n\n${context.tr('dm_tests_successful')}';
       });
     } catch (e) {
       setState(() {
-        _status = context
-            .tr('dm_test_error')
-            .replaceAll('{0}', '${e.toString()}');
+        _status = context.tr('dm_test_error').replaceAll('{0}', e.toString());
       });
     }
   }
@@ -191,33 +164,26 @@ class _DataManagerExampleState extends State<DataManagerExample> {
       final searchUsers = await _dataManager.searchUsers('علی');
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_search_users')
-                .replaceAll('{0}', 'علی')
-                .replaceAll('{1}', '${searchUsers.data.length}');
+            '\n${context.tr('dm_search_users').replaceAll('{0}', 'علی').replaceAll('{1}', '${searchUsers.data.length}')}';
       });
 
       // Get premium users
       final premiumUsers = await _dataManager.getPremiumUsers();
       setState(() {
         _status +=
-            '\n' +
-            context
-                .tr('dm_premium_users')
-                .replaceAll('{0}', '${premiumUsers.data.length}');
+            '\n${context.tr('dm_premium_users').replaceAll('{0}', '${premiumUsers.data.length}')}';
       });
 
       // Remove getUserStatistics call as it doesn't exist
 
       setState(() {
-        _status += '\n\n' + context.tr('dm_user_ops_successful');
+        _status += '\n\n${context.tr('dm_user_ops_successful')}';
       });
     } catch (e) {
       setState(() {
         _status = context
             .tr('dm_user_ops_error')
-            .replaceAll('{0}', '${e.toString()}');
+            .replaceAll('{0}', e.toString());
       });
     }
   }
@@ -241,11 +207,11 @@ class _DataManagerExampleState extends State<DataManagerExample> {
               ),
               child: Text(
                 _status.isEmpty ? context.tr('dm_ready_to_start') : _status,
-                style: const TextStyle(fontFamily: 'monospace'),
+                style: TextStyle(fontFamily: 'monospace'),
               ),
             ),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Action Buttons
             Wrap(
@@ -273,7 +239,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                 child: Center(child: CircularProgressIndicator()),
               ),
 
-            const SizedBox(height: 30),
+            SizedBox(height: 30.0.h),
 
             // Products Preview
             if (_products.isNotEmpty) ...[
@@ -283,7 +249,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                     .replaceAll('{0}', '${_products.length}'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.0.h),
               SizedBox(
                 height: 120,
                 child: ListView.builder(
@@ -293,7 +259,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                     final product = _products[index];
                     return Container(
                       width: 100,
-                      margin: const EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.only(left: 10),
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(8),
@@ -304,19 +270,19 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                                 product.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 12),
+                                style: TextStyle(fontSize: 12.0.sp),
                               ),
                               const Spacer(),
                               Text(
                                 product.formattedPrice,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 10,
+                                  fontSize: 10.0.sp,
                                 ),
                               ),
                               Text(
                                 '⭐ ${product.rating.average}',
-                                style: const TextStyle(fontSize: 10),
+                                style: TextStyle(fontSize: 10.0.sp),
                               ),
                             ],
                           ),
@@ -328,7 +294,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
               ),
             ],
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20.0.h),
 
             // Current User Info
             if (_currentUser != null) ...[
@@ -336,7 +302,7 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                 context.tr('dm_current_user'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.0.h),
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -345,9 +311,9 @@ class _DataManagerExampleState extends State<DataManagerExample> {
                     children: [
                       Text(
                         '${_currentUser!.profile.firstName} ${_currentUser!.profile.lastName}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16.0.sp,
                         ),
                       ),
                       Text('${context.tr('email')}: ${_currentUser!.email}'),

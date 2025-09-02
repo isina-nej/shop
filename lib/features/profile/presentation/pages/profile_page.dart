@@ -1,5 +1,6 @@
 // Modern Profile Page - Redesigned for Better UX
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
@@ -69,15 +70,15 @@ class _ProfilePageState extends State<ProfilePage>
               child: ResponsiveContainer(
                 child: Column(
                   children: [
-                    const SizedBox(height: AppDimensions.paddingL),
+                    SizedBox(height: AppDimensions.paddingL),
                     _buildStatsCards(context),
-                    const SizedBox(height: AppDimensions.paddingXL),
+                    SizedBox(height: AppDimensions.paddingXL),
                     _buildQuickActions(context),
-                    const SizedBox(height: AppDimensions.paddingXL),
+                    SizedBox(height: AppDimensions.paddingXL),
                     _buildMenuSections(context),
-                    const SizedBox(height: AppDimensions.paddingXL),
+                    SizedBox(height: AppDimensions.paddingXL),
                     _buildLogoutSection(context),
-                    const SizedBox(height: AppDimensions.paddingXL),
+                    SizedBox(height: AppDimensions.paddingXL),
                   ],
                 ),
               ),
@@ -113,9 +114,9 @@ class _ProfilePageState extends State<ProfilePage>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
+                SizedBox(height: 40.0.h),
                 _buildProfileAvatar(context),
-                const SizedBox(height: AppDimensions.paddingM),
+                SizedBox(height: AppDimensions.paddingM),
                 _buildUserInfo(context),
               ],
             ),
@@ -237,16 +238,16 @@ class _ProfilePageState extends State<ProfilePage>
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: AppDimensions.paddingXS),
+        SizedBox(height: AppDimensions.paddingXS),
         Text(
           _user.email,
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.white.withValues(alpha: 0.9),
           ),
         ),
-        const SizedBox(height: AppDimensions.paddingS),
+        SizedBox(height: AppDimensions.paddingS),
         Container(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingM,
             vertical: AppDimensions.paddingXS,
           ),
@@ -281,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage>
             isDark: isDark,
           ),
         ),
-        const SizedBox(width: AppDimensions.paddingM),
+        SizedBox(width: AppDimensions.paddingM),
         Expanded(
           child: _buildStatCard(
             context,
@@ -305,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage>
     required bool isDark,
   }) {
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -328,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             child: Icon(icon, color: color, size: 24),
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Text(
             value,
             style: AppTextStyles.headlineSmall.copyWith(
@@ -338,7 +339,7 @@ class _ProfilePageState extends State<ProfilePage>
                   : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingXS),
+          SizedBox(height: AppDimensions.paddingXS),
           Text(
             title,
             style: AppTextStyles.labelMedium.copyWith(color: AppColors.grey600),
@@ -353,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -377,7 +378,7 @@ class _ProfilePageState extends State<ProfilePage>
                   : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -436,7 +437,7 @@ class _ProfilePageState extends State<ProfilePage>
             ),
             child: Icon(icon, color: color, size: 24),
           ),
-          const SizedBox(height: AppDimensions.paddingS),
+          SizedBox(height: AppDimensions.paddingS),
           Text(
             title,
             style: AppTextStyles.labelSmall.copyWith(
@@ -481,7 +482,7 @@ class _ProfilePageState extends State<ProfilePage>
           ],
         ),
 
-        const SizedBox(height: AppDimensions.paddingL),
+        SizedBox(height: AppDimensions.paddingL),
 
         // Shopping
         _buildModernMenuSection(
@@ -510,7 +511,7 @@ class _ProfilePageState extends State<ProfilePage>
           ],
         ),
 
-        const SizedBox(height: AppDimensions.paddingL),
+        SizedBox(height: AppDimensions.paddingL),
 
         // App Settings
         _buildModernMenuSection(
@@ -528,7 +529,7 @@ class _ProfilePageState extends State<ProfilePage>
               trailing: Switch(
                 value: isDark,
                 onChanged: (_) => _toggleTheme(context),
-                activeColor: AppColors.primary,
+                activeThumbColor: AppColors.primary,
               ),
             ),
             ModernMenuItem(
@@ -540,7 +541,7 @@ class _ProfilePageState extends State<ProfilePage>
           ],
         ),
 
-        const SizedBox(height: AppDimensions.paddingL),
+        SizedBox(height: AppDimensions.paddingL),
 
         // Help & Support
         _buildModernMenuSection(
@@ -602,7 +603,7 @@ class _ProfilePageState extends State<ProfilePage>
         children: [
           // Section Header
           Container(
-            padding: const EdgeInsets.all(AppDimensions.paddingL),
+            padding: EdgeInsets.all(AppDimensions.paddingL),
             child: Row(
               children: [
                 Container(
@@ -614,7 +615,7 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
                   child: Icon(icon, color: AppColors.primary, size: 20),
                 ),
-                const SizedBox(width: AppDimensions.paddingM),
+                SizedBox(width: AppDimensions.paddingM),
                 Text(
                   title,
                   style: AppTextStyles.headlineSmall.copyWith(
@@ -676,7 +677,7 @@ class _ProfilePageState extends State<ProfilePage>
       trailing:
           item.trailing ??
           Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.grey500),
-      contentPadding: const EdgeInsets.symmetric(
+      contentPadding: EdgeInsets.symmetric(
         horizontal: AppDimensions.paddingL,
         vertical: AppDimensions.paddingXS,
       ),
@@ -725,7 +726,7 @@ class _ProfilePageState extends State<ProfilePage>
           size: 16,
           color: AppColors.error,
         ),
-        contentPadding: const EdgeInsets.all(AppDimensions.paddingL),
+        contentPadding: EdgeInsets.all(AppDimensions.paddingL),
       ),
     );
   }
@@ -795,11 +796,11 @@ class _ProfilePageState extends State<ProfilePage>
       builder: (context) => Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : AppColors.white,
-          borderRadius: const BorderRadius.vertical(
+          borderRadius: BorderRadius.vertical(
             top: Radius.circular(AppDimensions.radiusL),
           ),
         ),
-        padding: const EdgeInsets.all(AppDimensions.paddingL),
+        padding: EdgeInsets.all(AppDimensions.paddingL),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -811,14 +812,14 @@ class _ProfilePageState extends State<ProfilePage>
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
             Text(
               'تنظیمات بیشتر',
               style: AppTextStyles.headlineSmall.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
             ListTile(
               leading: const Icon(Icons.share_outlined),
               title: Text(context.tr('share_profile')),
@@ -843,7 +844,7 @@ class _ProfilePageState extends State<ProfilePage>
                 // TODO: Implement data backup
               },
             ),
-            const SizedBox(height: AppDimensions.paddingL),
+            SizedBox(height: AppDimensions.paddingL),
           ],
         ),
       ),
@@ -860,11 +861,11 @@ class _ProfilePageState extends State<ProfilePage>
       builder: (context) => Container(
         decoration: BoxDecoration(
           color: isDark ? AppColors.surfaceDark : AppColors.white,
-          borderRadius: const BorderRadius.vertical(
+          borderRadius: BorderRadius.vertical(
             top: Radius.circular(AppDimensions.radiusL),
           ),
         ),
-        padding: const EdgeInsets.all(AppDimensions.paddingL),
+        padding: EdgeInsets.all(AppDimensions.paddingL),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -877,20 +878,20 @@ class _ProfilePageState extends State<ProfilePage>
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingL),
+              SizedBox(height: AppDimensions.paddingL),
               Text(
                 'انتخاب زبان',
                 style: AppTextStyles.headlineSmall.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: AppDimensions.paddingL),
+              SizedBox(height: AppDimensions.paddingL),
               ...LanguageController.supportedLocales.map((locale) {
                 final languageData = _getLanguageData(locale.languageCode);
                 final languageController = Get.find<LanguageController>();
 
                 return Container(
-                  margin: const EdgeInsets.only(bottom: AppDimensions.paddingS),
+                  margin: EdgeInsets.only(bottom: AppDimensions.paddingS),
                   decoration: BoxDecoration(
                     color:
                         languageController.locale.value.languageCode ==
@@ -907,7 +908,7 @@ class _ProfilePageState extends State<ProfilePage>
                   child: ListTile(
                     leading: Text(
                       languageData['flag']!,
-                      style: const TextStyle(fontSize: 28),
+                      style: TextStyle(fontSize: 28.0.sp),
                     ),
                     title: Text(
                       languageData['name']!,
@@ -956,7 +957,7 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
                 );
               }),
-              const SizedBox(height: AppDimensions.paddingL),
+              SizedBox(height: AppDimensions.paddingL),
             ],
           ),
         ),

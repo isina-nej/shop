@@ -1,5 +1,6 @@
 // Products Page - Responsive Products List with Filters (Updated for DataManager)
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -156,15 +157,13 @@ class _ProductsPageState extends State<ProductsPage> {
       children: [
         // Search Bar
         Container(
-          margin: const EdgeInsets.all(AppDimensions.paddingM),
+          margin: EdgeInsets.all(AppDimensions.paddingM),
           child: _buildSearchBar(context),
         ),
 
         // Products Count
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingM,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -207,7 +206,7 @@ class _ProductsPageState extends State<ProductsPage> {
         // Filters Sidebar
         Container(
           width: 300,
-          padding: const EdgeInsets.all(AppDimensions.paddingL),
+          padding: EdgeInsets.all(AppDimensions.paddingL),
           child: _buildFilterSidebar(context),
         ),
 
@@ -217,11 +216,11 @@ class _ProductsPageState extends State<ProductsPage> {
             children: [
               // Search and Controls
               Container(
-                padding: const EdgeInsets.all(AppDimensions.paddingL),
+                padding: EdgeInsets.all(AppDimensions.paddingL),
                 child: Row(
                   children: [
                     Expanded(child: _buildSearchBar(context)),
-                    const SizedBox(width: AppDimensions.paddingM),
+                    SizedBox(width: AppDimensions.paddingM),
                     _buildViewToggle(context),
                   ],
                 ),
@@ -229,7 +228,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
               // Products Count and Sort
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingL,
                 ),
                 child: Row(
@@ -265,13 +264,13 @@ class _ProductsPageState extends State<ProductsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           Text(
             _errorMessage!,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           ElevatedButton(
             onPressed: _loadProducts,
             child: Text(context.tr('retry')),
@@ -287,12 +286,12 @@ class _ProductsPageState extends State<ProductsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.0.h),
           Text(
             'محصولی یافت نشد',
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.0.h),
           Text(
             'فیلترها را تغییر دهید یا جستجوی جدید انجام دهید',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -351,7 +350,7 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
           filled: true,
           fillColor: Colors.transparent,
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingM,
             vertical: AppDimensions.paddingM,
           ),
@@ -371,7 +370,7 @@ class _ProductsPageState extends State<ProductsPage> {
     required int crossAxisCount,
   }) {
     return GridView.builder(
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: EdgeInsets.all(AppDimensions.paddingM),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         childAspectRatio: 0.7,
@@ -387,7 +386,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   Widget _buildProductsListView(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: EdgeInsets.all(AppDimensions.paddingM),
       itemCount: _filteredProducts.length,
       itemBuilder: (context, index) {
         return _buildProductListItem(context, _filteredProducts[index]);
@@ -418,7 +417,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.vertical(
+                      borderRadius: BorderRadius.vertical(
                         top: Radius.circular(AppDimensions.radiusL),
                       ),
                       image: DecorationImage(
@@ -433,7 +432,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       top: 8,
                       right: 8,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 6,
                           vertical: 3,
                         ),
@@ -476,7 +475,7 @@ class _ProductsPageState extends State<ProductsPage> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(AppDimensions.paddingS),
+                padding: EdgeInsets.all(AppDimensions.paddingS),
                 child: ClipRect(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -492,7 +491,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         overflow: TextOverflow.ellipsis,
                       ),
 
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2.0.h),
 
                       // Brand
                       Text(
@@ -504,18 +503,18 @@ class _ProductsPageState extends State<ProductsPage> {
                         overflow: TextOverflow.ellipsis,
                       ),
 
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4.0.h),
 
                       // Rating and Price
                       Row(
                         children: [
                           Icon(Icons.star, size: 14, color: Colors.amber[600]),
-                          const SizedBox(width: 2),
+                          SizedBox(width: 2.0.w),
                           Text(
                             product.rating.average.toString(),
                             style: AppTextStyles.bodySmall,
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: 4.0.w),
                           Text(
                             '(${product.rating.totalReviews})',
                             style: AppTextStyles.bodySmall.copyWith(
@@ -527,7 +526,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         ],
                       ),
 
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2.0.h),
 
                       // Price
                       Row(
@@ -542,7 +541,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             ),
                           ),
                           if (product.isOnSale) ...[
-                            const SizedBox(width: 4),
+                            SizedBox(width: 4.0.w),
                             Text(
                               product.formattedOriginalPrice,
                               style: AppTextStyles.bodySmall.copyWith(
@@ -570,7 +569,7 @@ class _ProductsPageState extends State<ProductsPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: AppDimensions.paddingM),
+      margin: EdgeInsets.only(bottom: AppDimensions.paddingM),
       elevation: 2,
       shadowColor: isDark ? AppColors.shadowDark : AppColors.shadowLight,
       shape: RoundedRectangleBorder(
@@ -580,7 +579,7 @@ class _ProductsPageState extends State<ProductsPage> {
         onTap: () => _navigateToProductDetails(context, product),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         child: Padding(
-          padding: const EdgeInsets.all(AppDimensions.paddingM),
+          padding: EdgeInsets.all(AppDimensions.paddingM),
           child: Row(
             children: [
               // Product Image
@@ -596,7 +595,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 ),
               ),
 
-              const SizedBox(width: AppDimensions.paddingM),
+              SizedBox(width: AppDimensions.paddingM),
 
               // Product Info
               Expanded(
@@ -614,7 +613,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         overflow: TextOverflow.ellipsis,
                       ),
 
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2.0.h),
 
                       Text(
                         product.brand,
@@ -625,12 +624,12 @@ class _ProductsPageState extends State<ProductsPage> {
                         overflow: TextOverflow.ellipsis,
                       ),
 
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4.0.h),
 
                       Row(
                         children: [
                           Icon(Icons.star, size: 14, color: Colors.amber[600]),
-                          const SizedBox(width: 2),
+                          SizedBox(width: 2.0.w),
                           Expanded(
                             child: Text(
                               '${product.rating.average} (${product.rating.totalReviews})',
@@ -638,7 +637,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8.0.w),
                           Text(
                             product.formattedPrice,
                             style: AppTextStyles.bodyLarge.copyWith(
@@ -746,14 +745,14 @@ class _ProductsPageState extends State<ProductsPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.0.h),
 
         // Price Range
         Text(
           'محدوده قیمت',
           style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w600),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.0.h),
         Row(
           children: [
             Expanded(
@@ -768,7 +767,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 },
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.0.w),
             Expanded(
               child: TextField(
                 decoration: const InputDecoration(
@@ -784,7 +783,7 @@ class _ProductsPageState extends State<ProductsPage> {
           ],
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.0.h),
 
         // Stock filter
         CheckboxListTile(
@@ -797,7 +796,7 @@ class _ProductsPageState extends State<ProductsPage> {
           },
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.0.h),
 
         // Apply Filters Button
         SizedBox(
@@ -808,7 +807,7 @@ class _ProductsPageState extends State<ProductsPage> {
           ),
         ),
 
-        const SizedBox(height: 8),
+        SizedBox(height: 8.0.h),
 
         // Clear Filters Button
         SizedBox(
@@ -848,7 +847,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               ListTile(
                 title: Text(context.tr('name_asc')),
                 trailing: _sortBy == 'name' && _sortOrder == 'asc'

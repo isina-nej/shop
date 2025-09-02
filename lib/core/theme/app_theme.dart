@@ -32,7 +32,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, AppDimensions.buttonHeightL),
+          minimumSize: Size(double.infinity, AppDimensions.buttonHeightL),
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.white,
           textStyle: AppTextStyles.buttonTextStyle,
@@ -45,14 +45,14 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusS),
         ),
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: AppDimensions.paddingM,
           vertical: AppDimensions.paddingM,
         ),
       ),
       cardTheme: CardThemeData(
         elevation: AppDimensions.elevationS,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(AppDimensions.radiusM),
           ),
@@ -88,7 +88,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, AppDimensions.buttonHeightL),
+          minimumSize: Size(double.infinity, AppDimensions.buttonHeightL),
           backgroundColor: AppColors.primaryLight,
           foregroundColor: AppColors.black,
           textStyle: AppTextStyles.buttonTextStyle,
@@ -101,14 +101,14 @@ class AppTheme {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusS),
         ),
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: AppDimensions.paddingM,
           vertical: AppDimensions.paddingM,
         ),
       ),
       cardTheme: CardThemeData(
         elevation: AppDimensions.elevationS,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(AppDimensions.radiusM),
           ),

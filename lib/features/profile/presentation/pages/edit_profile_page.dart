@@ -84,7 +84,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           TextButton(
             onPressed: _isLoading ? null : _saveProfile,
             child: _isLoading
-                ? const SizedBox(
+                ? SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
@@ -100,21 +100,21 @@ class _EditProfilePageState extends State<EditProfilePage>
             offset: Offset(0, _slideAnimation.value),
             child: ResponsiveContainer(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(AppDimensions.paddingL),
+                padding: EdgeInsets.all(AppDimensions.paddingL),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       _buildProfileImageSection(context),
-                      const SizedBox(height: AppDimensions.paddingXL),
+                      SizedBox(height: AppDimensions.paddingXL),
                       _buildPersonalInfoSection(context),
-                      const SizedBox(height: AppDimensions.paddingL),
+                      SizedBox(height: AppDimensions.paddingL),
                       _buildContactInfoSection(context),
-                      const SizedBox(height: AppDimensions.paddingL),
+                      SizedBox(height: AppDimensions.paddingL),
                       _buildAddressSection(context),
-                      const SizedBox(height: AppDimensions.paddingXL),
+                      SizedBox(height: AppDimensions.paddingXL),
                       _buildActionButtons(context),
-                      const SizedBox(height: AppDimensions.paddingXL),
+                      SizedBox(height: AppDimensions.paddingXL),
                     ],
                   ),
                 ),
@@ -130,7 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -150,7 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage>
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
           Stack(
             children: [
               Container(
@@ -221,7 +221,7 @@ class _EditProfilePageState extends State<EditProfilePage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -247,7 +247,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -265,7 +265,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           Row(
             children: [
               Icon(Icons.person_outline, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'اطلاعات شخصی',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -274,7 +274,7 @@ class _EditProfilePageState extends State<EditProfilePage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           // Name Field
           _buildTextFormField(
@@ -292,7 +292,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // National ID Field
           _buildTextFormField(
@@ -315,7 +315,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // Birthdate Field
           _buildTextFormField(
@@ -332,7 +332,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // Gender Selection
           _buildGenderSelection(),
@@ -345,7 +345,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -363,7 +363,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           Row(
             children: [
               Icon(Icons.contact_phone_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 context.tr('contact_info'),
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -372,7 +372,7 @@ class _EditProfilePageState extends State<EditProfilePage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           // Email Field
           _buildTextFormField(
@@ -393,7 +393,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             },
           ),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // Phone Field
           _buildTextFormField(
@@ -424,7 +424,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: const EdgeInsets.all(AppDimensions.paddingL),
+      padding: EdgeInsets.all(AppDimensions.paddingL),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.white,
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
@@ -442,7 +442,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           Row(
             children: [
               Icon(Icons.location_on_outlined, color: AppColors.primary),
-              const SizedBox(width: AppDimensions.paddingS),
+              SizedBox(width: AppDimensions.paddingS),
               Text(
                 'آدرس',
                 style: AppTextStyles.headlineSmall.copyWith(
@@ -451,12 +451,12 @@ class _EditProfilePageState extends State<EditProfilePage>
               ),
             ],
           ),
-          const SizedBox(height: AppDimensions.paddingL),
+          SizedBox(height: AppDimensions.paddingL),
 
           // City Selection
           _buildCitySelection(),
 
-          const SizedBox(height: AppDimensions.paddingM),
+          SizedBox(height: AppDimensions.paddingM),
 
           // Address Field
           _buildTextFormField(
@@ -532,7 +532,7 @@ class _EditProfilePageState extends State<EditProfilePage>
           'جنسیت',
           style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: AppDimensions.paddingS),
+        SizedBox(height: AppDimensions.paddingS),
         Row(
           children: [
             Expanded(
@@ -587,7 +587,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     ];
 
     return DropdownButtonFormField<String>(
-      value: _selectedCity,
+      initialValue: _selectedCity,
       decoration: InputDecoration(
         labelText: 'شهر',
         prefixIcon: const Icon(Icons.location_city),
@@ -634,9 +634,7 @@ class _EditProfilePageState extends State<EditProfilePage>
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
-              padding: const EdgeInsets.symmetric(
-                vertical: AppDimensions.paddingM,
-              ),
+              padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
               ),
@@ -646,16 +644,14 @@ class _EditProfilePageState extends State<EditProfilePage>
                 : Text(context.tr('save_changes')),
           ),
         ),
-        const SizedBox(height: AppDimensions.paddingM),
+        SizedBox(height: AppDimensions.paddingM),
         SizedBox(
           width: double.infinity,
           child: OutlinedButton(
             onPressed: _resetForm,
             style: OutlinedButton.styleFrom(
               side: BorderSide(color: AppColors.grey400),
-              padding: const EdgeInsets.symmetric(
-                vertical: AppDimensions.paddingM,
-              ),
+              padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppDimensions.radiusM),
               ),

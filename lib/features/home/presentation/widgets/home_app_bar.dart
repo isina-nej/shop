@@ -36,7 +36,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 20,
             ),
           ),
-          const SizedBox(width: AppDimensions.paddingS),
+          SizedBox(width: AppDimensions.paddingS),
           Text(
             'سینا شاپ', // TODO: Use translation
             style: AppTextStyles.headlineSmall.copyWith(
@@ -81,7 +81,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             // TODO: Navigate to notifications
           },
         ),
-        const SizedBox(width: AppDimensions.paddingXS),
+        SizedBox(width: AppDimensions.paddingXS),
       ],
     );
   }

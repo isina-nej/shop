@@ -1,5 +1,6 @@
 // Featured Products Widget
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -80,17 +81,15 @@ class FeaturedProducts extends StatelessWidget {
       children: [
         // Products List
         SizedBox(
-          height: 300,
+          height: 300.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimensions.paddingM,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
             itemCount: _featuredProducts.length,
             itemBuilder: (context, index) {
               final product = _featuredProducts[index];
               return Container(
-                width: 200,
+                width: 200.w,
                 margin: EdgeInsets.only(
                   left: index < _featuredProducts.length - 1
                       ? AppDimensions.paddingM
@@ -132,8 +131,8 @@ class _ProductCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: isDark ? AppColors.shadowDark : AppColors.shadowLight,
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.h),
             ),
           ],
         ),
@@ -144,16 +143,16 @@ class _ProductCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 140,
+                  height: 140.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColors.grey200,
-                    borderRadius: const BorderRadius.vertical(
+                    borderRadius: BorderRadius.vertical(
                       top: Radius.circular(AppDimensions.radiusM),
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
+                    borderRadius: BorderRadius.vertical(
                       top: Radius.circular(AppDimensions.radiusM),
                     ),
                     child: _buildProductImage(product),
@@ -166,7 +165,7 @@ class _ProductCard extends StatelessWidget {
                     top: 8,
                     right: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: AppDimensions.paddingS,
                         vertical: 4,
                       ),
@@ -191,16 +190,16 @@ class _ProductCard extends StatelessWidget {
                   top: 8,
                   left: 8,
                   child: Container(
-                    width: 32,
-                    height: 32,
+                    width: 32.w,
+                    height: 32.h,
                     decoration: BoxDecoration(
                       color: AppColors.white.withValues(alpha: 0.9),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.favorite_border,
                       color: AppColors.grey600,
-                      size: 20,
+                      size: 20.sp,
                     ),
                   ),
                 ),
@@ -210,7 +209,7 @@ class _ProductCard extends StatelessWidget {
             // Product Info
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(AppDimensions.paddingS),
+                padding: EdgeInsets.all(AppDimensions.paddingS),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -223,17 +222,13 @@ class _ProductCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.0.h),
 
                     // Rating
                     Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: AppColors.warning,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 4),
+                        Icon(Icons.star, color: AppColors.warning, size: 16.sp),
+                        SizedBox(width: 4.0.w),
                         Text(
                           product.rating.toString(),
                           style: AppTextStyles.labelMedium.copyWith(
@@ -254,7 +249,7 @@ class _ProductCard extends StatelessWidget {
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2.0.h),
                       Text(
                         '${_formatPrice(product.discountPrice!)} تومان',
                         style: AppTextStyles.bodyMedium.copyWith(
@@ -295,8 +290,12 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.phone_android, size: 48, color: Colors.blue.shade600),
-              const SizedBox(height: 8),
+              Icon(
+                Icons.phone_android,
+                size: 48.sp,
+                color: Colors.blue.shade600,
+              ),
+              SizedBox(height: 8.0.h),
               Text(
                 'Samsung',
                 style: TextStyle(
@@ -318,8 +317,8 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.laptop_mac, size: 48, color: Colors.grey.shade700),
-              const SizedBox(height: 8),
+              Icon(Icons.laptop_mac, size: 48.sp, color: Colors.grey.shade700),
+              SizedBox(height: 8.0.h),
               Text(
                 'MacBook',
                 style: TextStyle(
@@ -341,8 +340,12 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.headphones, size: 48, color: Colors.orange.shade600),
-              const SizedBox(height: 8),
+              Icon(
+                Icons.headphones,
+                size: 48.sp,
+                color: Colors.orange.shade600,
+              ),
+              SizedBox(height: 8.0.h),
               Text(
                 'AirPods',
                 style: TextStyle(
@@ -364,8 +367,8 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.watch, size: 48, color: Colors.green.shade600),
-              const SizedBox(height: 8),
+              Icon(Icons.watch, size: 48.sp, color: Colors.green.shade600),
+              SizedBox(height: 8.0.h),
               Text(
                 'Watch',
                 style: TextStyle(
@@ -387,8 +390,12 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.tablet_mac, size: 48, color: Colors.purple.shade600),
-              const SizedBox(height: 8),
+              Icon(
+                Icons.tablet_mac,
+                size: 48.sp,
+                color: Colors.purple.shade600,
+              ),
+              SizedBox(height: 8.0.h),
               Text(
                 'iPad',
                 style: TextStyle(
@@ -411,7 +418,7 @@ class _ProductCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.camera_alt, size: 48, color: Colors.teal.shade600),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.0.h),
               Text(
                 'Camera',
                 style: TextStyle(

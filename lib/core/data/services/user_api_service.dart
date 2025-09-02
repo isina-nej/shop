@@ -1,5 +1,6 @@
 import '../models/user_model.dart';
 import '../test_data/user_test_data.dart';
+import '../../utils/data_validator.dart';
 import 'product_api_service.dart';
 
 /// User API Service - Simulates real API calls
@@ -632,6 +633,44 @@ class UserApiService {
         );
       }
 
+      // Clean and validate incoming data to prevent null issues
+      final cleanedUpdates = DataValidator.cleanData(updates);
+
+      // Validate required fields with defaults
+      final validatedUpdates =
+          DataValidator.validateRequiredFields(cleanedUpdates, {
+            'firstName': user.profile.firstName,
+            'lastName': user.profile.lastName,
+            'email': user.email,
+          });
+
+      // Validate specific field types
+      if (validatedUpdates.containsKey('email')) {
+        final email = DataValidator.safeString(validatedUpdates['email']);
+        if (!DataValidator.isValidEmail(email)) {
+          return ApiResponse<UserModel>(
+            data: user,
+            success: false,
+            message: 'فرمت ایمیل صحیح نیست',
+            errorCode: 'INVALID_EMAIL',
+          );
+        }
+      }
+
+      if (validatedUpdates.containsKey('firstName')) {
+        final firstName = DataValidator.safeString(
+          validatedUpdates['firstName'],
+        );
+        if (!DataValidator.isValidString(firstName, minLength: 2)) {
+          return ApiResponse<UserModel>(
+            data: user,
+            success: false,
+            message: 'نام باید حداقل ۲ کاراکتر باشد',
+            errorCode: 'INVALID_FIRST_NAME',
+          );
+        }
+      }
+
       // In a real app, you would update the user data in the database
       // Here we'll just return the existing user as if it was updated
 
@@ -640,8 +679,9 @@ class UserApiService {
         success: true,
         message: 'پروفایل کاربر با موفقیت به‌روزرسانی شد',
         metadata: {
-          'updatedFields': updates.keys.toList(),
+          'updatedFields': validatedUpdates.keys.toList(),
           'updateTime': DateTime.now().toIso8601String(),
+          'validationPassed': true,
         },
       );
     } catch (e) {

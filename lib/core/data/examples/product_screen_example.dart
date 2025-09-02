@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../data_manager.dart';
 import '../models/product_model.dart';
 import '../../localization/localization_extension.dart';
@@ -143,7 +144,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: DropdownButton<String>(
                         value: _selectedCategory,
                         hint: Text(context.tr('category_hint')),
@@ -180,7 +181,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: DropdownButton<String>(
                         value: '$_sortBy-$_sortOrder',
                         isExpanded: true,
@@ -219,7 +220,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.0.h),
             ],
           ),
         ),
@@ -239,13 +240,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text(
               _errorMessage!,
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             ElevatedButton(
               onPressed: () => _loadProducts(refresh: true),
               child: Text(context.tr('try_again')),
@@ -259,7 +260,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       return Center(
         child: Text(
           context.tr('no_products_found'),
-          style: const TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18.0.sp),
         ),
       );
     }
@@ -285,7 +286,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   Widget _buildProductItem(ProductModel product) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -310,9 +311,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
           children: [
             Text(
               product.brand,
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              style: TextStyle(color: Colors.grey[600], fontSize: 12.0.sp),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.0.h),
             Row(
               children: [
                 Text(
@@ -323,30 +324,30 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   ),
                 ),
                 if (product.isOnSale) ...[
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.0.w),
                   Text(
                     product.formattedOriginalPrice,
-                    style: const TextStyle(
+                    style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: Colors.grey,
-                      fontSize: 12,
+                      fontSize: 12.0.sp,
                     ),
                   ),
                 ],
               ],
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.0.h),
             Row(
               children: [
                 Icon(Icons.star, size: 16, color: Colors.amber[600]),
-                const SizedBox(width: 4),
+                SizedBox(width: 4.0.w),
                 Text(
                   product.rating.average.toString(),
-                  style: const TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12.0.sp),
                 ),
                 Text(
                   ' (${product.rating.totalReviews})',
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 12.0.sp, color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -357,21 +358,21 @@ class _ProductListScreenState extends State<ProductListScreen> {
           children: [
             if (product.isOnSale)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   '${product.discountPercentage.toInt()}%',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
+                    fontSize: 10.0.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.0.h),
             Icon(
               product.inventory.stockStatus == 'in_stock'
                   ? Icons.check_circle
@@ -493,7 +494,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: Text(context.tr('add_to_cart')),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16.0.w),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -520,13 +521,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.error_outline, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text(
               _errorMessage!,
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             ElevatedButton(
               onPressed: _loadProductDetails,
               child: Text(context.tr('try_again')),
@@ -574,37 +575,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   _product!.name,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.0.h),
                 Text(
                   '${context.tr('brand_label')} ${_product!.brand}',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 16),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 16.0.sp),
                 ),
 
                 // Price
-                const SizedBox(height: 16),
+                SizedBox(height: 16.0.h),
                 Row(
                   children: [
                     Text(
                       _product!.formattedPrice,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 24.0.sp,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                     if (_product!.isOnSale) ...[
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.0.w),
                       Text(
                         _product!.formattedOriginalPrice,
-                        style: const TextStyle(
+                        style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,
-                          fontSize: 18,
+                          fontSize: 18.0.sp,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.0.w),
                       Container(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 4,
                         ),
@@ -614,9 +615,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         child: Text(
                           '${_product!.discountPercentage.toInt()}% ${context.tr('discount_label')}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 12.0.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -626,7 +627,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
 
                 // Rating
-                const SizedBox(height: 16),
+                SizedBox(height: 16.0.h),
                 Row(
                   children: [
                     Row(
@@ -640,15 +641,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         );
                       }),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8.0.w),
                     Text(
                       '${_product!.rating.average}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 16.0.sp,
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4.0.w),
                     Text(
                       '(${_product!.rating.totalReviews} ${context.tr('reviews_label')})',
                       style: TextStyle(color: Colors.grey[600]),
@@ -657,25 +658,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
 
                 // Description
-                const SizedBox(height: 24),
+                SizedBox(height: 24.0.h),
                 Text(
                   context.tr('description'),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  _product!.description,
-                  style: const TextStyle(height: 1.5),
-                ),
+                SizedBox(height: 8.0.h),
+                Text(_product!.description, style: TextStyle(height: 1.5)),
 
                 // Colors (if available)
                 if (_product!.availableColors.isNotEmpty) ...[
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.0.h),
                   Text(
                     context.tr('available_colors'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.0.h),
                   Wrap(
                     spacing: 8,
                     children: _product!.availableColors.map((color) {
@@ -699,12 +697,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                 // Related Products
                 if (_relatedProducts.isNotEmpty) ...[
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32.0.h),
                   Text(
                     context.tr('related_products'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.0.h),
                   SizedBox(
                     height: 200,
                     child: ListView.builder(
@@ -714,13 +712,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         final relatedProduct = _relatedProducts[index];
                         return Container(
                           width: 150,
-                          margin: const EdgeInsets.only(right: 16),
+                          margin: EdgeInsets.only(right: 16),
                           child: Card(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
+                                  borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(4),
                                   ),
                                   child: Image.network(
@@ -749,15 +747,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         relatedProduct.name,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 12),
+                                        style: TextStyle(fontSize: 12.0.sp),
                                       ),
-                                      const SizedBox(height: 4),
+                                      SizedBox(height: 4.0.h),
                                       Text(
                                         relatedProduct.formattedPrice,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context).primaryColor,
-                                          fontSize: 12,
+                                          fontSize: 12.0.sp,
                                         ),
                                       ),
                                     ],

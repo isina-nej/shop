@@ -1,5 +1,6 @@
 // Enhanced App Router with Deferred Loading
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'deferred_page_loader.dart';
 import '../localization/localization_extension.dart';
 
@@ -263,10 +264,10 @@ class EnhancedAppRouter {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               Text(
                 context.tr(messageKey),
-                style: const TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18.0.sp),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -377,7 +378,7 @@ class DeferredLoadingPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.0.h),
               Text(
                 'در حال بارگیری $pageName...',
                 style: theme.textTheme.titleLarge?.copyWith(
@@ -385,9 +386,9 @@ class DeferredLoadingPage extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.0.h),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 32),
+                margin: EdgeInsets.symmetric(horizontal: 32),
                 width: 200,
                 child: LinearProgressIndicator(
                   value: DeferredPageLoader.getLoadingProgress(),
@@ -398,7 +399,7 @@ class DeferredLoadingPage extends StatelessWidget {
                   minHeight: 4,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               Text(
                 '${(DeferredPageLoader.getLoadingProgress() * 100).toInt()}% کامل شده',
                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -437,19 +438,19 @@ class DeferredErrorPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.error_outline, size: 64, color: Colors.red),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.0.h),
               Text(
                 'خطا در بارگیری $pageName',
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.0.h),
               Text(
                 error,
                 style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24.0.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -457,7 +458,7 @@ class DeferredErrorPage extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('بازگشت'),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16.0.w),
                   ElevatedButton(
                     onPressed: onRetry,
                     child: const Text('تلاش مجدد'),
@@ -478,18 +479,18 @@ class _SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FlutterLogo(size: 100),
-            SizedBox(height: 24),
+            SizedBox(height: 24.0.h),
             Text(
               'خوش آمدید',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24.0.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             CircularProgressIndicator(),
           ],
         ),
@@ -513,9 +514,9 @@ class _PlaceholderPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.construction, size: 64, color: Colors.grey.shade600),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.0.h),
             Text('صفحه $title', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.0.h),
             Text(
               'در حال توسعه...',
               style: Theme.of(

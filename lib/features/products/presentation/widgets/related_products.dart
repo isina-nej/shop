@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RelatedProducts extends StatelessWidget {
   final String currentProductId;
@@ -17,17 +18,17 @@ class RelatedProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
-      margin: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: EdgeInsets.all(AppDimensions.paddingM),
+      margin: EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
         color: AppColors.grey200,
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       ),
-      child: const Center(
+      child:  Center(
         child: Text(
           'Related Products\n(Coming Soon)',
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.grey600, fontSize: 16),
+          style: TextStyle(color: AppColors.grey600, fontSize: 16.0.sp),
         ),
       ),
     );
