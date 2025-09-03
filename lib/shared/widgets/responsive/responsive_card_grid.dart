@@ -39,11 +39,9 @@ class ResponsiveCardGrid extends StatelessWidget {
         : 3;
 
     // Dynamic spacing based on screen size
-    final dynamicSpacing = ResponsiveUtils.getResponsiveValue(
+    final dynamicSpacing = ResponsiveUtils.getResponsiveSpacing(
       context,
-      mobile: spacing,
-      tablet: spacing * 1.2,
-      desktop: spacing * 1.5,
+      baseSpacing: spacing,
     );
 
     return Container(
@@ -238,11 +236,9 @@ class ResponsiveHeroSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       constraints: BoxConstraints(
-        minHeight: ResponsiveUtils.getResponsiveValue(
+        minHeight: ResponsiveUtils.getResponsiveImageHeight(
           context,
-          mobile: 250.h,
-          tablet: 350.h,
-          desktop: 450.h,
+          baseHeight: 250.0,
         ),
       ),
       decoration: BoxDecoration(

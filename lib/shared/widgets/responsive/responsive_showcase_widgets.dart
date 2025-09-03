@@ -395,24 +395,41 @@ class _ResponsiveImageGalleryState extends State<ResponsiveImageGallery> {
           // Main Image
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: ResponsiveUtils.getResponsiveValue(
+            height: ResponsiveUtils.getResponsiveImageHeight(
               context,
-              mobile: 250.h,
-              tablet: 350.h,
-              desktop: 400.h,
+              baseHeight: 250.0,
             ),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+              borderRadius: BorderRadius.circular(
+                ResponsiveUtils.getResponsiveBorderRadius(
+                  context,
+                  baseRadius: AppDimensions.radiusL,
+                ),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.shadowLight.withValues(alpha: 0.2),
-                  blurRadius: 15.r,
-                  offset: Offset(0, 8.h),
+                  blurRadius: ResponsiveUtils.getResponsiveElevation(
+                    context,
+                    baseElevation: 15.0,
+                  ),
+                  offset: Offset(
+                    0,
+                    ResponsiveUtils.getResponsiveSpacing(
+                      context,
+                      baseSpacing: 8.0,
+                    ),
+                  ),
                 ),
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+              borderRadius: BorderRadius.circular(
+                ResponsiveUtils.getResponsiveBorderRadius(
+                  context,
+                  baseRadius: AppDimensions.radiusL,
+                ),
+              ),
               child: GestureDetector(
                 onTap: () =>
                     widget.onImageTap?.call(widget.images[_selectedIndex]),
@@ -425,13 +442,21 @@ class _ResponsiveImageGalleryState extends State<ResponsiveImageGallery> {
                       decoration: BoxDecoration(
                         color: AppColors.grey200,
                         borderRadius: BorderRadius.circular(
-                          AppDimensions.radiusL,
+                          ResponsiveUtils.getResponsiveBorderRadius(
+                            context,
+                            baseRadius: AppDimensions.radiusL,
+                          ),
                         ),
                       ),
                       child: Center(
                         child: Icon(
                           Icons.broken_image,
-                          size: 64.sp,
+                          size: ResponsiveUtils.getResponsiveValue(
+                            context,
+                            mobile: 48.0,
+                            tablet: 64.0,
+                            desktop: 80.0,
+                          ).sp,
                           color: AppColors.grey400,
                         ),
                       ),

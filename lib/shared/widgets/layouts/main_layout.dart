@@ -7,6 +7,7 @@ import '../../../features/cart/presentation/pages/cart_page.dart';
 import '../../../features/profile/presentation/pages/profile_page.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/localization/localization_extension.dart';
+import '../../../core/utils/responsive_utils.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -25,6 +26,14 @@ class _MainLayoutState extends State<MainLayout> {
     const ProductsPage(),
     const CartPage(),
     const ProfilePage(),
+  ];
+
+  final List<String> _pageTitles = ['home', 'products', 'cart', 'profile'];
+  final List<IconData> _pageIcons = [
+    Icons.home,
+    Icons.shopping_bag,
+    Icons.shopping_cart,
+    Icons.person,
   ];
 
   @override
@@ -78,62 +87,219 @@ class _MainLayoutState extends State<MainLayout> {
       focusNode: _focusNode,
       autofocus: true,
       onKeyEvent: _handleKey,
-      child: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          children: _pages,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            int diff = (index - _currentIndex).abs();
-            Duration duration = Duration(
-              milliseconds: (diff * 150).clamp(200, 600),
-            );
-            Curve curve = diff == 1 ? Curves.easeInOut : Curves.fastOutSlowIn;
+      child: ResponsiveLayout(
+        mobile: _buildMobileLayout(context),
+        tablet: _buildTabletLayout(context),
+        desktop: _buildDesktopLayout(context),
+      ),
+    );
+  }
 
-            _pageController.animateToPage(
-              index,
-              duration: duration,
-              curve: curve,
-            );
-          },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.surfaceDark
-              : AppColors.white,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.textSecondaryDark
-              : AppColors.textSecondaryLight,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home_outlined),
-              activeIcon: const Icon(Icons.home),
-              label: context.tr('home'),
+  Widget _buildMobileLayout(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          int diff = (index - _currentIndex).abs();
+          Duration duration = Duration(
+            milliseconds: (diff * 150).clamp(200, 600),
+          );
+          Curve curve = diff == 1 ? Curves.easeInOut : Curves.fastOutSlowIn;
+
+          _pageController.animateToPage(
+            index,
+            duration: duration,
+            curve: curve,
+          );
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.surfaceDark
+            : AppColors.white,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.textSecondaryDark
+            : AppColors.textSecondaryLight,
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home_outlined),
+            activeIcon: const Icon(Icons.home),
+            label: context.tr('home'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.shopping_bag_outlined),
+            activeIcon: const Icon(Icons.shopping_bag),
+            label: context.tr('products'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.shopping_cart_outlined),
+            activeIcon: const Icon(Icons.shopping_cart),
+            label: context.tr('cart'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.person_outline),
+            activeIcon: const Icon(Icons.person),
+            label: context.tr('profile'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabletLayout(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          NavigationRail(
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+              _pageController.jumpToPage(index);
+            },
+            labelType: NavigationRailLabelType.all,
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.surfaceDark
+                : AppColors.white,
+            selectedIconTheme: IconThemeData(color: AppColors.primary),
+            unselectedIconTheme: IconThemeData(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.shopping_bag_outlined),
-              activeIcon: const Icon(Icons.shopping_bag),
-              label: context.tr('products'),
+            destinations: [
+              NavigationRailDestination(
+                icon: const Icon(Icons.home_outlined),
+                selectedIcon: const Icon(Icons.home),
+                label: Text(context.tr('home')),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.shopping_bag_outlined),
+                selectedIcon: const Icon(Icons.shopping_bag),
+                label: Text(context.tr('products')),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.shopping_cart_outlined),
+                selectedIcon: const Icon(Icons.shopping_cart),
+                label: Text(context.tr('cart')),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.person_outline),
+                selectedIcon: const Icon(Icons.person),
+                label: Text(context.tr('profile')),
+              ),
+            ],
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              children: _pages,
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.shopping_cart_outlined),
-              activeIcon: const Icon(Icons.shopping_cart),
-              label: context.tr('cart'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDesktopLayout(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          Container(
+            width: 280,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.surfaceDark
+                : AppColors.white,
+            child: Column(
+              children: [
+                SizedBox(height: 24),
+                Text(
+                  'سینا شاپ',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+                SizedBox(height: 32),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _pages.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(
+                          _currentIndex == index
+                              ? _pageIcons[index]
+                              : _pageIcons[index] == Icons.home
+                              ? Icons.home_outlined
+                              : _pageIcons[index] == Icons.shopping_bag
+                              ? Icons.shopping_bag_outlined
+                              : _pageIcons[index] == Icons.shopping_cart
+                              ? Icons.shopping_cart_outlined
+                              : Icons.person_outline,
+                          color: _currentIndex == index
+                              ? AppColors.primary
+                              : Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.textSecondaryLight,
+                        ),
+                        title: Text(
+                          context.tr(_pageTitles[index]),
+                          style: TextStyle(
+                            color: _currentIndex == index
+                                ? AppColors.primary
+                                : Theme.of(context).brightness ==
+                                      Brightness.dark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondaryLight,
+                            fontWeight: _currentIndex == index
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                          _pageController.jumpToPage(index);
+                        },
+                        selected: _currentIndex == index,
+                        selectedTileColor: AppColors.primary.withValues(
+                          alpha: 0.1,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person_outline),
-              activeIcon: const Icon(Icons.person),
-              label: context.tr('profile'),
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              children: _pages,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

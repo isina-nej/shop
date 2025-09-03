@@ -1,14 +1,15 @@
 // Responsive Utilities - Helper classes and methods for responsive design
 import 'package:flutter/material.dart';
+import '../theme/app_dimensions.dart';
 
 class ResponsiveUtils {
   // Device type detection
   static DeviceType getDeviceType(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    if (screenWidth >= 1200) {
+    if (screenWidth >= AppBreakpoints.desktop) {
       return DeviceType.desktop;
-    } else if (screenWidth >= 768) {
+    } else if (screenWidth >= AppBreakpoints.tablet) {
       return DeviceType.tablet;
     } else {
       return DeviceType.mobile;
@@ -115,6 +116,58 @@ class ResponsiveUtils {
     );
 
     return BoxConstraints(maxWidth: maxWidth);
+  }
+
+  // Get responsive image height
+  static double getResponsiveImageHeight(
+    BuildContext context, {
+    double baseHeight = 200.0,
+  }) {
+    return getResponsiveValue(
+      context,
+      mobile: baseHeight,
+      tablet: baseHeight * 1.2,
+      desktop: baseHeight * 1.5,
+    );
+  }
+
+  // Get responsive spacing
+  static double getResponsiveSpacing(
+    BuildContext context, {
+    double baseSpacing = 16.0,
+  }) {
+    return getResponsiveValue(
+      context,
+      mobile: baseSpacing,
+      tablet: baseSpacing * 1.2,
+      desktop: baseSpacing * 1.5,
+    );
+  }
+
+  // Get responsive border radius
+  static double getResponsiveBorderRadius(
+    BuildContext context, {
+    double baseRadius = 12.0,
+  }) {
+    return getResponsiveValue(
+      context,
+      mobile: baseRadius,
+      tablet: baseRadius * 1.1,
+      desktop: baseRadius * 1.2,
+    );
+  }
+
+  // Get responsive elevation
+  static double getResponsiveElevation(
+    BuildContext context, {
+    double baseElevation = 4.0,
+  }) {
+    return getResponsiveValue(
+      context,
+      mobile: baseElevation,
+      tablet: baseElevation * 1.2,
+      desktop: baseElevation * 1.5,
+    );
   }
 }
 

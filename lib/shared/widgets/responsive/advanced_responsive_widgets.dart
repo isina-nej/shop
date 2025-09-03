@@ -53,7 +53,8 @@ class ResponsiveMasonryGrid extends StatelessWidget {
         columnHeights.reduce((a, b) => a < b ? a : b),
       );
       columnChildren[shortestColumnIndex].add(children[i]);
-      columnHeights[shortestColumnIndex] += 200; // Estimated height
+      columnHeights[shortestColumnIndex] +=
+          ResponsiveUtils.getResponsiveImageHeight(context, baseHeight: 200.0);
     }
 
     return Row(
@@ -301,10 +302,23 @@ class _ResponsiveProductCardState extends State<ResponsiveProductCard>
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(AppDimensions.radiusM),
+                            top: Radius.circular(
+                              ResponsiveUtils.getResponsiveBorderRadius(
+                                context,
+                                baseRadius: AppDimensions.radiusM,
+                              ),
+                            ),
                           ),
                           child: Container(
-                            height: widget.isCompact ? 120.h : 180.h,
+                            height: widget.isCompact
+                                ? ResponsiveUtils.getResponsiveImageHeight(
+                                    context,
+                                    baseHeight: 120.0,
+                                  )
+                                : ResponsiveUtils.getResponsiveImageHeight(
+                                    context,
+                                    baseHeight: 180.0,
+                                  ),
                             width: double.infinity,
                             color: AppColors.grey100,
                             child: widget.imageUrl.isNotEmpty

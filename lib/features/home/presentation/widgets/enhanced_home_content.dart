@@ -173,7 +173,7 @@ class EnhancedHomeContent extends StatelessWidget {
                 title: 'لپ‌تاپ مک‌بوک ایر M2',
                 subtitle: 'Apple',
                 price: '۶۵,۰۰۰,۰۰۰ تومان',
-                imageUrl: 'assets/images/products/macbook.png',
+                imageUrl: 'assets/images/products/macbook_air.png',
                 rating: 4.9,
                 onTap: () {
                   // Navigate to product details
@@ -195,7 +195,7 @@ class EnhancedHomeContent extends StatelessWidget {
                 title: 'گلکسی S24 اولترا',
                 subtitle: 'Samsung',
                 price: '۴۸,۰۰۰,۰۰۰ تومان',
-                imageUrl: 'assets/images/products/galaxy.png',
+                imageUrl: 'assets/images/products/samsung_galaxy.png',
                 rating: 4.6,
                 onTap: () {
                   // Navigate to product details
@@ -217,11 +217,11 @@ class EnhancedHomeContent extends StatelessWidget {
 
           ResponsiveImageGallery(
             images: [
-              'assets/images/products/gallery1.jpg',
-              'assets/images/products/gallery2.jpg',
-              'assets/images/products/gallery3.jpg',
-              'assets/images/products/gallery4.jpg',
-              'assets/images/products/gallery5.jpg',
+              'assets/images/products/airpods.jpg',
+              'assets/images/products/ipad_air.jpg',
+              'assets/images/products/lenovo_thinkpad.jpg',
+              'assets/images/products/samsung_s23.jpg',
+              'assets/images/products/mi_watch.jpg',
             ],
             onImageTap: (imagePath) {
               // Show full-screen image

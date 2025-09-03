@@ -46,6 +46,7 @@ class ShopApp extends StatelessWidget {
       designSize: Size(375, 812), // iPhone X size as base
       minTextAdapt: true,
       splitScreenMode: true,
+      useInheritedMediaQuery: true,
       builder: (context, child) {
         return Obx(() {
           return Directionality(

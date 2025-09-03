@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ResponsiveLayout(
       mobile: _buildMobileLayout(context),
+      tablet: _buildTabletLayout(context),
       desktop: _buildDesktopLayout(context),
     );
   }
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildDesktopLayout(BuildContext context) {
+  Widget _buildTabletLayout(BuildContext context) {
     return Scaffold(
       appBar: const HomeAppBar(),
       body: RefreshIndicator(
@@ -44,6 +45,25 @@ class _HomePageState extends State<HomePage> {
         child: const SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: EnhancedHomeContent(),
+        ),
+      ),
+      floatingActionButton: const HomeFloatingHub(),
+    );
+  }
+
+  Widget _buildDesktopLayout(BuildContext context) {
+    return Scaffold(
+      appBar: const HomeAppBar(),
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: ResponsiveUtils.getResponsiveConstraints(context),
+            child: const SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: EnhancedHomeContent(),
+            ),
+          ),
         ),
       ),
       floatingActionButton: const HomeFloatingHub(),

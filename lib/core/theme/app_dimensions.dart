@@ -73,4 +73,46 @@ class AppDimensions {
   static double get elevationM => 4.0;
   static double get elevationL => 8.0;
   static double get elevationXL => 16.0;
+
+  // Responsive Spacing Helpers
+  static double getResponsiveSpacing(
+    double screenWidth, {
+    double baseSpacing = 16.0,
+  }) {
+    if (AppBreakpoints.isMobile(screenWidth)) {
+      return baseSpacing;
+    } else if (AppBreakpoints.isTablet(screenWidth)) {
+      return baseSpacing * 1.2;
+    } else {
+      return baseSpacing * 1.5;
+    }
+  }
+
+  // Responsive Font Size Helpers
+  static double getResponsiveFontSize(
+    double screenWidth, {
+    double baseSize = 14.0,
+  }) {
+    if (AppBreakpoints.isMobile(screenWidth)) {
+      return baseSize.sp;
+    } else if (AppBreakpoints.isTablet(screenWidth)) {
+      return (baseSize * 1.1).sp;
+    } else {
+      return (baseSize * 1.2).sp;
+    }
+  }
+
+  // Responsive Container Width Helpers
+  static double getResponsiveContainerWidth(
+    double screenWidth, {
+    double maxWidth = 1200.0,
+  }) {
+    if (AppBreakpoints.isMobile(screenWidth)) {
+      return screenWidth - 32.0; // Account for padding
+    } else if (AppBreakpoints.isTablet(screenWidth)) {
+      return screenWidth * 0.9;
+    } else {
+      return maxWidth;
+    }
+  }
 }
