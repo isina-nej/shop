@@ -20,11 +20,17 @@ import '../../features/profile/presentation/pages/support_page.dart';
 import '../../features/profile/presentation/pages/about_page.dart';
 import '../../features/profile/presentation/pages/privacy_policy_page.dart';
 import '../../features/profile/presentation/pages/settings_page.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/orders/presentation/pages/orders_page.dart';
+import '../../features/wishlist/presentation/pages/wishlist_page.dart';
+import '../../features/landing/presentation/pages/landing_page.dart';
 
 class AppRouter {
   // Route names
   static const String splash = '/';
   static const String onboarding = '/onboarding';
+  static const String landing = '/landing';
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
@@ -76,20 +82,13 @@ class AppRouter {
         );
 
       case login:
-        return PageTransitions.slideRightToLeft(
-          Builder(
-            builder: (context) =>
-                Scaffold(body: Center(child: Text(context.tr('login')))),
-          ),
-        );
+        return PageTransitions.slideRightToLeft(const LoginPage());
 
       case register:
-        return PageTransitions.slideRightToLeft(
-          Builder(
-            builder: (context) =>
-                Scaffold(body: Center(child: Text(context.tr('register')))),
-          ),
-        );
+        return PageTransitions.slideRightToLeft(const RegisterPage());
+
+      case landing:
+        return PageTransitions.fadeTransition(const LandingPage());
 
       case home:
         return PageTransitions.slideRightToLeft(const HomePage());
@@ -130,6 +129,9 @@ class AppRouter {
 
       case cart:
         return PageTransitions.slideRightToLeft(const CartPage());
+
+      case orders:
+        return PageTransitions.slideRightToLeft(const OrdersPage());
 
       case profile:
         return PageTransitions.slideRightToLeft(const ProfilePage());
@@ -172,14 +174,7 @@ class AppRouter {
         return PageTransitions.fadeTransition(ProductsPage(searchQuery: query));
 
       case wishlist:
-        return PageTransitions.slideAndScaleTransition(
-          Builder(
-            builder: (context) => Scaffold(
-              appBar: AppBar(title: Text(context.tr('wishlist_title'))),
-              body: Center(child: Text(context.tr('wishlist_page'))),
-            ),
-          ),
-        );
+        return PageTransitions.slideAndScaleTransition(const WishlistPage());
 
       case AppRouter.settings:
         return PageTransitions.scaleTransition(const SettingsPage());

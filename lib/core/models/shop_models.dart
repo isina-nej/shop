@@ -54,6 +54,49 @@ class Product {
   String? get formattedOriginalPrice => originalPrice != null
       ? '${originalPrice!.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} تومان'
       : null;
+
+  // JSON serialization
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+      'originalPrice': originalPrice,
+      'images': images,
+      'category': category,
+      'brand': brand,
+      'rating': rating,
+      'reviewsCount': reviewsCount,
+      'isInStock': isInStock,
+      'isFeatured': isFeatured,
+      'isOnSale': isOnSale,
+      'colors': colors,
+      'sizes': sizes,
+      'specifications': specifications,
+    };
+  }
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      price: (json['price'] ?? 0.0).toDouble(),
+      originalPrice: json['originalPrice']?.toDouble(),
+      images: List<String>.from(json['images'] ?? []),
+      category: json['category'] ?? '',
+      brand: json['brand'] ?? '',
+      rating: (json['rating'] ?? 0.0).toDouble(),
+      reviewsCount: json['reviewsCount'] ?? 0,
+      isInStock: json['isInStock'] ?? true,
+      isFeatured: json['isFeatured'] ?? false,
+      isOnSale: json['isOnSale'] ?? false,
+      colors: List<String>.from(json['colors'] ?? []),
+      sizes: List<String>.from(json['sizes'] ?? []),
+      specifications: Map<String, String>.from(json['specifications'] ?? {}),
+    );
+  }
 }
 
 // Category Model

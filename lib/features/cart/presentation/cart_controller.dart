@@ -87,4 +87,9 @@ class CartController extends GetxController {
       );
     }
   }
+
+  // Alias for compatibility
+  void addToCart(Product product, {int quantity = 1}) {
+    addItem(product, quantity: quantity);
+  }
 }

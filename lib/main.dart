@@ -7,8 +7,14 @@ import 'core/theme/advanced_theme_manager.dart';
 import 'core/localization/language_controller.dart';
 import 'core/theme/theme_controller.dart';
 import 'core/routing/app_router.dart';
-import 'shared/widgets/layouts/main_layout.dart';
 import 'core/localization/translation_manager.dart';
+import 'shared/widgets/splash/splash_screen.dart';
+import 'features/auth/presentation/auth_controller.dart';
+import 'features/cart/presentation/cart_controller.dart';
+import 'features/wishlist/presentation/wishlist_controller.dart';
+import 'core/network/network_service.dart';
+import 'core/utils/responsive_utils.dart';
+import 'features/landing/presentation/pages/landing_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +33,12 @@ void main() async {
   // Initialize GetX controllers
   Get.put(ThemeController());
   Get.put(LanguageController());
+  Get.put(AuthController());
+  Get.put(CartController());
+  Get.put(WishlistController());
+
+  // Initialize NetworkService
+  NetworkService.initialize();
 
   // Initialize TranslationManager
   await TranslationManager.instance.initialize();
@@ -36,6 +48,20 @@ void main() async {
 
 class ShopApp extends StatelessWidget {
   const ShopApp({super.key});
+
+  Widget _getInitialPage() {
+    // For web/desktop, show landing page
+    // For mobile, show splash screen
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (ResponsiveUtils.isDesktop(context)) {
+          return const LandingPage();
+        } else {
+          return const SplashScreen();
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +92,7 @@ class ShopApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
               ],
               onGenerateRoute: AppRouter.generateRoute,
-              home: const MainLayout(),
+              home: _getInitialPage(),
               debugShowCheckedModeBanner: false,
             ),
           );
